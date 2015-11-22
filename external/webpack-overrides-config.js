@@ -5,7 +5,7 @@ console.log('overrides path', sourceRoot);
 console.log('context', projectRoot);
 
 module.exports = {
-  // context: projectRoot,
+  context: projectRoot,
   resolve: {
     root: [
       sourceRoot
