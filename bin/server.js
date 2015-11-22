@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 require('../server.babel'); // babel registration (runtime transpilation for node)
 var path = require('path');
-var rootDir = path.resolve(__dirname, '..');
+
 /**
  * Define isomorphic constants.
  */
@@ -24,9 +24,23 @@ if (__DEVELOPMENT__) {
 var overrides = require(path.resolve(process.env.WEBPACK_OVERRIDES_PATH));
 process.env.SOURCE_ROOT = overrides.resolve.root[0];
 
+var toolsConfig = require('../webpack/webpack-isomorphic-tools');
+
+if(overrides.context) {
+  console.log('found context');
+  var rootDir = path.resolve(overrides.context);
+} else {
+  console.log('did not find context');
+  var rootDir = path.resolve(__dirname, '..');
+}
+
+toolsConfig.webpack_assets_file_path = rootDir + '/webpack-assets.json',
+
+console.log('isomorphic tools root dir', rootDir)
+
 // https://github.com/halt-hammerzeit/webpack-isomorphic-tools
 var WebpackIsomorphicTools = require('webpack-isomorphic-tools');
-global.webpackIsomorphicTools = new WebpackIsomorphicTools(require('../webpack/webpack-isomorphic-tools'))
+global.webpackIsomorphicTools = new WebpackIsomorphicTools(toolsConfig)
   .development(__DEVELOPMENT__)
   .server(rootDir, function() {
     require('../src/server');
