@@ -1,5 +1,5 @@
 import {ROUTER_DID_CHANGE} from 'redux-router/lib/constants';
-import getDataDependencies from '../../helpers/getDataDependencies';
+import getDataDependencies from 'helpers/getDataDependencies';
 
 const locationsAreEqual = (locA, locB) => (locA.pathname === locB.pathname) && (locA.search === locB.search);
 

@@ -21,7 +21,7 @@ module.exports = {
     'main': [
       'bootstrap-sass!./src/theme/bootstrap.config.prod.js',
       'font-awesome-webpack!./src/theme/font-awesome.config.prod.js',
-      './src/client.js'
+      path.resolve(__dirname, '..', 'src/client.js')
     ]
   },
   output: {

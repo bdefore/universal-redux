@@ -6,14 +6,14 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import createHistory from 'history/lib/createBrowserHistory';
 import useScroll from 'scroll-behavior/lib/useStandardScroll';
-import createStore from './redux/create';
-import ApiClient from './helpers/ApiClient';
+import createStore from 'redux/create';
+import ApiClient from 'helpers/ApiClient';
 import io from 'socket.io-client';
 import {Provider} from 'react-redux';
 import {reduxReactRouter, ReduxRouter} from 'redux-router';
 
-import getRoutes from './routes';
-import makeRouteHooksSafe from './helpers/makeRouteHooksSafe';
+import getRoutes from 'routes';
+import makeRouteHooksSafe from 'helpers/makeRouteHooksSafe';
 
 const client = new ApiClient();
 
@@ -59,7 +59,7 @@ if (process.env.NODE_ENV !== 'production') {
 }
 
 if (__DEVTOOLS__ && !window.devToolsExtension) {
-  const DevTools = require('./containers/DevTools/DevTools');
+  const DevTools = require('containers/DevTools/DevTools');
   ReactDOM.render(
     <Provider store={store} key="provider">
       <div>

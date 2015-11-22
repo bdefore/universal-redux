@@ -60,6 +60,7 @@
       "env": {
         "NODE_PATH": "./src",
         "NODE_ENV": "development",
+        "WEBPACK_OVERRIDES_PATH": "external/webpack-overrides-config.js",
         "PORT": 3000,
         "APIPORT": 3030
       }
@@ -69,6 +70,7 @@
       "env": {
         "NODE_PATH": "./api",
         "NODE_ENV": "development",
+        "WEBPACK_OVERRIDES_PATH": "external/webpack-overrides-config.js",
         "APIPORT": 3030
       }
     },
@@ -76,6 +78,7 @@
       "command": "node webpack/webpack-dev-server.js",
       "env": {
         "UV_THREADPOOL_SIZE": 100,
+        "WEBPACK_OVERRIDES_PATH": "external/webpack-overrides-config.js",
         "NODE_PATH": "./src"
       }
     }
@@ -116,6 +119,7 @@
     "socket.io-client": "^1.3.7",
     "superagent": "^1.4.0",
     "url-loader": "^0.5.6",
+    "webpack-config-merger": "0.0.3",
     "webpack-isomorphic-tools": "^2.2.4"
   },
   "devDependencies": {
@@ -160,7 +164,7 @@
     "redux-devtools": "^3.0.0-beta-3",
     "redux-devtools-dock-monitor": "^1.0.0-beta-3",
     "redux-devtools-log-monitor": "^1.0.0-beta-3",
-    "redux-router": "1.0.0-beta3",
+    "redux-router": "1.0.0-beta4",
     "sass-loader": "^3.0.0",
     "strip-loader": "^0.1.0",
     "style-loader": "^0.13.0",

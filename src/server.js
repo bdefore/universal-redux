@@ -1,13 +1,12 @@
 import Express from 'express';
 import React from 'react';
 import ReactDOM from 'react-dom/server';
-import config from './config';
 import favicon from 'serve-favicon';
 import compression from 'compression';
 import httpProxy from 'http-proxy';
 import path from 'path';
-import createStore from './redux/create';
-import ApiClient from './helpers/ApiClient';
+import createStore from 'redux/create';
+import ApiClient from 'helpers/ApiClient';
 import Html from './helpers/Html';
 import PrettyError from 'pretty-error';
 import http from 'http';
@@ -18,8 +17,11 @@ import createHistory from 'history/lib/createMemoryHistory';
 import {reduxReactRouter, match} from 'redux-router/server';
 import {Provider} from 'react-redux';
 import qs from 'query-string';
-import getRoutes from './routes';
-import getStatusFromRoutes from './helpers/getStatusFromRoutes';
+import getStatusFromRoutes from 'helpers/getStatusFromRoutes';
+
+// build requires that rely on SOURCE_ROOT
+const getRoutes = require(path.resolve(process.env.SOURCE_ROOT, 'routes'));
+const config = require(path.resolve(process.env.SOURCE_ROOT, 'config'));
 
 const pretty = new PrettyError();
 const app = new Express();
