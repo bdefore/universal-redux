@@ -27,8 +27,8 @@
     "start": "concurrent --kill-others \"npm run start-prod\" \"npm run start-prod-api\"",
     "start-prod": "better-npm-run start-prod",
     "start-prod-api": "better-npm-run start-prod-api",
-    "build": "webpack --verbose --colors --display-error-details --config webpack/prod.config.js",
-    "postinstall": "webpack --display-error-details --config webpack/prod.config.js",
+    "build": "better-npm-run build-prod",
+    "postinstall": "better-npm-run build-prod",
     "lint": "eslint -c .eslintrc src api",
     "start-dev": "better-npm-run start-dev",
     "start-dev-api": "better-npm-run start-dev-api",
@@ -38,6 +38,14 @@
     "test-node": "./node_modules/mocha/bin/mocha ./api/**/__tests__/*-test.js --compilers js:babel-core/register"
   },
   "betterScripts": {
+    "build-prod": {
+      "command": "node ./webpack/build-prod.js",
+      "env": {
+        "CONFIG_PATH": "external/src/config.js",
+        "WEBPACK_OVERRIDES_PATH": "external/webpack-overrides-config.js",
+        "NODE_PATH": "external/src"
+      }
+    },
     "start-prod": {
       "command": "node ./bin/server.js",
       "env": {
