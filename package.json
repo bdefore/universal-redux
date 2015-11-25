@@ -82,7 +82,7 @@
         "UV_THREADPOOL_SIZE": 100,
         "CONFIG_PATH": "external/src/config.js",
         "WEBPACK_OVERRIDES_PATH": "external/webpack-overrides-config.js",
-        "NODE_PATH": "./src"
+        "NODE_PATH": "external/src"
       }
     }
   },
