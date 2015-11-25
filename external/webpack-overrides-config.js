@@ -12,7 +12,8 @@ module.exports = {
     ],
     alias: {
       routes: sourceRoot + '/routes.js',
-      config: sourceRoot + '/config.js'
+      config: sourceRoot + '/config.js',
+      reducers: sourceRoot + '/redux/modules/reducer.js'
     }
   }
 };

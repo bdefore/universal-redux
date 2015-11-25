@@ -24,6 +24,7 @@ import getStatusFromRoutes from './helpers/getStatusFromRoutes';
 // build requires that rely on SOURCE_ROOT
 const getRoutes = require(path.resolve(process.env.SOURCE_ROOT, 'routes'));
 const config = require(path.resolve(process.env.SOURCE_ROOT, 'config'));
+const reducers = require(path.resolve(process.env.SOURCE_ROOT, 'redux/modules/reducer'));
 
 const pretty = new PrettyError();
 const app = new Express();
@@ -65,7 +66,7 @@ app.use((req, res) => {
   }
   const client = new ApiClient(req);
 
-  const store = createStore(reduxReactRouter, getRoutes, createHistory, client);
+  const store = createStore(reduxReactRouter, getRoutes, createHistory, client, reducers);
 
   function hydrateOnClient() {
     res.send('<!doctype html>\n' +

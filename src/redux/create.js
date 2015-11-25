@@ -1,8 +1,9 @@
+import path from 'path';
 import { createStore as _createStore, applyMiddleware, compose } from 'redux';
 import createMiddleware from './middleware/clientMiddleware';
 import transitionMiddleware from './middleware/transitionMiddleware';
 
-export default function createStore(reduxReactRouter, getRoutes, createHistory, client, data) {
+export default function createStore(reduxReactRouter, getRoutes, createHistory, client, reducers, data) {
   const middleware = [createMiddleware(client), transitionMiddleware];
 
   let finalCreateStore;
@@ -20,12 +21,13 @@ export default function createStore(reduxReactRouter, getRoutes, createHistory, 
 
   finalCreateStore = reduxReactRouter({ getRoutes, createHistory })(finalCreateStore);
 
-  const reducer = require('./modules/reducer');
-  const store = finalCreateStore(reducer, data);
+  const sourceRoot = process.env.SOURCE_ROOT;
+  console.log('source root', sourceRoot);
+  const store = finalCreateStore(reducers, data);
 
   if (__DEVELOPMENT__ && module.hot) {
-    module.hot.accept('./modules/reducer', () => {
-      store.replaceReducer(require('./modules/reducer'));
+    module.hot.accept(path.resolve(sourceRoot, 'redux/modules/reducer'), () => {
+      store.replaceReducer(path.resolve(sourceRoot, 'redux/modules/reducer'));
     });
   }
 

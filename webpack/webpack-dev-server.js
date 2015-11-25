@@ -13,6 +13,14 @@ if (process.env.WEBPACK_OVERRIDES_PATH) {
 } else {
   console.log('No webpack config overrides specified.')
 }
+
+// for setting up HMR in redux/create
+webpackConfig.plugins.push(new webpack.DefinePlugin({
+  'process.env': {
+    SOURCE_ROOT: JSON.stringify(webpackConfig.resolve.root[0])
+  }
+}));
+
 console.log('Webpack config:', webpackConfig);
 var compiler = webpack(webpackConfig);
 

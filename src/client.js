@@ -11,13 +11,14 @@ import io from 'socket.io-client';
 import {Provider} from 'react-redux';
 import {reduxReactRouter, ReduxRouter} from 'redux-router';
 
+// dependencies of external source
+import getRoutes from 'routes';
+import reducers from 'reducers';
+
 // dependencies of serverside render
 import ApiClient from './helpers/ApiClient';
 import createStore from './redux/create';
 import makeRouteHooksSafe from './helpers/makeRouteHooksSafe';
-
-// dependencies of external source
-import getRoutes from 'routes';
 
 const client = new ApiClient();
 
@@ -26,7 +27,7 @@ const client = new ApiClient();
 const scrollablehistory = useScroll(createHistory);
 
 const dest = document.getElementById('content');
-const store = createStore(reduxReactRouter, makeRouteHooksSafe(getRoutes), scrollablehistory, client, window.__data);
+const store = createStore(reduxReactRouter, makeRouteHooksSafe(getRoutes), scrollablehistory, client, reducers, window.__data);
 
 function initSocket() {
   const socket = io('', {path: '/api/ws', transports: ['polling']});
@@ -63,7 +64,7 @@ if (process.env.NODE_ENV !== 'production') {
 }
 
 if (__DEVTOOLS__ && !window.devToolsExtension) {
-  const DevTools = require('containers/DevTools/DevTools');
+  const DevTools = require('./containers/DevTools/DevTools');
   ReactDOM.render(
     <Provider store={store} key="provider">
       <div>
