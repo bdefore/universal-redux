@@ -8,6 +8,7 @@ module.exports = {
   // context: projectRoot,
   entry: {
     main: [
+      'bootstrap-sass!' + sourceRoot + '/theme/bootstrap.config.js',
       'font-awesome-webpack!' + sourceRoot + '/theme/font-awesome.config.js'
     ]
   },
