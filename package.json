@@ -51,7 +51,8 @@
       "env": {
         "NODE_PATH": "external/src",
         "NODE_ENV": "production",
-        "PORT": 8080,
+        "CONFIG_PATH": "external/src/config.js",
+        "WEBPACK_OVERRIDES_PATH": "external/webpack-overrides-config.js",
         "APIPORT": 3030
       }
     },
@@ -60,6 +61,8 @@
       "env": {
         "NODE_PATH": "./api",
         "NODE_ENV": "production",
+        "CONFIG_PATH": "external/src/config.js",
+        "WEBPACK_OVERRIDES_PATH": "external/webpack-overrides-config.js",
         "APIPORT": 3030
       }
     },
