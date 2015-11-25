@@ -22,7 +22,7 @@ if (__DEVELOPMENT__) {
 // hang source root on process.env, needed for serverside render require() statements to know where
 // to resolve them from
 var overrides = require(path.resolve(process.env.WEBPACK_OVERRIDES_PATH));
-process.env.SOURCE_ROOT = overrides.resolve.root[0];
+process.env.SOURCE_ROOT = overrides.resolve.root;
 
 var toolsConfig = require('../webpack/webpack-isomorphic-tools');
 

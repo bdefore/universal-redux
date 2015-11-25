@@ -7,9 +7,7 @@ console.log('context', projectRoot);
 module.exports = {
   // context: projectRoot,
   resolve: {
-    root: [
-      sourceRoot
-    ],
+    root: sourceRoot,
     alias: {
       routes: sourceRoot + '/routes.js',
       config: sourceRoot + '/config.js',

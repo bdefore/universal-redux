@@ -17,7 +17,7 @@ if (process.env.WEBPACK_OVERRIDES_PATH) {
 // for setting up HMR in redux/create
 webpackConfig.plugins.push(new webpack.DefinePlugin({
   'process.env': {
-    SOURCE_ROOT: JSON.stringify(webpackConfig.resolve.root[0])
+    SOURCE_ROOT: JSON.stringify(webpackConfig.resolve.root)
   }
 }));
 
