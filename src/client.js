@@ -1,19 +1,23 @@
 /**
  * THIS IS THE ENTRY POINT FOR THE CLIENT, JUST LIKE server.js IS THE ENTRY POINT FOR THE SERVER.
  */
+// node modules dependencies
 import 'babel/polyfill';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import createHistory from 'history/lib/createBrowserHistory';
 import useScroll from 'scroll-behavior/lib/useStandardScroll';
-import createStore from 'redux/create';
-import ApiClient from 'helpers/ApiClient';
 import io from 'socket.io-client';
 import {Provider} from 'react-redux';
 import {reduxReactRouter, ReduxRouter} from 'redux-router';
 
+// dependencies of serverside render
+import ApiClient from './helpers/ApiClient';
+import createStore from './redux/create';
+import makeRouteHooksSafe from './helpers/makeRouteHooksSafe';
+
+// dependencies of external source
 import getRoutes from 'routes';
-import makeRouteHooksSafe from 'helpers/makeRouteHooksSafe';
 
 const client = new ApiClient();
 

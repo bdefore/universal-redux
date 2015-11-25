@@ -3,7 +3,7 @@ var webpack = require('webpack');
 var path = require('path');
 var merge = require('../node_modules/webpack-config-merger');
 
-var config = require('../src/config');
+var config = require(path.resolve(process.env.CONFIG_PATH));
 var webpackConfig = require('./dev.config');
 
 if (process.env.WEBPACK_OVERRIDES_PATH) {

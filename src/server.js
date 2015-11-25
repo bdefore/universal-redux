@@ -1,3 +1,4 @@
+// node modules depenedencies
 import Express from 'express';
 import React from 'react';
 import ReactDOM from 'react-dom/server';
@@ -5,19 +6,20 @@ import favicon from 'serve-favicon';
 import compression from 'compression';
 import httpProxy from 'http-proxy';
 import path from 'path';
-import createStore from 'redux/create';
-import ApiClient from 'helpers/ApiClient';
-import Html from './helpers/Html';
 import PrettyError from 'pretty-error';
 import http from 'http';
 import SocketIo from 'socket.io';
-
 import {ReduxRouter} from 'redux-router';
 import createHistory from 'history/lib/createMemoryHistory';
 import {reduxReactRouter, match} from 'redux-router/server';
 import {Provider} from 'react-redux';
 import qs from 'query-string';
-import getStatusFromRoutes from 'helpers/getStatusFromRoutes';
+
+// dependencies of serverside render
+import ApiClient from './helpers/ApiClient';
+import createStore from './redux/create';
+import Html from './helpers/Html';
+import getStatusFromRoutes from './helpers/getStatusFromRoutes';
 
 // build requires that rely on SOURCE_ROOT
 const getRoutes = require(path.resolve(process.env.SOURCE_ROOT, 'routes'));
