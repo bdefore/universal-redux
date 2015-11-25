@@ -5,7 +5,6 @@ var merge = require('../node_modules/webpack-config-merger');
 
 var config = require('../src/config');
 var webpackConfig = require('./dev.config');
-var compiler = webpack(webpackConfig);
 
 if (process.env.WEBPACK_OVERRIDES_PATH) {
   console.log('Overriding webpack config with those specified at ', process.env.WEBPACK_OVERRIDES_PATH);
@@ -14,7 +13,8 @@ if (process.env.WEBPACK_OVERRIDES_PATH) {
 } else {
   console.log('No webpack config overrides specified.')
 }
-console.log('webpack config:', webpackConfig);
+console.log('Webpack config:', webpackConfig);
+var compiler = webpack(webpackConfig);
 
 var host = config.host || 'localhost';
 var port = (config.port + 1) || 3001;

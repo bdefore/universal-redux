@@ -9,6 +9,10 @@ module.exports = {
   resolve: {
     root: [
       sourceRoot
-    ]
+    ],
+    alias: {
+      routes: sourceRoot + '/routes.js',
+      config: sourceRoot + '/config.js'
+    }
   }
 };

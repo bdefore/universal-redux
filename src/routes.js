@@ -5,7 +5,7 @@ import {
     App,
     Chat,
     Home,
-    Widgets,
+    Widgets
     About,
     Login,
     LoginSuccess,
