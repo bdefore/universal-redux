@@ -6,6 +6,11 @@ console.log('overrides path', sourceRoot);
 
 module.exports = {
   // context: projectRoot,
+  entry: {
+    main: [
+      'font-awesome-webpack!' + sourceRoot + '/theme/font-awesome.config.js'
+    ]
+  },
   resolve: {
     root: sourceRoot,
     alias: {
