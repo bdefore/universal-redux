@@ -11,7 +11,7 @@ var port = parseInt(process.env.PORT) + 1 || 3001;
 
 // https://github.com/halt-hammerzeit/webpack-isomorphic-tools
 var WebpackIsomorphicToolsPlugin = require('webpack-isomorphic-tools/plugin');
-var webpackIsomorphicToolsPlugin = new WebpackIsomorphicToolsPlugin(require('./webpack-isomorphic-tools'));
+var webpackIsomorphicToolsPlugin = new WebpackIsomorphicToolsPlugin(require('./webpack-isomorphic-tools-config'));
 
 var babelrc = fs.readFileSync(path.resolve(__dirname, '..', './.babelrc'));
 var babelrcObject = {};
