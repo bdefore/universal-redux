@@ -24,7 +24,7 @@ if (__DEVELOPMENT__) {
 var overrides = require(path.resolve(process.env.WEBPACK_OVERRIDES_PATH));
 process.env.SOURCE_ROOT = overrides.resolve.root;
 
-var toolsConfig = require('../webpack/webpack-isomorphic-tools');
+var toolsConfig = require('../webpack/webpack-isomorphic-tools-config');
 
 if(overrides.context) {
   console.log('found context');
