@@ -3,7 +3,7 @@
   "description": "Example of an isomorphic (universal) webapp using react redux and hot reloading",
   "author": "Buck DeFore <bdefore@gmail.com> (http://github.com/bdefore)",
   "license": "MIT",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/bdefore/redux-universal-test.git"
@@ -30,7 +30,6 @@
     "start-prod": "better-npm-run start-prod",
     "start-prod-api": "better-npm-run start-prod-api",
     "build": "better-npm-run build-prod",
-    "postinstall": "better-npm-run build-prod",
     "lint": "eslint -c .eslintrc src api",
     "start-dev": "better-npm-run start-dev",
     "start-dev-api": "better-npm-run start-dev-api",
