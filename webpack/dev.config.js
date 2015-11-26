@@ -51,7 +51,7 @@ module.exports = {
   entry: {
     'main': [
       'webpack-hot-middleware/client?path=http://' + host + ':' + port + '/__webpack_hmr',
-      path.resolve(__dirname, '..', 'src/client.js')
+      path.resolve(__dirname, '..', 'lib/client.js')
     ]
   },
   output: {
