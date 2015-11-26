@@ -1,6 +1,12 @@
 require('babel/polyfill');
 
-const environment = {
+var path = require('path');
+var sourceRoot = path.resolve(__dirname);
+var projectRoot = path.resolve(__dirname); 
+console.log('overrides path', sourceRoot);
+// console.log('context', projectRoot);
+
+var environment = {
   development: {
     isProduction: false
   },
@@ -33,6 +39,23 @@ module.exports = Object.assign({
         'twitter:image': 'https://react-redux.herokuapp.com/logo.jpg',
         'twitter:image:width': '200',
         'twitter:image:height': '200'
+      }
+    }
+  },
+  webpack: {
+    // context: projectRoot,
+    entry: {
+      main: [
+        'bootstrap-sass!' + sourceRoot + '/theme/bootstrap.config.js',
+        'font-awesome-webpack!' + sourceRoot + '/theme/font-awesome.config.js'
+      ]
+    },
+    resolve: {
+      root: sourceRoot,
+      alias: {
+        routes: sourceRoot + '/routes.js',
+        config: sourceRoot + '/config.js',
+        reducers: sourceRoot + '/redux/modules/reducer.js'
       }
     }
   }

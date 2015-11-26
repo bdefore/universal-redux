@@ -2,16 +2,10 @@ var webpack = require('webpack');
 var path = require('path');
 var merge = require('webpack-config-merger');
 
-var config = require(path.resolve(process.env.CONFIG_PATH));
+var config = require(path.resolve(process.env.CONFIG_PATH || 'src/config.js'));
 var webpackConfig = require('./prod.config');
 
-if (process.env.WEBPACK_OVERRIDES_PATH) {
-  console.log('Overriding webpack config with those specified at ', process.env.WEBPACK_OVERRIDES_PATH);
-  var overrides = require(path.resolve(process.env.WEBPACK_OVERRIDES_PATH));
-  webpackConfig = merge(webpackConfig, overrides);
-} else {
-  console.log('No webpack config overrides specified.')
-}
+webpackConfig = merge(webpackConfig, config.webpack);
 
 // for setting up HMR in redux/create
 webpackConfig.plugins.push(new webpack.DefinePlugin({

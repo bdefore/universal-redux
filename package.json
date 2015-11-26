@@ -43,18 +43,14 @@
     "build-prod": {
       "command": "node ./webpack/build-prod.js",
       "env": {
-        "CONFIG_PATH": "external/src/config.js",
-        "WEBPACK_OVERRIDES_PATH": "external/webpack-overrides-config.js",
-        "NODE_PATH": "external/src"
+        "NODE_PATH": "src"
       }
     },
     "start-prod": {
       "command": "node ./bin/server.js",
       "env": {
-        "NODE_PATH": "external/src",
+        "NODE_PATH": "src",
         "NODE_ENV": "production",
-        "CONFIG_PATH": "external/src/config.js",
-        "WEBPACK_OVERRIDES_PATH": "external/webpack-overrides-config.js",
         "APIPORT": 3030
       }
     },
@@ -63,18 +59,14 @@
       "env": {
         "NODE_PATH": "./api",
         "NODE_ENV": "production",
-        "CONFIG_PATH": "external/src/config.js",
-        "WEBPACK_OVERRIDES_PATH": "external/webpack-overrides-config.js",
         "APIPORT": 3030
       }
     },
     "start-dev": {
       "command": "node ./bin/server.js",
       "env": {
-        "NODE_PATH": "external/src",
+        "NODE_PATH": "src",
         "NODE_ENV": "development",
-        "CONFIG_PATH": "external/src/config.js",
-        "WEBPACK_OVERRIDES_PATH": "external/webpack-overrides-config.js",
         "PORT": 3000,
         "APIPORT": 3030
       }
@@ -84,8 +76,6 @@
       "env": {
         "NODE_PATH": "./api",
         "NODE_ENV": "development",
-        "CONFIG_PATH": "external/src/config.js",
-        "WEBPACK_OVERRIDES_PATH": "external/webpack-overrides-config.js",
         "APIPORT": 3030
       }
     },
@@ -93,9 +83,7 @@
       "command": "node webpack/webpack-dev-server.js",
       "env": {
         "UV_THREADPOOL_SIZE": 100,
-        "CONFIG_PATH": "external/src/config.js",
-        "WEBPACK_OVERRIDES_PATH": "external/webpack-overrides-config.js",
-        "NODE_PATH": "external/src"
+        "NODE_PATH": "src"
       }
     }
   },

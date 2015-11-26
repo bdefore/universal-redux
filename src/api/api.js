@@ -8,7 +8,7 @@ import http from 'http';
 import SocketIo from 'socket.io';
 
 const path = require('path');
-const config = require(path.resolve(process.env.CONFIG_PATH));
+const config = require(path.resolve(process.env.CONFIG_PATH || 'src/config.js'));
 const pretty = new PrettyError();
 const app = express();
 

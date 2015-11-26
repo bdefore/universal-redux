@@ -19,16 +19,17 @@ if (__DEVELOPMENT__) {
   }
 }
 
+var config = require(path.resolve(process.env.CONFIG_PATH || 'src/config.js'));
+
 // hang source root on process.env, needed for serverside render require() statements to know where
 // to resolve them from
-var overrides = require(path.resolve(process.env.WEBPACK_OVERRIDES_PATH));
-process.env.SOURCE_ROOT = overrides.resolve.root;
+process.env.SOURCE_ROOT = config.webpack.resolve.root;
 
 var toolsConfig = require('../webpack/webpack-isomorphic-tools-config');
 
-if(overrides.context) {
+if(config.webpack.context) {
   console.log('found context');
-  var rootDir = path.resolve(overrides.context);
+  var rootDir = path.resolve(config.webpack.context);
 } else {
   console.log('did not find context');
   var rootDir = path.resolve(__dirname, '..');
