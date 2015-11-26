@@ -21,12 +21,6 @@ if (__DEVELOPMENT__) {
 
 var config = require(path.resolve(process.env.CONFIG_PATH || 'src/config.js'));
 
-// hang source root on process.env, needed for serverside render require() statements to know where
-// to resolve them from
-process.env.SOURCE_ROOT = config.webpack.resolve.root;
-
-var toolsConfig = require('../webpack/webpack-isomorphic-tools-config');
-
 if(config.webpack.context) {
   console.log('found context');
   var rootDir = path.resolve(config.webpack.context);
@@ -35,6 +29,12 @@ if(config.webpack.context) {
   var rootDir = path.resolve(__dirname, '..');
 }
 
+// hang source root on process.env, needed for serverside render require() statements to know where
+// to resolve them from
+process.env.SOURCE_ROOT = config.webpack.resolve.root;
+process.env.ASSETS_ROOT = rootDir + '/static';
+
+var toolsConfig = require('../webpack/webpack-isomorphic-tools-config');
 toolsConfig.webpack_assets_file_path = rootDir + '/webpack-assets.json',
 
 console.log('isomorphic tools root dir', rootDir)
