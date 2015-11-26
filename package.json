@@ -1,14 +1,14 @@
 {
-  "name": "redux-universal",
+  "name": "redux-universal-test",
   "description": "Example of an isomorphic (universal) webapp using react redux and hot reloading",
   "author": "Buck DeFore <bdefore@gmail.com> (http://github.com/bdefore)",
   "license": "MIT",
-  "version": "0.0.1",
+  "version": "0.0.3",
   "repository": {
     "type": "git",
-    "url": "https://github.com/bdefore/redux-universal"
+    "url": "git+https://github.com/bdefore/redux-universal-test.git"
   },
-  "homepage": "https://github.com/bdefore/redux-universal",
+  "homepage": "https://github.com/bdefore/redux-universal-test",
   "keywords": [
     "react",
     "isomorphic",
@@ -188,5 +188,11 @@
   },
   "engines": {
     "node": "4.1.1"
+  },
+  "bugs": {
+    "url": "https://github.com/bdefore/redux-universal-test/issues"
+  },
+  "directories": {
+    "doc": "docs"
   }
 }
