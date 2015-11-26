@@ -1,6 +1,6 @@
 var webpack = require('webpack');
 var path = require('path');
-var merge = require('../node_modules/webpack-config-merger');
+var merge = require('webpack-config-merger');
 
 var config = require(path.resolve(process.env.CONFIG_PATH));
 var webpackConfig = require('./prod.config');
