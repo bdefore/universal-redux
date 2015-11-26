@@ -1,14 +1,14 @@
 {
-  "name": "react-redux-universal-hot-example",
+  "name": "redux-universal",
   "description": "Example of an isomorphic (universal) webapp using react redux and hot reloading",
-  "author": "Erik Rasmussen <rasmussenerik@gmail.com> (http://github.com/erikras)",
+  "author": "Buck DeFore <bdefore@gmail.com> (http://github.com/bdefore)",
   "license": "MIT",
-  "version": "0.9.0",
+  "version": "0.0.1",
   "repository": {
     "type": "git",
-    "url": "https://github.com/erikras/react-redux-universal-hot-example"
+    "url": "https://github.com/bdefore/redux-universal"
   },
-  "homepage": "https://github.com/erikras/react-redux-universal-hot-example",
+  "homepage": "https://github.com/bdefore/redux-universal",
   "keywords": [
     "react",
     "isomorphic",
@@ -116,10 +116,10 @@
     "piping": "^0.3.0",
     "pretty-error": "^1.2.0",
     "query-string": "^3.0.0",
-    "react": "^0.14.2",
+    "react": "0.14.3",
     "react-bootstrap": "^0.27.3",
     "react-document-meta": "^2.0.0",
-    "react-dom": "^0.14.1",
+    "react-dom": "0.14.3",
     "react-inline-css": "^2.0.0",
     "react-redux": "^4.0.0",
     "react-router": "^1.0.0-rc3",
@@ -171,7 +171,7 @@
     "phantomjs": "^1.9.18",
     "phantomjs-polyfill": "0.0.1",
     "react-a11y": "^0.2.6",
-    "react-addons-test-utils": "^0.14.0",
+    "react-addons-test-utils": "0.14.3",
     "react-transform-catch-errors": "^1.0.0",
     "react-transform-hmr": "^1.0.1",
     "redbox-react": "^1.1.1",
