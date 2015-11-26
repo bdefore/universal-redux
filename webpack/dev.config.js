@@ -78,9 +78,17 @@ module.exports = {
   resolve: {
     modulesDirectories: [
       'src',
-      'node_modules'
+      'node_modules',
+      'node_modules/redux-universal-test/node_modules'
     ],
     extensions: ['', '.json', '.js']
+  },
+  resolveLoader: {
+    modulesDirectories: [
+      'src',
+      'node_modules',
+      'node_modules/redux-universal-test/node_modules'
+    ]
   },
   plugins: [
     // hot reload

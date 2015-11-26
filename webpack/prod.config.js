@@ -46,9 +46,16 @@ module.exports = {
   resolve: {
     modulesDirectories: [
       'src',
-      'node_modules'
-    ],
-    extensions: ['', '.json', '.js']
+      'node_modules',
+      'node_modules/redux-universal-test/node_modules'
+    ]
+  },
+  resolveLoader: {
+    modulesDirectories: [
+      'src',
+      'node_modules',
+      'node_modules/redux-universal-test/node_modules'
+    ]
   },
   plugins: [
     new CleanPlugin([relativeAssetsPath]),
