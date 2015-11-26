@@ -22,7 +22,6 @@ export default function createStore(reduxReactRouter, getRoutes, createHistory, 
   finalCreateStore = reduxReactRouter({ getRoutes, createHistory })(finalCreateStore);
 
   const sourceRoot = process.env.SOURCE_ROOT;
-  console.log('source root', sourceRoot);
   const store = finalCreateStore(reducers, data);
 
   if (__DEVELOPMENT__ && module.hot) {
