@@ -43,13 +43,15 @@
     "build-prod": {
       "command": "node ./webpack/build-prod.js",
       "env": {
-        "NODE_PATH": "src"
+        "NODE_PATH": "example",
+        "CONFIG_PATH": "example/config.js"
       }
     },
     "start-prod": {
       "command": "node ./bin/server.js",
       "env": {
-        "NODE_PATH": "src",
+        "NODE_PATH": "example",
+        "CONFIG_PATH": "example/config.js",
         "NODE_ENV": "production",
         "APIPORT": 3030
       }
@@ -58,6 +60,7 @@
       "command": "node ./bin/api.js",
       "env": {
         "NODE_PATH": "./api",
+        "CONFIG_PATH": "example/config.js",
         "NODE_ENV": "production",
         "APIPORT": 3030
       }
@@ -65,7 +68,8 @@
     "start-dev": {
       "command": "node ./bin/server.js",
       "env": {
-        "NODE_PATH": "src",
+        "NODE_PATH": "example",
+        "CONFIG_PATH": "example/config.js",
         "NODE_ENV": "development",
         "PORT": 3000,
         "APIPORT": 3030
@@ -75,6 +79,7 @@
       "command": "node ./bin/api.js",
       "env": {
         "NODE_PATH": "./api",
+        "CONFIG_PATH": "example/config.js",
         "NODE_ENV": "development",
         "APIPORT": 3030
       }
@@ -82,8 +87,9 @@
     "watch-client": {
       "command": "node webpack/webpack-dev-server.js",
       "env": {
-        "UV_THREADPOOL_SIZE": 100,
-        "NODE_PATH": "src"
+        "NODE_PATH": "example",
+        "CONFIG_PATH": "example/config.js",
+        "UV_THREADPOOL_SIZE": 100
       }
     }
   },

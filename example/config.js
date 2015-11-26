@@ -2,9 +2,7 @@ require('babel/polyfill');
 
 var path = require('path');
 var sourceRoot = path.resolve(__dirname);
-var projectRoot = path.resolve(__dirname); 
-console.log('overrides path', sourceRoot);
-// console.log('context', projectRoot);
+var projectRoot = path.resolve(__dirname, '..'); 
 
 var environment = {
   development: {
@@ -43,7 +41,7 @@ module.exports = Object.assign({
     }
   },
   webpack: {
-    // context: projectRoot,
+    context: projectRoot,
     entry: {
       main: [
         'bootstrap-sass!' + sourceRoot + '/theme/bootstrap.config.js',
