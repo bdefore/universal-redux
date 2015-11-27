@@ -36,7 +36,7 @@ const proxy = httpProxy.createProxyServer({
 
 app.use(compression());
 app.use(favicon(path.join(process.env.ASSETS_ROOT, 'favicon.ico')));
-app.use(Express.static(path.join(process.env.ASSETS_ROOT, 'static')));
+app.use(Express.static(path.resolve(process.env.ASSETS_ROOT)));
 
 // Proxy to API server
 app.use('/api', (req, res) => {
