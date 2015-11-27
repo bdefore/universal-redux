@@ -16,7 +16,7 @@ webpackConfig.plugins.push(new webpack.DefinePlugin({
   }
 }));
 
-console.log('Webpack config:', webpackConfig);
+// console.log('Webpack config:', webpackConfig);
 var compiler = webpack(webpackConfig);
 
 var host = config.host || 'localhost';

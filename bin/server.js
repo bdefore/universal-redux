@@ -34,7 +34,7 @@ process.env.ASSETS_ROOT = rootDir + '/static';
 var toolsConfig = require('../config/webpack-isomorphic-tools-config');
 toolsConfig.webpack_assets_file_path = rootDir + '/webpack-assets.json',
 
-console.log('isomorphic tools root dir', rootDir)
+// console.log('isomorphic tools root dir', rootDir)
 
 // https://github.com/halt-hammerzeit/webpack-isomorphic-tools
 var WebpackIsomorphicTools = require('webpack-isomorphic-tools');
