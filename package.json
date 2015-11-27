@@ -3,7 +3,7 @@
   "description": "Example of an isomorphic (universal) webapp using react redux and hot reloading",
   "author": "Buck DeFore <bdefore@gmail.com> (http://github.com/bdefore)",
   "license": "MIT",
-  "version": "0.2.6",
+  "version": "0.3.0",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/bdefore/redux-universal-test.git"
@@ -26,71 +26,9 @@
   "scripts": {
     "compile": "babel src/ -d lib/",
     "prepublish": "npm run compile",
-    "start": "concurrent --kill-others \"npm run start-prod\" \"npm run start-prod-api\"",
-    "start-prod": "better-npm-run start-prod",
-    "start-prod-api": "better-npm-run start-prod-api",
-    "build": "better-npm-run build-prod",
     "lint": "eslint -c .eslintrc src api",
-    "start-dev": "better-npm-run start-dev",
-    "start-dev-api": "better-npm-run start-dev-api",
-    "watch-client": "better-npm-run watch-client",
-    "dev": "concurrent --kill-others \"npm run watch-client\" \"npm run start-dev\" \"npm run start-dev-api\"",
     "test": "karma start",
     "test-node": "./node_modules/mocha/bin/mocha ./api/**/__tests__/*-test.js --compilers js:babel-core/register"
-  },
-  "betterScripts": {
-    "build-prod": {
-      "command": "node ./webpack/build-prod.js",
-      "env": {
-        "NODE_PATH": "example",
-        "CONFIG_PATH": "example/config.js"
-      }
-    },
-    "start-prod": {
-      "command": "node ./bin/server.js",
-      "env": {
-        "NODE_PATH": "example",
-        "CONFIG_PATH": "example/config.js",
-        "NODE_ENV": "production",
-        "APIPORT": 3030
-      }
-    },
-    "start-prod-api": {
-      "command": "node ./bin/api.js",
-      "env": {
-        "NODE_PATH": "./api",
-        "CONFIG_PATH": "example/config.js",
-        "NODE_ENV": "production",
-        "APIPORT": 3030
-      }
-    },
-    "start-dev": {
-      "command": "node ./bin/server.js",
-      "env": {
-        "NODE_PATH": "example",
-        "CONFIG_PATH": "example/config.js",
-        "NODE_ENV": "development",
-        "PORT": 3000,
-        "APIPORT": 3030
-      }
-    },
-    "start-dev-api": {
-      "command": "node ./bin/api.js",
-      "env": {
-        "NODE_PATH": "./api",
-        "CONFIG_PATH": "example/config.js",
-        "NODE_ENV": "development",
-        "APIPORT": 3030
-      }
-    },
-    "watch-client": {
-      "command": "node webpack/webpack-dev-server.js",
-      "env": {
-        "NODE_PATH": "example",
-        "CONFIG_PATH": "example/config.js",
-        "UV_THREADPOOL_SIZE": 100
-      }
-    }
   },
   "dependencies": {
     "babel": "~5.8.29",
@@ -135,7 +73,6 @@
     "babel-loader": "~5.3.3",
     "babel-plugin-react-transform": "~1.1.1",
     "babel-runtime": "~5.8.29",
-    "better-npm-run": "^0.0.4",
     "bootstrap-sass": "^3.3.5",
     "bootstrap-sass-loader": "^1.0.9",
     "chai": "^3.3.0",
