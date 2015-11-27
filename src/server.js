@@ -21,10 +21,10 @@ import createStore from './redux/create';
 import Html from './helpers/Html';
 import getStatusFromRoutes from './helpers/getStatusFromRoutes';
 
-// build requires that rely on SOURCE_ROOT
-const getRoutes = require(path.resolve(process.env.SOURCE_ROOT, 'routes'));
-const config = require(path.resolve(process.env.SOURCE_ROOT, 'config'));
-const reducers = require(path.resolve(process.env.SOURCE_ROOT, 'redux/modules/reducer'));
+// build requires that rely on paths from external configuration
+const config = process.env.CONFIG;
+const getRoutes = require(path.resolve(config.webpack.resolve.alias.routes));
+const reducers = require(path.resolve(config.webpack.resolve.alias.reducers));
 
 const pretty = new PrettyError();
 const app = new Express();

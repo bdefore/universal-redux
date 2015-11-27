@@ -27,9 +27,7 @@ if(config.webpack.context) {
   var rootDir = path.resolve(__dirname, '..');
 }
 
-// hang source root on process.env, needed for serverside render require() statements to know where
-// to resolve them from
-process.env.SOURCE_ROOT = config.webpack.resolve.root;
+process.env.CONFIG = config;
 process.env.ASSETS_ROOT = rootDir + '/static';
 
 var toolsConfig = require('../config/webpack-isomorphic-tools-config');
