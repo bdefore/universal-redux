@@ -47,14 +47,14 @@ module.exports = {
     modulesDirectories: [
       'src',
       'node_modules',
-      'node_modules/redux-universal-test/node_modules'
+      'node_modules/redux-universal-starter/node_modules'
     ]
   },
   resolveLoader: {
     modulesDirectories: [
       'src',
       'node_modules',
-      'node_modules/redux-universal-test/node_modules'
+      'node_modules/redux-universal-starter/node_modules'
     ]
   },
   plugins: [
