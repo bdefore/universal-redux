@@ -3,7 +3,7 @@
   "description": "Example of an isomorphic (universal) webapp using react redux and hot reloading",
   "author": "Buck DeFore <bdefore@gmail.com> (http://github.com/bdefore)",
   "license": "MIT",
-  "version": "0.4.0",
+  "version": "0.4.1",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/bdefore/redux-universal-test.git"
@@ -28,7 +28,7 @@
     "prepublish": "npm run compile",
     "lint": "eslint -c .eslintrc src api",
     "test": "karma start",
-    "test-node": "./node_modules/mocha/bin/mocha ./api/**/__tests__/*-test.js --compilers js:babel-core/register"
+    "test-node": "./node_modules/mocha/bin/mocha ./src/api/**/__tests__/*-test.js --compilers js:babel-core/register"
   },
   "dependencies": {
     "babel": "~5.8.29",
