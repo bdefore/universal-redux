@@ -1,7 +1,5 @@
 # Redux Universal Starter
 
----
-
 #### Why?
 
 This starter forked off of [react-redux-universal-hot-example](https://github.com/erikras/react-redux-universal-hot-example) with the goal of making an npm module for an easier starting point for new projects. Please refer to the README there for more details and join the discussion at the pull request, and please open an issue if you find one.
@@ -9,6 +7,12 @@ This starter forked off of [react-redux-universal-hot-example](https://github.co
 #### Usage
 
 An example project has been made here: https://github.com/bdefore/react-redux-universal-hot-example/tree/example-project
+
+- Install
+
+```
+npm install redux-universal-starter
+```
 
 - Add a `webpack` object in `src/config.js` that defines what properties you want to override during the build step.
 
@@ -54,8 +58,6 @@ redux-universal-starter-build
 ```
 
 You'll generally call these from the corresponding section of your project's scripts. See `package.json` in the example project: https://github.com/bdefore/react-redux-universal-hot-example/blob/example-project/package.json#L39
-
-```
 
 #### Known Issues
 
