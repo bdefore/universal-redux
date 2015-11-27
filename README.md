@@ -6,7 +6,7 @@ This starter forked off of [react-redux-universal-hot-example](https://github.co
 
 #### Usage
 
-An example project has been made here: https://github.com/bdefore/react-redux-universal-hot-example/tree/example-project
+An example project has been made here: https://github.com/bdefore/react-redux-universal-hot-example/tree/example-project and is deployed on Heroku here: https://redux-universal-starter.herokuapp.com
 
 - Install
 
