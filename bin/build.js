@@ -1,9 +1,10 @@
+#!/usr/bin/env node
 var webpack = require('webpack');
 var path = require('path');
 var merge = require('webpack-config-merger');
 
 var config = require(path.resolve(process.env.CONFIG_PATH || 'src/config.js'));
-var webpackConfig = require('./prod.config');
+var webpackConfig = require('../config/prod.config');
 
 webpackConfig = merge(webpackConfig, config.webpack);
 

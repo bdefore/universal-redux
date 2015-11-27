@@ -171,7 +171,7 @@ This project moves fast and has an active community, so if you have a question t
 
 #### How do I disable the dev tools?
 
-They will only show in development, but if you want to disable them even there, set `__DEVTOOLS__` to `false` in `/webpack/dev.config.js`.
+They will only show in development, but if you want to disable them even there, set `__DEVTOOLS__` to `false` in `/config/dev.config.js`.
 
 ## Roadmap 
 

@@ -22,10 +22,8 @@ if (__DEVELOPMENT__) {
 var config = require(path.resolve(process.env.CONFIG_PATH || 'src/config.js'));
 
 if(config.webpack.context) {
-  console.log('found context');
   var rootDir = path.resolve(config.webpack.context);
 } else {
-  console.log('did not find context');
   var rootDir = path.resolve(__dirname, '..');
 }
 

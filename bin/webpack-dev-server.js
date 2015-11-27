@@ -5,7 +5,7 @@ var path = require('path');
 var merge = require('webpack-config-merger');
 
 var config = require(path.resolve(process.env.CONFIG_PATH || 'src/config.js'));
-var webpackConfig = require('./dev.config');
+var webpackConfig = require('../config/dev.config');
 
 webpackConfig = merge(webpackConfig, config.webpack);
 
