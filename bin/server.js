@@ -19,7 +19,9 @@ if (__DEVELOPMENT__) {
   }
 }
 
-var config = require(path.resolve(process.env.CONFIG_PATH || 'src/config.js'));
+process.env.CONFIG_PATH = process.env.CONFIG_PATH || 'src/config.js';
+
+var config = require(path.resolve(process.env.CONFIG_PATH));
 
 if(config.webpack.context) {
   var rootDir = path.resolve(config.webpack.context);
@@ -27,7 +29,6 @@ if(config.webpack.context) {
   var rootDir = path.resolve(__dirname, '..');
 }
 
-process.env.CONFIG = config;
 process.env.ASSETS_ROOT = rootDir + '/static';
 
 var toolsConfig = require('../config/webpack-isomorphic-tools-config');

@@ -21,8 +21,8 @@ import createStore from './redux/create';
 import Html from './helpers/Html';
 import getStatusFromRoutes from './helpers/getStatusFromRoutes';
 
-// build requires that rely on paths from external configuration
-const config = process.env.CONFIG;
+// resolve requires that rely on settings from external configuration
+const config = require(path.resolve(process.env.CONFIG_PATH));
 const getRoutes = require(path.resolve(config.webpack.resolve.alias.routes));
 const reducers = require(path.resolve(config.webpack.resolve.alias.reducers));
 
