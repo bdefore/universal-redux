@@ -32,7 +32,7 @@ if(config.webpack.context) {
 process.env.ASSETS_ROOT = rootDir + '/static';
 
 var toolsConfig = require('../config/webpack-isomorphic-tools-config');
-toolsConfig.webpack_assets_file_path = rootDir + '/webpack-assets.json',
+toolsConfig.webpack_assets_file_path = rootDir + '/webpack-assets.json';
 
 // console.log('isomorphic tools root dir', rootDir)
 
