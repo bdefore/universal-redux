@@ -7,5 +7,14 @@ if (process.env.NODE_ENV !== 'production') {
     return;
   }
 }
-require('../server.babel'); // babel registration (runtime transpilation for node)
-require('../lib/api/api');
+
+const path = require('path');
+const config = require(path.resolve(process.env.CONFIG_PATH || 'src/config.js'));
+
+if (config.apiPort) {
+  require('../server.babel'); // babel registration (runtime transpilation for node)
+  require('../lib/api/api');
+} else {
+  console.error('==>     No port has been specified to the API. Not starting it.');
+}
+

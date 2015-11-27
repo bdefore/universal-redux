@@ -26,7 +26,7 @@
   "scripts": {
     "compile": "babel src/ -d lib/",
     "prepublish": "npm run compile",
-    "lint": "eslint -c .eslintrc src api",
+    "lint": "eslint -c .eslintrc src",
     "test": "karma start",
     "test-node": "./node_modules/mocha/bin/mocha ./src/api/**/__tests__/*-test.js --compilers js:babel-core/register"
   },
