@@ -29,21 +29,6 @@ const scrollablehistory = useScroll(createHistory);
 const dest = document.getElementById('content');
 const store = createStore(reduxReactRouter, makeRouteHooksSafe(getRoutes), scrollablehistory, client, reducers, window.__data);
 
-function initSocket() {
-  const socket = io('', {path: '/api/ws', transports: ['polling']});
-  socket.on('news', (data) => {
-    console.log(data);
-    socket.emit('my other event', { my: 'data from client' });
-  });
-  socket.on('msg', (data) => {
-    console.log(data);
-  });
-
-  return socket;
-}
-
-global.socket = initSocket();
-
 const component = (
   <ReduxRouter routes={getRoutes(store)} />
 );
@@ -75,3 +60,23 @@ if (__DEVTOOLS__ && !window.devToolsExtension) {
     dest
   );
 }
+
+// begin socket.io
+const config = require(pathLib.resolve(process.env.SOURCE_ROOT, 'config'));
+if (config.socket) {
+  function initSocket() {
+    const socket = io('', {path: '/api' + config.socket.path, transports: ['polling']});
+    socket.on('news', (data) => {
+      console.log(data);
+      socket.emit('my other event', { my: 'data from client' });
+    });
+    socket.on('msg', (data) => {
+      console.log(data);
+    });
+
+    return socket;
+  }
+
+  global.socket = initSocket();
+}
+// end socket.io

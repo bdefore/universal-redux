@@ -219,9 +219,10 @@ export default class Starter {
     }
 
     const server = new http.Server(app);
-    if (config.isProduction) {
+
+    if (config.isProduction && config.socket) {
       const io = new SocketIo(server);
-      io.path('/api/ws');
+      io.path('/api' + config.socket.path);
     }
 
     server.listen(config.port, (err) => {
