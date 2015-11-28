@@ -22,8 +22,6 @@ import createStore from './redux/create';
 import Html from './helpers/Html';
 import getStatusFromRoutes from './helpers/getStatusFromRoutes';
 
-let webpackIsomorphicTools;
-
 /**
  * Define isomorphic constants.
  */
@@ -42,12 +40,16 @@ if (__DEVELOPMENT__) {
 }
 
 const app = new Express();
-const pretty = new PrettyError();
-const server = new http.Server(app);
+app.use(compression());
 
-function setupProxy(app, host, port) {
+let hasSetup = false;
+let isomorphicTools;
+let config = require('./config');
+let toolsConfig = require('../config/webpack-isomorphic-tools-config');
+
+function setupProxy() {
   const proxy = httpProxy.createProxyServer({
-    target: 'http://' + host + ':' + port,
+    target: 'http://' + config.apiHost + ':' + config.apiPort,
     ws: true
   });
 
@@ -71,37 +73,31 @@ function setupProxy(app, host, port) {
   });
 }
 
-function setup(config) {
-
-  const getRoutes = require(path.resolve(config.webpack.resolve.alias.routes));
-  const reducers = require(path.resolve(config.webpack.resolve.alias.reducers));
-
-  let rootDir;
-  if(config.webpack.context) {
-    rootDir = path.resolve(config.webpack.context);
-  } else {
-    rootDir = path.resolve(__dirname, '..');
-  }
-
-  setupProxy(app, config.apiHost, config.apiPort);
-
-  app.use(compression());
-  app.use(favicon(path.join(rootDir, 'static', 'favicon.ico')));
-  app.use(Express.static(path.resolve(rootDir, 'static')));
-
-  const toolsConfig = require('../config/webpack-isomorphic-tools-config');
+function setupTools(rootDir) {
   toolsConfig.webpack_assets_file_path = rootDir + '/webpack-assets.json';
 
-  const webpackIsomorphicTools = new WebpackIsomorphicTools(toolsConfig);
-  webpackIsomorphicTools
+  isomorphicTools = new WebpackIsomorphicTools(toolsConfig);
+  isomorphicTools
     .development(__DEVELOPMENT__)
     .server(rootDir);
+}
 
+function setupAssets(rootDir) {
+  app.use(favicon(path.join(rootDir, 'static', 'favicon.ico')));
+  app.use(Express.static(path.resolve(rootDir, 'static')));
+}
+
+function setupRenderer() {
   app.use((req, res) => {
+
+    const getRoutes = require(path.resolve(config.webpack.resolve.alias.routes));
+    const reducers = require(path.resolve(config.webpack.resolve.alias.reducers));
+    const pretty = new PrettyError();
+
     if (__DEVELOPMENT__) {
       // Do not cache webpack stats: the script file would change since
       // hot module replacement is enabled in the development env
-      webpackIsomorphicTools.refresh();
+      isomorphicTools.refresh();
     }
     const client = new ApiClient(req);
 
@@ -109,7 +105,7 @@ function setup(config) {
 
     function hydrateOnClient() {
       res.send('<!doctype html>\n' +
-        ReactDOM.renderToString(<Html assets={webpackIsomorphicTools.assets()} store={store}/>));
+        ReactDOM.renderToString(<Html assets={isomorphicTools.assets()} store={store}/>));
     }
 
     if (__DISABLE_SSR__) {
@@ -146,7 +142,7 @@ function setup(config) {
             res.status(status);
           }
           res.send('<!doctype html>\n' +
-            ReactDOM.renderToString(<Html assets={webpackIsomorphicTools.assets()} component={component} store={store}/>));
+            ReactDOM.renderToString(<Html assets={isomorphicTools.assets()} component={component} store={store}/>));
         }).catch((err) => {
           console.error('DATA FETCHING ERROR:', pretty.render(err));
           res.status(500);
@@ -155,8 +151,74 @@ function setup(config) {
       }
     }));
   });
+}
 
-  if (config.port) {
+function validateConfig() {
+  if (!config) {
+    console.error('==>     ERROR: No configuration supplied.');
+  }
+  if (!toolsConfig) {
+    console.error('==>     ERROR: Invalid tools configuration supplied.');
+  }
+  if (!config.port) {
+    console.error('==>     ERROR: No PORT variable has been configured');
+  }
+  if (!config.host) {
+    console.error('==>     ERROR: No HOST variable has been configured');
+  }
+  if (!config.webpack) {
+    console.error('==>     ERROR: No webpack configuration supplied. See example at https://github.com/bdefore/redux-universal-starter#usage');
+  } else {
+    const resolve = config.webpack.resolve;
+    if (!resolve || !resolve.root) {
+      console.error('==>     ERROR: Webpack configuration must supply a root that maps to your project. See example at https://github.com/bdefore/redux-universal-starter#usage');
+    }
+    if (!resolve || !resolve.alias || !resolve.alias.routes || !resolve.alias.config || !resolve.alias.reducers) {
+      console.error('==>     ERROR: Webpack configuration must supply aliases for routes, config, and reducers. See example at https://github.com/bdefore/redux-universal-starter#usage');
+    }
+  }
+  // TODO: check for more
+  console.log('Redux universal starter configuration is valid.');
+}
+
+export default class Starter {
+
+  static configure(userConfig, userToolsConfig) {
+    config = userConfig;
+    if (userToolsConfig) {
+      toolsConfig = userToolsConfig;
+    }
+    validateConfig();
+  }
+
+  static app(userConfig, userToolsConfig) {
+    if(userConfig) {
+      Starter.configure(userConfig, userToolsConfig);
+    }
+
+    let rootDir;
+    if(config.webpack.context) {
+      rootDir = path.resolve(config.webpack.context);
+    } else {
+      rootDir = path.resolve(__dirname, '..');
+    }
+
+    setupProxy();
+    setupTools(rootDir);
+    setupAssets(rootDir);
+    setupRenderer();
+
+    hasSetup = true;
+
+    return app;
+  }
+
+  static start() {
+    if (!hasSetup) {
+      Starter.app();
+    }
+
+    const server = new http.Server(app);
     if (config.isProduction) {
       const io = new SocketIo(server);
       io.path('/api/ws');
@@ -169,13 +231,5 @@ function setup(config) {
       console.info('----\n==> ✅  %s is running, talking to API server on %s.', config.app.title, config.apiPort);
       console.info('==> 💻  Open http://%s:%s in a browser to view the app.', config.host, config.port);
     });
-  } else {
-    console.error('==>     ERROR: No PORT environment variable has been specified');
-  }
-}
-
-export default class Starter {
-  static app(config) {
-    return setup(config);
   }
 }

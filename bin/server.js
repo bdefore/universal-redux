@@ -9,5 +9,17 @@ var config = require(path.resolve(process.env.CONFIG_PATH));
 
 // TODO: why does this script execute twice, once before requires are resolved??
 if(starter.app) {
-  starter.app(config);
+
+  // method 1
+  starter.configure(config);
+  starter.start();
+
+  // method 2
+  // starter.app(config);
+  // starter.start();
+
+  // method 3
+  // starter.configure(config);
+  // starter.app();
+  // starter.start();
 }
