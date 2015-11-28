@@ -3,7 +3,7 @@
   "description": "A universal redux starter (ES6, Webpack, Express)",
   "author": "Buck DeFore <bdefore@gmail.com> (http://github.com/bdefore)",
   "license": "MIT",
-  "version": "0.4.5",
+  "version": "0.5.0",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/bdefore/redux-universal-starter.git"
@@ -25,6 +25,7 @@
   "main": "bin/server.js",
   "scripts": {
     "compile": "babel src/ -d lib/",
+    "dev": "cp bin/* $PROJECT_PATH/node_modules/redux-universal-starter/bin/; babel src/ -w -d $PROJECT_PATH/node_modules/redux-universal-starter/lib",
     "prepublish": "npm run compile",
     "lint": "eslint -c .eslintrc src",
     "test": "karma start",

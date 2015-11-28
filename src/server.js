@@ -1,4 +1,4 @@
-// node modules depenedencies
+// node modules dependencies
 import Express from 'express';
 import React from 'react';
 import ReactDOM from 'react-dom/server';
@@ -14,6 +14,7 @@ import createHistory from 'history/lib/createMemoryHistory';
 import {reduxReactRouter, match} from 'redux-router/server';
 import {Provider} from 'react-redux';
 import qs from 'query-string';
+import WebpackIsomorphicTools from 'webpack-isomorphic-tools';
 
 // dependencies of serverside render
 import ApiClient from './helpers/ApiClient';
@@ -21,114 +22,160 @@ import createStore from './redux/create';
 import Html from './helpers/Html';
 import getStatusFromRoutes from './helpers/getStatusFromRoutes';
 
-// resolve requires that rely on settings from external configuration
-const config = require(path.resolve(process.env.CONFIG_PATH));
-const getRoutes = require(path.resolve(config.webpack.resolve.alias.routes));
-const reducers = require(path.resolve(config.webpack.resolve.alias.reducers));
+let webpackIsomorphicTools;
 
-const pretty = new PrettyError();
-const app = new Express();
-const server = new http.Server(app);
-const proxy = httpProxy.createProxyServer({
-  target: 'http://' + config.apiHost + ':' + config.apiPort,
-  ws: true
-});
+/**
+ * Define isomorphic constants.
+ */
+global.__CLIENT__ = false;
+global.__SERVER__ = true;
+global.__DISABLE_SSR__ = false;  // <----- DISABLES SERVER SIDE RENDERING FOR ERROR DEBUGGING
+global.__DEVELOPMENT__ = process.env.NODE_ENV !== 'production';
 
-app.use(compression());
-app.use(favicon(path.join(process.env.ASSETS_ROOT, 'favicon.ico')));
-app.use(Express.static(path.resolve(process.env.ASSETS_ROOT)));
-
-// Proxy to API server
-app.use('/api', (req, res) => {
-  proxy.web(req, res);
-});
-
-// added the error handling to avoid https://github.com/nodejitsu/node-http-proxy/issues/527
-proxy.on('error', (error, req, res) => {
-  let json;
-  if (error.code !== 'ECONNRESET') {
-    console.error('proxy error', error);
-  }
-  if (!res.headersSent) {
-    res.writeHead(500, {'content-type': 'application/json'});
-  }
-
-  json = {error: 'proxy_error', reason: error.message};
-  res.end(JSON.stringify(json));
-});
-
-app.use((req, res) => {
-  if (__DEVELOPMENT__) {
-    // Do not cache webpack stats: the script file would change since
-    // hot module replacement is enabled in the development env
-    webpackIsomorphicTools.refresh();
-  }
-  const client = new ApiClient(req);
-
-  const store = createStore(reduxReactRouter, getRoutes, createHistory, client, reducers);
-
-  function hydrateOnClient() {
-    res.send('<!doctype html>\n' +
-      ReactDOM.renderToString(<Html assets={webpackIsomorphicTools.assets()} store={store}/>));
-  }
-
-  if (__DISABLE_SSR__) {
-    hydrateOnClient();
+if (__DEVELOPMENT__) {
+  if (!require('piping')({
+      hook: true,
+      ignore: /(\/\.|~$|\.json|\.scss$)/i
+    })) {
     return;
   }
+}
 
-  store.dispatch(match(req.originalUrl, (error, redirectLocation, routerState) => {
-    if (redirectLocation) {
-      res.redirect(redirectLocation.pathname + redirectLocation.search);
-    } else if (error) {
-      console.error('ROUTER ERROR:', pretty.render(error));
-      res.status(500);
-      hydrateOnClient();
-    } else if (!routerState) {
-      res.status(500);
-      hydrateOnClient();
-    } else {
-      // Workaround redux-router query string issue:
-      // https://github.com/rackt/redux-router/issues/106
-      if (routerState.location.search && !routerState.location.query) {
-        routerState.location.query = qs.parse(routerState.location.search);
-      }
+const app = new Express();
+const pretty = new PrettyError();
+const server = new http.Server(app);
 
-      store.getState().router.then(() => {
-        const component = (
-          <Provider store={store} key="provider">
-            <ReduxRouter/>
-          </Provider>
-        );
+function setupProxy(app, host, port) {
+  const proxy = httpProxy.createProxyServer({
+    target: 'http://' + host + ':' + port,
+    ws: true
+  });
 
-        const status = getStatusFromRoutes(routerState.routes);
-        if (status) {
-          res.status(status);
-        }
-        res.send('<!doctype html>\n' +
-          ReactDOM.renderToString(<Html assets={webpackIsomorphicTools.assets()} component={component} store={store}/>));
-      }).catch((err) => {
-        console.error('DATA FETCHING ERROR:', pretty.render(err));
-        res.status(500);
-        hydrateOnClient();
-      });
+  // Proxy to API server
+  app.use('/api', (req, res) => {
+    proxy.web(req, res);
+  });
+
+  // added the error handling to avoid https://github.com/nodejitsu/node-http-proxy/issues/527
+  proxy.on('error', (error, req, res) => {
+    let json;
+    if (error.code !== 'ECONNRESET') {
+      console.error('proxy error', error);
     }
-  }));
-});
+    if (!res.headersSent) {
+      res.writeHead(500, {'content-type': 'application/json'});
+    }
 
-if (config.port) {
-  if (config.isProduction) {
-    const io = new SocketIo(server);
-    io.path('/api/ws');
+    json = {error: 'proxy_error', reason: error.message};
+    res.end(JSON.stringify(json));
+  });
+}
+
+function setup(config) {
+
+  const getRoutes = require(path.resolve(config.webpack.resolve.alias.routes));
+  const reducers = require(path.resolve(config.webpack.resolve.alias.reducers));
+
+  let rootDir;
+  if(config.webpack.context) {
+    rootDir = path.resolve(config.webpack.context);
+  } else {
+    rootDir = path.resolve(__dirname, '..');
   }
 
-  server.listen(config.port, (err) => {
-    if (err) {
-      console.error(err);
+  setupProxy(app, config.apiHost, config.apiPort);
+
+  app.use(compression());
+  app.use(favicon(path.join(rootDir, 'static', 'favicon.ico')));
+  app.use(Express.static(path.resolve(rootDir, 'static')));
+
+  const toolsConfig = require('../config/webpack-isomorphic-tools-config');
+  toolsConfig.webpack_assets_file_path = rootDir + '/webpack-assets.json';
+
+  const webpackIsomorphicTools = new WebpackIsomorphicTools(toolsConfig);
+  webpackIsomorphicTools
+    .development(__DEVELOPMENT__)
+    .server(rootDir);
+
+  app.use((req, res) => {
+    if (__DEVELOPMENT__) {
+      // Do not cache webpack stats: the script file would change since
+      // hot module replacement is enabled in the development env
+      webpackIsomorphicTools.refresh();
     }
-    console.info('----\n==> ✅  %s is running, talking to API server on %s.', config.app.title, config.apiPort);
-    console.info('==> 💻  Open http://%s:%s in a browser to view the app.', config.host, config.port);
+    const client = new ApiClient(req);
+
+    const store = createStore(reduxReactRouter, getRoutes, createHistory, client, reducers);
+
+    function hydrateOnClient() {
+      res.send('<!doctype html>\n' +
+        ReactDOM.renderToString(<Html assets={webpackIsomorphicTools.assets()} store={store}/>));
+    }
+
+    if (__DISABLE_SSR__) {
+      hydrateOnClient();
+      return;
+    }
+
+    store.dispatch(match(req.originalUrl, (error, redirectLocation, routerState) => {
+      if (redirectLocation) {
+        res.redirect(redirectLocation.pathname + redirectLocation.search);
+      } else if (error) {
+        console.error('ROUTER ERROR:', pretty.render(error));
+        res.status(500);
+        hydrateOnClient();
+      } else if (!routerState) {
+        res.status(500);
+        hydrateOnClient();
+      } else {
+        // Workaround redux-router query string issue:
+        // https://github.com/rackt/redux-router/issues/106
+        if (routerState.location.search && !routerState.location.query) {
+          routerState.location.query = qs.parse(routerState.location.search);
+        }
+
+        store.getState().router.then(() => {
+          const component = (
+            <Provider store={store} key="provider">
+              <ReduxRouter/>
+            </Provider>
+          );
+
+          const status = getStatusFromRoutes(routerState.routes);
+          if (status) {
+            res.status(status);
+          }
+          res.send('<!doctype html>\n' +
+            ReactDOM.renderToString(<Html assets={webpackIsomorphicTools.assets()} component={component} store={store}/>));
+        }).catch((err) => {
+          console.error('DATA FETCHING ERROR:', pretty.render(err));
+          res.status(500);
+          hydrateOnClient();
+        });
+      }
+    }));
   });
-} else {
-  console.error('==>     ERROR: No PORT environment variable has been specified');
+
+  if (config.port) {
+    if (config.isProduction) {
+      const io = new SocketIo(server);
+      io.path('/api/ws');
+    }
+
+    server.listen(config.port, (err) => {
+      if (err) {
+        console.error(err);
+      }
+      console.info('----\n==> ✅  %s is running, talking to API server on %s.', config.app.title, config.apiPort);
+      console.info('==> 💻  Open http://%s:%s in a browser to view the app.', config.host, config.port);
+    });
+  } else {
+    console.error('==>     ERROR: No PORT environment variable has been specified');
+  }
+}
+
+export default class Starter {
+  static app(config) {
+    return setup(config);
+  }
 }
