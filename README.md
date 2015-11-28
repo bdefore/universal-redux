@@ -59,8 +59,12 @@ redux-universal-starter-build
 
 You'll generally call these from the corresponding section of your project's scripts. See `package.json` in the example project: https://github.com/bdefore/react-redux-universal-hot-example/blob/example-project/package.json#L39
 
+#### Local development
+
+If you'd like to modify the starter while running a project that uses it, I've found that npm version 2 tends to cause issues including multiple versions of React, which cause script errors, if you symlink or drop it into your project's `node_modules` manually. You may prefer to use `PROJECT_ROOT=/path/to/project npm run dev` from the starter root, which will watch for changes and copy them over to your project's `node_modules/redux-universal-starter/lib` directory.
+
 #### Known Issues
 
 - In the example project, Bootstrap and Font Awesome styles are not built into the Webpack styles, so do not serverside render.
-- An extra resolve exists for `node_modules/redux-universal-test/node_modules`. This makes local development on the module difficult.
-- Extending the functionality of `src/server` and `src/client` is currently difficult without forking.
+- An extra resolve exists for `node_modules/redux-universal-test/node_modules`. This may not be a correct assumption.
+- Extending the functionality of `src/client` is currently difficult without forking.
