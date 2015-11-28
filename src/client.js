@@ -62,21 +62,18 @@ if (__DEVTOOLS__ && !window.devToolsExtension) {
 }
 
 // begin socket.io
-const config = require(pathLib.resolve(process.env.SOURCE_ROOT, 'config'));
-if (config.socket) {
-  function initSocket() {
-    const socket = io('', {path: '/api' + config.socket.path, transports: ['polling']});
-    socket.on('news', (data) => {
-      console.log(data);
-      socket.emit('my other event', { my: 'data from client' });
-    });
-    socket.on('msg', (data) => {
-      console.log(data);
-    });
+function initSocket() {
+  const socket = io('', {path: '/api' + config.socket.path, transports: ['polling']});
+  socket.on('news', (data) => {
+    console.log(data);
+    socket.emit('my other event', { my: 'data from client' });
+  });
+  socket.on('msg', (data) => {
+    console.log(data);
+  });
 
-    return socket;
-  }
-
-  global.socket = initSocket();
+  return socket;
 }
+
+global.socket = initSocket();
 // end socket.io
