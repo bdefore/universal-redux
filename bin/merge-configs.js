@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 var path = require('path');
+var webpack = require('webpack');
 var merge = require('lodash.merge');
 var mergeWebpack = require('webpack-config-merger');
 var baseDevConfig = require('../config/dev.config');
@@ -16,16 +17,10 @@ combinedConfig = mergeWebpack(baseConfig, userConfig.webpack);
 var combinedToolsConfig = baseToolsConfig;
 if(userConfig.toolsConfigPath) {
   var userToolsConfig = require(path.resolve(userConfig.toolsConfigPath));
-  console.log('userToolsConfig', userToolsConfig)
-  console.log('baseToolsConfig', baseToolsConfig)
   combinedToolsConfig = merge(baseToolsConfig, userToolsConfig);
-  console.log('combinedToolsConfig', combinedToolsConfig);
 }
 
 // add tools settings to combined weback config
-// console.log(__dirname, '..', '/node_modules/webpack-isomorphic-tools/plugin.js');
-// var pluginPath = path.resolve(__dirname, '..', '/node_modules/webpack-isomorphic-tools/plugin.js');
-// console.log(pluginPath);
 var WebpackIsomorphicToolsPlugin = require('webpack-isomorphic-tools/plugin');
 var toolsPlugin = new WebpackIsomorphicToolsPlugin(combinedToolsConfig);
 
@@ -40,4 +35,4 @@ combinedConfig.plugins.push(new webpack.DefinePlugin({
   }
 }));
 
-return combinedConfig
+module.exports = combinedConfig;
