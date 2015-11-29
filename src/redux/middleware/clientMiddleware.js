@@ -13,7 +13,7 @@ export default function clientMiddleware(client) {
       const [REQUEST, SUCCESS, FAILURE] = types;
       next({...rest, type: REQUEST});
       return promise(client).then(
-        (result) => next({...rest, result, type: SUCCESS}),
+        (response) => next({...rest, 'result': response.body, 'response': response, type: SUCCESS}),
         (error) => next({...rest, error, type: FAILURE})
       ).catch((error)=> {
         console.error('MIDDLEWARE ERROR:', error);
