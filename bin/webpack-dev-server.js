@@ -1,27 +1,15 @@
 #!/usr/bin/env node
+var path = require('path');
 var Express = require('express');
 var webpack = require('webpack');
-var path = require('path');
-var merge = require('webpack-config-merger');
+var webpackConfig = require('./merge-configs');
+var userConfig = require(path.resolve(process.env.CONFIG_PATH || 'src/config.js'));
 
-var config = require(path.resolve(process.env.CONFIG_PATH || 'src/config.js'));
-var webpackConfig = require('../config/dev.config');
-
-webpackConfig = merge(webpackConfig, config.webpack);
-
-// for setting up HMR in redux/create
-webpackConfig.plugins.push(new webpack.DefinePlugin({
-  'process.env': {
-    SOURCE_ROOT: JSON.stringify(webpackConfig.resolve.root),
-    API_PREFIX: JSON.stringify(webpackConfig.apiPrefix)
-  }
-}));
-
-// console.log('Webpack config:', webpackConfig);
+console.log('Webpack config:', webpackConfig);
 var compiler = webpack(webpackConfig);
 
-var host = config.host || 'localhost';
-var port = parseInt(config.port) + 1 || 3001;
+var host = userConfig.host || 'localhost';
+var port = parseInt(userConfig.port) + 1 || 3001;
 var serverOptions = {
   contentBase: 'http://' + host + ':' + port,
   quiet: true,
