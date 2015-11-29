@@ -31,7 +31,6 @@ combinedConfig.plugins.push(process.env.NODE_ENV === 'production' ? toolsPlugin 
 combinedConfig.plugins.push(new webpack.DefinePlugin({
   'process.env': {
     SOURCE_ROOT: JSON.stringify(combinedConfig.resolve.root),
-    API_PREFIX: JSON.stringify(combinedConfig.apiPrefix)
   }
 }));
 
