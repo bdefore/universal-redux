@@ -11,15 +11,15 @@ var config = require(path.resolve(process.env.CONFIG_PATH));
 if(starter.app) {
 
   // method 1
-  starter.configure(config);
+  starter.setup(config);
   starter.start();
 
   // method 2
-  // starter.app(config);
+  // starter.setup(config);
   // starter.start();
 
   // method 3
   // starter.configure(config);
-  // starter.app();
+  // starter.setup();
   // starter.start();
 }

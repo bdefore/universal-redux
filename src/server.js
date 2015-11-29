@@ -185,13 +185,19 @@ export default class Starter {
 
   static configure(userConfig, userToolsConfig) {
     config = userConfig;
+    config.apiPrefix = userConfig.apiPrefix || 'api';
+
     if (userToolsConfig) {
       toolsConfig = userToolsConfig;
     }
     validateConfig();
   }
 
-  static app(userConfig, userToolsConfig) {
+  static app() {
+    return app;
+  }
+
+  static setup(userConfig, userToolsConfig) {
     if(userConfig) {
       Starter.configure(userConfig, userToolsConfig);
     }
@@ -209,8 +215,6 @@ export default class Starter {
     setupRenderer();
 
     hasSetup = true;
-
-    return app;
   }
 
   static start() {
