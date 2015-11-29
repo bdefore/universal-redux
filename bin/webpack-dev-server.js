@@ -20,7 +20,7 @@ webpackConfig.plugins.push(new webpack.DefinePlugin({
 var compiler = webpack(webpackConfig);
 
 var host = config.host || 'localhost';
-var port = (config.port + 1) || 3001;
+var port = parseInt(config.port) + 1 || 3001;
 var serverOptions = {
   contentBase: 'http://' + host + ':' + port,
   quiet: true,
