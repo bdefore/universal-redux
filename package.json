@@ -3,7 +3,7 @@
   "description": "A universal redux starter (ES6, Webpack, Express)",
   "author": "Buck DeFore <bdefore@gmail.com> (http://github.com/bdefore)",
   "license": "MIT",
-  "version": "0.8.2",
+  "version": "0.9.0",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/bdefore/redux-universal-starter.git"
@@ -50,10 +50,10 @@
     "piping": "^0.3.0",
     "pretty-error": "^1.2.0",
     "query-string": "^3.0.0",
-    "react": "0.14.3",
+    "react": "^0.14.3",
     "react-bootstrap": "^0.27.3",
     "react-document-meta": "^2.0.0",
-    "react-dom": "0.14.3",
+    "react-dom": "^0.14.3",
     "react-inline-css": "^2.0.0",
     "react-redux": "^4.0.0",
     "react-router": "^1.0.0-rc3",
@@ -117,6 +117,10 @@
     "webpack-hot-middleware": "^2.5.0"
   },
   "devDependencies": {},
+  "peerDependencies": {
+    "react": "^0.14.3",
+    "react-dom": "^0.14.3"
+  },
   "engines": {
     "node": "4.1.1"
   },
