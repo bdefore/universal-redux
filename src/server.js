@@ -92,20 +92,26 @@ function setupRenderer() {
 
     const getRoutes = require(path.resolve(config.webpack.resolve.alias.routes));
     const reducers = require(path.resolve(config.webpack.resolve.alias.reducers));
-    const pretty = new PrettyError();
+
+    let CustomHtml;
+    if (config.webpack.resolve.alias.html) {
+      CustomHtml = require(path.resolve(config.webpack.resolve.alias.html));
+    } else {
+      CustomHtml = Html;
+    }
 
     if (__DEVELOPMENT__) {
       // Do not cache webpack stats: the script file would change since
       // hot module replacement is enabled in the development env
       isomorphicTools.refresh();
     }
-    const client = new ApiClient(req);
+    const pretty = new PrettyError();
 
+    const client = new ApiClient(req);
     const store = createStore(reduxReactRouter, getRoutes, createHistory, client, reducers);
 
     function hydrateOnClient() {
-      res.send('<!doctype html>\n' +
-        ReactDOM.renderToString(<Html assets={isomorphicTools.assets()} store={store}/>));
+      res.send('<!doctype html>\n' + ReactDOM.renderToString(<CustomHtml assets={isomorphicTools.assets()} store={store}/>));
     }
 
     if (__DISABLE_SSR__) {
@@ -141,8 +147,7 @@ function setupRenderer() {
           if (status) {
             res.status(status);
           }
-          res.send('<!doctype html>\n' +
-            ReactDOM.renderToString(<Html assets={isomorphicTools.assets()} component={component} store={store}/>));
+          res.send('<!doctype html>\n' + ReactDOM.renderToString(<CustomHtml assets={isomorphicTools.assets()} component={component} store={store}/>));
         }).catch((err) => {
           console.error('DATA FETCHING ERROR:', pretty.render(err));
           res.status(500);
