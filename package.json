@@ -3,7 +3,7 @@
   "description": "A universal redux starter (ES6, Webpack, Express)",
   "author": "Buck DeFore <bdefore@gmail.com> (http://github.com/bdefore)",
   "license": "MIT",
-  "version": "0.11.3",
+  "version": "0.11.4",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/bdefore/redux-universal-starter.git"
