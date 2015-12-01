@@ -5,7 +5,6 @@ var webpack = require('webpack');
 var webpackConfig = require('./merge-configs');
 var userConfig = require(path.resolve(process.env.CONFIG_PATH || 'src/config.js'));
 
-console.log('Webpack config:', webpackConfig);
 var compiler = webpack(webpackConfig);
 
 var host = userConfig.host || 'localhost';
