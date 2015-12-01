@@ -2,8 +2,7 @@
 var webpack = require('webpack');
 var webpackConfig = require('./merge-configs');
 
-console.log('Webpack config:', webpackConfig);
-console.log('\nBuilding...');
+console.log('\nBuilding webpack bundle...');
 webpack(webpackConfig, function(err, stats) {
   if(err) {
     console.log('Webpack build had fatal error:', err);
