@@ -172,21 +172,21 @@ function validateConfig() {
     console.error('==>     ERROR: No HOST variable has been configured');
   }
   if (!config.webpack) {
-    console.error('==>     ERROR: No webpack configuration supplied. See example at https://github.com/bdefore/redux-universal-starter#usage');
+    console.error('==>     ERROR: No webpack configuration supplied. See example at https://github.com/bdefore/redux-universal-renderer#usage');
   } else {
     const resolve = config.webpack.resolve;
     if (!resolve || !resolve.root) {
-      console.error('==>     ERROR: Webpack configuration must supply a root that maps to your project. See example at https://github.com/bdefore/redux-universal-starter#usage');
+      console.error('==>     ERROR: Webpack configuration must supply a root that maps to your project. See example at https://github.com/bdefore/redux-universal-renderer#usage');
     }
     if (!resolve || !resolve.alias || !resolve.alias.routes || !resolve.alias.config || !resolve.alias.reducers) {
-      console.error('==>     ERROR: Webpack configuration must supply aliases for routes, config, and reducers. See example at https://github.com/bdefore/redux-universal-starter#usage');
+      console.error('==>     ERROR: Webpack configuration must supply aliases for routes, config, and reducers. See example at https://github.com/bdefore/redux-universal-renderer#usage');
     }
   }
   // TODO: check for more
-  console.log('Redux universal starter configuration is valid.');
+  console.log('Redux universal renderer configuration is valid.');
 }
 
-export default class Starter {
+export default class Renderer {
 
   static configure(userConfig, userToolsConfig) {
     config = userConfig;
@@ -204,7 +204,7 @@ export default class Starter {
 
   static setup(userConfig, userToolsConfig) {
     if(userConfig) {
-      Starter.configure(userConfig, userToolsConfig);
+      Renderer.configure(userConfig, userToolsConfig);
     }
 
     let rootDir;
@@ -224,7 +224,7 @@ export default class Starter {
 
   static start() {
     if (!hasSetup) {
-      Starter.app();
+      Renderer.app();
     }
 
     const server = new http.Server(app);

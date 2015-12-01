@@ -1,14 +1,14 @@
 #!/usr/bin/env bash
 
 # lifted from http://stackoverflow.com/a/13864829/583755
-if [ -z ${PROJECT_PATH+x} ]; then echo "You must specify a PROJECT_PATH where you want node_modules/redux-universal-starter to be updated"; exit; else echo "Project path is set to '$PROJECT_PATH'"; fi
+if [ -z ${PROJECT_PATH+x} ]; then echo "You must specify a PROJECT_PATH where you want node_modules/redux-universal-renderer to be updated"; exit; else echo "Project path is set to '$PROJECT_PATH'"; fi
 
 compile() {
-  echo Updating redux-universal-starter libraries.
+  echo Updating redux-universal-renderer libraries.
   echo
-  cp bin/* $PROJECT_PATH/node_modules/redux-universal-starter/bin/
-  cp config/* $PROJECT_PATH/node_modules/redux-universal-starter/config/
-  babel src/ -d $PROJECT_PATH/node_modules/redux-universal-starter/lib
+  cp bin/* $PROJECT_PATH/node_modules/redux-universal-renderer/bin/
+  cp config/* $PROJECT_PATH/node_modules/redux-universal-renderer/config/
+  babel src/ -d $PROJECT_PATH/node_modules/redux-universal-renderer/lib
 }
 
 # lifted from http://stackoverflow.com/a/9461685/583755
