@@ -18,7 +18,7 @@ var CleanPlugin = require('clean-webpack-plugin');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var strip = require('strip-loader');
 
-if (process.env !== 'production') {
+if (process.env.NODE_ENV !== 'production') {
 
   try {
     babelrcObject = JSON.parse(babelrc);
