@@ -1,17 +1,17 @@
-# Redux Universal Starter
+# Redux Universal Renderer
 
 ### Why?
 
-This starter forked off of [react-redux-universal-hot-example](https://github.com/erikras/react-redux-universal-hot-example) with the goal of making an npm module for an easier starting point for new projects. Please refer to the README there for more details and join the discussion at the pull request here: https://github.com/erikras/react-redux-universal-hot-example/pull/626, and please open an issue if you find one.
+This project forked off of [react-redux-universal-hot-example](https://github.com/erikras/react-redux-universal-hot-example) with the goal of making an npm module for an easier starting point for new projects. Please refer to the README there for more details and join the discussion at the pull request here: https://github.com/erikras/react-redux-universal-hot-example/pull/626, and please open an issue if you find one.
 
 ### Usage
 
-An example project has been made here: https://github.com/bdefore/react-redux-universal-hot-example/tree/example-project and is deployed on Heroku here: https://redux-universal-starter.herokuapp.com
+An example project has been made here: https://github.com/bdefore/react-redux-universal-hot-example/tree/example-project and is deployed on Heroku here: https://redux-universal-renderer.herokuapp.com
 
 - Install
 
 ```
-npm install redux-universal-starter
+npm install redux-universal-renderer
 ```
 
 - Add a `webpack` object in `src/config.js` that defines what properties you want to override during the build step.
@@ -51,10 +51,10 @@ npm install redux-universal-starter
 The following npm bin aliases have been defined:
 
 ```
-redux-universal-starter-watch
-redux-universal-starter-server
-redux-universal-starter-api
-redux-universal-starter-build
+redux-universal-renderer-watch
+redux-universal-renderer-server
+redux-universal-renderer-api
+redux-universal-renderer-build
 ```
 
 You'll generally call these from the corresponding section of your project's scripts. See `package.json` in the example project: https://github.com/bdefore/react-redux-universal-hot-example/blob/example-project/package.json#L39
@@ -68,16 +68,16 @@ The npm module also exposes a few methods for adding additional functionality.
 You can add your own Express middleware like so:
 
 ```
-import starter from 'redux-universal-starter';
+import renderer from 'redux-universal-renderer';
 import config from '../src/config';
 
-const app = starter.app();
+const app = renderer.app();
 
 // add some middleware
 // add some more middleware
 
-starter.setup(config);
-starter.start();
+renderer.setup(config);
+renderer.start();
 ```
 
 #### Webpack Isomorphic Tools configuration
@@ -104,7 +104,7 @@ There are a few other options you can specify in your configuration. They are:
 
 ### Local development
 
-If you'd like to modify the starter while running a project that uses it, I've found that npm version 2 tends to cause issues including multiple versions of React, which cause script errors, if you symlink or drop it into your project's `node_modules` manually. You may prefer to use `PROJECT_PATH=/path/to/project npm run dev` from the starter root, which will watch for changes and copy them over to your project's `node_modules/redux-universal-starter/lib` directory.
+If you'd like to modify the renderer while running a project that uses it, I've found that npm version 2 tends to cause issues including multiple versions of React, which cause script errors, if you symlink or drop it into your project's `node_modules` manually. You may prefer to use `PROJECT_PATH=/path/to/project npm run dev` from the renderer root, which will watch for changes and copy them over to your project's `node_modules/redux-universal-renderer/lib` directory.
 
 ### Known Issues
 
