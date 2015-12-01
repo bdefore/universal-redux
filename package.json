@@ -25,7 +25,7 @@
   "main": "lib/server.js",
   "scripts": {
     "compile": "babel src/ -d lib/",
-    "dev": "cp bin/* $PROJECT_PATH/node_modules/redux-universal-starter/bin/; cp config/* $PROJECT_PATH/node_modules/redux-universal-starter/config/; babel src/ -w -d $PROJECT_PATH/node_modules/redux-universal-starter/lib",
+    "dev": "./bin/local-dev.sh",
     "prepublish": "npm run compile",
     "lint": "eslint -c .eslintrc src",
     "test": "karma start",
@@ -126,6 +126,7 @@
     "node": "4.1.1"
   },
   "bin": {
+    "redux-universal-starter-dev": "./bin/local-dev.sh",
     "redux-universal-starter-watch": "./bin/webpack-dev-server.js",
     "redux-universal-starter-server": "./bin/server.js",
     "redux-universal-starter-api": "./bin/api.js",
