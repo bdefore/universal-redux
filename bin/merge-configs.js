@@ -4,8 +4,9 @@ var util = require('util');
 var webpack = require('webpack');
 var merge = require('lodash.merge');
 var mergeWebpack = require('webpack-config-merger');
-var baseDevConfig = require('../config/dev.config');
-var baseProdConfig = require('../config/prod.config');
+var baseWebpackConfig = require('../config/webpack.config.js');
+var baseDevConfig = mergeWebpack(baseWebpackConfig.common, baseWebpackConfig.development);
+var baseProdConfig = mergeWebpack(baseWebpackConfig.common, baseWebpackConfig.production);
 var baseToolsConfig = require('../config/webpack-isomorphic-tools-config');
 
 // gather webpack config
