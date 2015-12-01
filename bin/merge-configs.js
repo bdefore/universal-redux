@@ -32,6 +32,7 @@ combinedWebpackConfig.plugins.push(isProduction ? toolsPlugin : toolsPlugin.deve
 
 // add default settings that are used by server via process.env
 var definitions = {
+  __LOGGER__: false,
   __DEVTOOLS__: !isProduction,
   __DEVELOPMENT__: !isProduction,
   'process.env': {
