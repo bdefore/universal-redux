@@ -72,7 +72,7 @@
     "karma-webpack": "^1.7.0",
     "less": "^2.5.3",
     "less-loader": "^2.2.1",
-    "lodash.merge": "^3.3.2",
+    "lodash": "^3.10.1",
     "lru-memoize": "^1.0.0",
     "map-props": "^1.0.0",
     "mocha": "^2.3.3",

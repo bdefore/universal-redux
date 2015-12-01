@@ -118,8 +118,7 @@ module.exports = {
       new webpack.DefinePlugin({
         __CLIENT__: true,
         __SERVER__: false,
-        __DEVELOPMENT__: true,
-        __DEVTOOLS__: true
+        __DEVELOPMENT__: true
       })
     ]
   },
@@ -144,8 +143,7 @@ module.exports = {
       new webpack.DefinePlugin({
         __CLIENT__: true,
         __SERVER__: false,
-        __DEVELOPMENT__: false,
-        __DEVTOOLS__: false
+        __DEVELOPMENT__: false
       }),
 
       // ignore dev config
