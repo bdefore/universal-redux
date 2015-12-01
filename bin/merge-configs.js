@@ -33,6 +33,7 @@ combinedWebpackConfig.plugins.push(isProduction ? toolsPlugin : toolsPlugin.deve
 // add settings that are used by server via process.env
 var definitions = {
   __DEVTOOLS__: !isProduction,
+  __DEVELOPMENT__: !isProduction,
   'process.env': {
     SOURCE_ROOT: JSON.stringify(combinedWebpackConfig.resolve.root),
   }

@@ -117,8 +117,7 @@ module.exports = {
       new webpack.IgnorePlugin(/webpack-assets\.json$/),
       new webpack.DefinePlugin({
         __CLIENT__: true,
-        __SERVER__: false,
-        __DEVELOPMENT__: true
+        __SERVER__: false
       })
     ]
   },
@@ -142,8 +141,7 @@ module.exports = {
       new ExtractTextPlugin('[name]-[chunkhash].css', {allChunks: true}),
       new webpack.DefinePlugin({
         __CLIENT__: true,
-        __SERVER__: false,
-        __DEVELOPMENT__: false
+        __SERVER__: false
       }),
 
       // ignore dev config
