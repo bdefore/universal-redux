@@ -101,6 +101,7 @@
     "redux-devtools-dock-monitor": "^1.0.0-beta-3",
     "redux-devtools-log-monitor": "^1.0.0-beta-3",
     "redux-form": "^3.0.12",
+    "redux-logger": "0.0.3",
     "redux-router": "1.0.0-beta4",
     "sass-loader": "^3.1.2",
     "scroll-behavior": "^0.3.0",
