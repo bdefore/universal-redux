@@ -88,13 +88,26 @@ You can add or override the default [webpack-isomorphic-tools](https://github.co
 
 Inside of your `config.webpack.resolve.alias` array, you can specify `html: sourceRoot + '/path/to/your/Html.js'` and this will be used instead of the default one. This allows you to add your own additions to `<head>` as well as third party `<script>` tags such as for metrics tracking.
 
+#### Other configuration options
+
+There are a few other options you can specify in your configuration. They are:
+
+**env** - An object specifying environment variables to make available to the app. Defaults:
+
+  **`__LOGGER__`** *(default: false)* - Enable [Redux Logger](https://github.com/fcomb/redux-logger) in console.
+
+  **`__DEVTOOLS__`** *(default: true)* - Enable [Redux DevTools](https://github.com/gaearon/redux-devtools) as side panel in development mode.
+
+**lint** *(default: true)* - Lint JavaScript with each development Webpack build.
+
+**verbose** *(default: false)* - Output Wepback and Webpack Isomorphic Tools configuration before building.
+
 ### Local development
 
 If you'd like to modify the starter while running a project that uses it, I've found that npm version 2 tends to cause issues including multiple versions of React, which cause script errors, if you symlink or drop it into your project's `node_modules` manually. You may prefer to use `PROJECT_PATH=/path/to/project npm run dev` from the starter root, which will watch for changes and copy them over to your project's `node_modules/redux-universal-starter/lib` directory.
 
 ### Known Issues
 
-- In the example project, Bootstrap and Font Awesome styles are not built into the Webpack styles, so do not serverside render.
 - There is no way currently to change the api prefix, which is hard coded to 'api'
 - An extra resolve exists for `node_modules/redux-universal-test/node_modules`. This may not be a correct assumption.
 - Extending the functionality of `src/client` is currently difficult without forking.
