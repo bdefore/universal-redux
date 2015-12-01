@@ -49,7 +49,7 @@ if (process.env.NODE_ENV !== 'production') {
     locals: ['module']
   });
 
-  var jsLoaders = ['babel?' + JSON.stringify(babelLoaderQuery), 'eslint-loader'];
+  var jsLoaders = ['babel?' + JSON.stringify(babelLoaderQuery)];
 } else {
   var jsLoaders = [strip.loader('debug'), 'babel'];
 }

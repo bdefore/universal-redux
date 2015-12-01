@@ -30,7 +30,7 @@ var toolsPlugin = new WebpackIsomorphicToolsPlugin(combinedToolsConfig);
 combinedWebpackConfig.module.loaders.push({ test: toolsPlugin.regular_expression('images'), loader: 'url-loader?limit=10240' });
 combinedWebpackConfig.plugins.push(isProduction ? toolsPlugin : toolsPlugin.development());
 
-// add settings that are used by server via process.env
+// add default settings that are used by server via process.env
 var definitions = {
   __DEVTOOLS__: !isProduction,
   __DEVELOPMENT__: !isProduction,
@@ -38,8 +38,15 @@ var definitions = {
     SOURCE_ROOT: JSON.stringify(combinedWebpackConfig.resolve.root),
   }
 };
+
+// override with user settings
 _.each(userConfig.env, function(value, key) { definitions[key] = value; });
 combinedWebpackConfig.plugins.push(new webpack.DefinePlugin(definitions));
+
+// turn on linting per webpack build, unless directed not to
+if(userConfig.lint !== false && !isProduction) {
+  combinedWebpackConfig.module.loaders[0].loaders.push('eslint-loader');
+} 
 
 if(userConfig.verbose) {
   var utilOptions = {
