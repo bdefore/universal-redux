@@ -229,9 +229,9 @@ export default class Renderer {
 
     const server = new http.Server(app);
 
-    if (config.isProduction && config.socket) {
+    if (config.isProduction && config.socket && config.socket.enabled) {
       const io = new SocketIo(server);
-      io.path('/api' + config.socket.path);
+      io.path('/api/ws');
     }
 
     server.listen(config.port, (err) => {

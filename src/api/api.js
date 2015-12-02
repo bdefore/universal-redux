@@ -59,7 +59,7 @@ const runnable = app.listen(config.apiPort, (err) => {
   console.info('==> 💻  Send requests to http://%s:%s', config.apiHost, config.apiPort);
 });
 
-if (config.socket) {
+if (config.socket && config.socket.enabled) {
   import SocketIo from 'socket.io';
 
   const bufferSize = 100;
@@ -67,7 +67,7 @@ if (config.socket) {
   let messageIndex = 0;
 
   const io = new SocketIo(server);
-  io.path(config.socket.path);
+  io.path('/ws');
 
   io.on('connection', (socket) => {
     socket.emit('news', {msg: `'Hello World!' from server`});

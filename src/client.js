@@ -61,19 +61,19 @@ if (__DEVTOOLS__ && !window.devToolsExtension) {
   );
 }
 
-// begin socket.io
-// function initSocket() {
-//   const socket = io('', {path: '/api/ws', transports: ['polling']});
-//   socket.on('news', (data) => {
-//     console.log(data);
-//     socket.emit('my other event', { my: 'data from client' });
-//   });
-//   socket.on('msg', (data) => {
-//     console.log(data);
-//   });
+if (__SOCKET__) {
+  function initSocket() {
+    const socket = io('', {path: '/api/ws', transports: ['polling']});
+    socket.on('news', (data) => {
+      console.log(data);
+      socket.emit('my other event', { my: 'data from client' });
+    });
+    socket.on('msg', (data) => {
+      console.log(data);
+    });
 
-//   return socket;
-// }
+    return socket;
+  }
 
-// global.socket = initSocket();
-// end socket.io
+  global.socket = initSocket();
+}
