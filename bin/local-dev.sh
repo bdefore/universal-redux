@@ -1,14 +1,37 @@
 #!/usr/bin/env bash
+# echo $BASH_SOURCE
+# MY_PATH="`dirname \"$0\"`"
+# echo $MY_PATH
+# pwd -P
+
+# find script base dir even with symlinks (such as when in node_modules/.bin) http://stackoverflow.com/a/246128/583755
+SOURCE="${BASH_SOURCE[0]}"
+while [ -h "$SOURCE" ]; do # resolve $SOURCE until the file is no longer a symlink
+  ROOT_DIR="$( cd -P "$( dirname "$SOURCE" )" && pwd )"
+  SOURCE="$(readlink "$SOURCE")"
+  [[ $SOURCE != /* ]] && SOURCE="$ROOT_DIR/$SOURCE" # if $SOURCE was a relative symlink, we need to resolve it relative to the path where the symlink file was located
+done
+ROOT_DIR="$( cd -P "$( dirname "$SOURCE" )" && cd .. && pwd )"
+
+if [ -z ${PROJECT_PATH+x} ] ; then
+  PROJECT_PATH="$( cd -P "$( dirname "$ROOT_DIR" )" && cd .. && pwd )"
+
+  echo Did not receive a PROJECT_PATH, defaulting to $PROJECT_PATH
+else
+  echo "Project path is set to '$PROJECT_PATH'"
+fi
 
 # lifted from http://stackoverflow.com/a/13864829/583755
-if [ -z ${PROJECT_PATH+x} ]; then echo "You must specify a PROJECT_PATH where you want node_modules/redux-universal-renderer to be updated"; exit; else echo "Project path is set to '$PROJECT_PATH'"; fi
-
 compile() {
-  echo Updating redux-universal-renderer libraries.
   echo
-  cp bin/* $PROJECT_PATH/node_modules/redux-universal-renderer/bin/
-  cp config/* $PROJECT_PATH/node_modules/redux-universal-renderer/config/
-  babel src/ -d $PROJECT_PATH/node_modules/redux-universal-renderer/lib
+  echo Updating redux-universal-renderer...
+  echo
+  echo Source: $ROOT_DIR
+  echo Destination: $PROJECT_PATH
+  echo
+  cp $ROOT_DIR/bin/* $PROJECT_PATH/node_modules/redux-universal-renderer/bin/
+  cp $ROOT_DIR/config/* $PROJECT_PATH/node_modules/redux-universal-renderer/config/
+  babel $ROOT_DIR/src/ -d $PROJECT_PATH/node_modules/redux-universal-renderer/lib
 }
 
 # lifted from http://stackoverflow.com/a/9461685/583755
@@ -16,7 +39,7 @@ chsum1=""
 
 while [[ true ]]
 do
-    chsum2=`find src bin config -type f -exec md5 {} \;`
+    chsum2=`find $ROOT_DIR/src $ROOT_DIR/bin $ROOT_DIR/config -type f -exec md5 {} \;`
     if [[ $chsum1 != $chsum2 ]] ; then           
         compile
         chsum1=$chsum2
