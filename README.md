@@ -92,6 +92,8 @@ Inside of your `config.webpack.resolve.alias` array, you can specify `html: sour
 
 There are a few other options you can specify in your configuration. They are:
 
+**apiPrefix** *(default: 'api')* - The prefix that Express will look for on incoming requests to determine if calls should be routed to the API.
+
 **env** - An object specifying environment variables to make available to the app. Defaults:
 
   **`__LOGGER__`** *(default: false)* - Enable [Redux Logger](https://github.com/fcomb/redux-logger) in console.
@@ -112,6 +114,5 @@ If you'd like to modify the renderer while running a project that uses it, I've 
 
 ### Known Issues
 
-- There is no way currently to change the api prefix, which is hard coded to 'api'
 - An extra resolve exists for `node_modules/redux-universal-test/node_modules`. This may not be a correct assumption.
 - Extending the functionality of `src/client` is currently difficult without forking.
