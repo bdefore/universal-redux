@@ -56,7 +56,7 @@ function setupProxy() {
   });
 
   // Proxy to API server
-  app.use(`/${config.apiPrefix}`}, (req, res) => {
+  app.use(`/${config.apiPrefix}`, (req, res) => {
     proxy.web(req, res);
   });
 
