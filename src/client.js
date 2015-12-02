@@ -63,7 +63,7 @@ if (__DEVTOOLS__ && !window.devToolsExtension) {
 
 if (__SOCKET__) {
   function initSocket() {
-    const socket = io('', {path: '/api/ws', transports: ['polling']});
+    const socket = io('', {path: '/' + __API_PREFIX__ + '/ws', transports: ['polling']});
     socket.on('news', (data) => {
       console.log(data);
       socket.emit('my other event', { my: 'data from client' });

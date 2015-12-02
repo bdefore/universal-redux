@@ -7,6 +7,7 @@ import PrettyError from 'pretty-error';
 
 const path = require('path');
 const config = require(path.resolve(process.env.CONFIG_PATH || 'src/config.js'));
+const apiPrefix = config.apiPrefix || 'api';
 
 // resolve requires that rely on settings from external configuration
 const actions = require(path.resolve(config.webpack.resolve.alias.actions));
@@ -55,7 +56,7 @@ const runnable = app.listen(config.apiPort, (err) => {
   if (err) {
     console.error(err);
   }
-  console.info('----\n==> 🌎  API is running on port %s', config.apiPort);
+  console.info('----\n==> 🌎  API is running on port %s', config.apiPort, 'listening for calls prefixed with /' + apiPrefix);
   console.info('==> 💻  Send requests to http://%s:%s', config.apiHost, config.apiPort);
 });
 

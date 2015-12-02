@@ -48,13 +48,15 @@ let config = require('./config');
 let toolsConfig = require('../config/webpack-isomorphic-tools-config');
 
 function setupProxy() {
+  global.__API_PREFIX__ = config.apiPrefix;
+
   const proxy = httpProxy.createProxyServer({
     target: 'http://' + config.apiHost + ':' + config.apiPort,
     ws: true
   });
 
   // Proxy to API server
-  app.use('/api', (req, res) => {
+  app.use(`/${config.apiPrefix}`}, (req, res) => {
     proxy.web(req, res);
   });
 
@@ -231,7 +233,7 @@ export default class Renderer {
 
     if (config.isProduction && config.socket && config.socket.enabled) {
       const io = new SocketIo(server);
-      io.path('/api/ws');
+      io.path(`${config.apiPrefix}/ws`);
     }
 
     server.listen(config.port, (err) => {
