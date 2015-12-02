@@ -38,7 +38,7 @@ var definitions = {
   __LOGGER__: false,
   __DEVTOOLS__: !isProduction,
   __DEVELOPMENT__: !isProduction,
-  __SOURCE_ROOT__: JSON.stringify(combinedWebpackConfig.resolve.root)
+  __REDUCER_PATH__: JSON.stringify(combinedWebpackConfig.resolve.root + combinedWebpackConfig.resolve.alias.reducers)
 };
 
 // override with user settings
