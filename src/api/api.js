@@ -56,8 +56,7 @@ const runnable = app.listen(config.apiPort, (err) => {
   if (err) {
     console.error(err);
   }
-  console.info('----\n==> 🌎  API is running on port %s', config.apiPort, 'listening for calls prefixed with /' + apiPrefix);
-  console.info('==> 💻  Send requests to http://%s:%s', config.apiHost, config.apiPort);
+  console.info('----\n==> 🌎  API is running. Send requests to:', 'http://' + config.apiHost + ':' + config.apiPort + '/' + apiPrefix);
 });
 
 if (config.socket && config.socket.enabled) {

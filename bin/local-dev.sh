@@ -29,9 +29,9 @@ compile() {
   echo Source: $ROOT_DIR
   echo Destination: $PROJECT_PATH/node_modules/redux-universal-renderer
   echo
-  cp $ROOT_DIR/bin/* $PROJECT_PATH/node_modules/redux-universal-renderer/bin/ > /dev/null 2>&1
-  cp $ROOT_DIR/config/* $PROJECT_PATH/node_modules/redux-universal-renderer/config/ > /dev/null 2>&1
-  babel $ROOT_DIR/src/ -d $PROJECT_PATH/node_modules/redux-universal-renderer/lib > /dev/null 2>&1
+  cp $ROOT_DIR/bin/* $PROJECT_PATH/node_modules/redux-universal-renderer/bin/ > /dev/null
+  cp $ROOT_DIR/config/* $PROJECT_PATH/node_modules/redux-universal-renderer/config/ > /dev/null
+  babel $ROOT_DIR/src/ -d $PROJECT_PATH/node_modules/redux-universal-renderer/lib > /dev/null
   echo Update complete, continuing to watch...
 }
 

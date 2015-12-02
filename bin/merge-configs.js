@@ -38,9 +38,7 @@ var definitions = {
   __LOGGER__: false,
   __DEVTOOLS__: !isProduction,
   __DEVELOPMENT__: !isProduction,
-  'process.env': {
-    SOURCE_ROOT: JSON.stringify(combinedWebpackConfig.resolve.root),
-  }
+  __SOURCE_ROOT__: JSON.stringify(combinedWebpackConfig.resolve.root)
 };
 
 // override with user settings
