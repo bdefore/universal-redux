@@ -114,5 +114,6 @@ If you'd like to modify the renderer while running a project that uses it, I've 
 
 ### Known Issues
 
+- Reducers are not hot reloading correctly.
 - An extra resolve exists for `node_modules/redux-universal-test/node_modules`. This may not be a correct assumption.
 - Extending the functionality of `src/client` is currently difficult without forking.
