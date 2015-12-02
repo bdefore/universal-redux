@@ -100,6 +100,10 @@ There are a few other options you can specify in your configuration. They are:
 
 **lint** *(default: true)* - Lint JavaScript with each development Webpack build.
 
+**socket** - The Socket.IO configuration. Defaults:
+
+  **``enabled``** *(default: true)* - Whether to attach Socket.IO to the Express app.
+
 **verbose** *(default: false)* - Output Wepback and Webpack Isomorphic Tools configuration before building.
 
 ### Local development
