@@ -30,14 +30,15 @@ global.__SERVER__ = true;
 global.__DISABLE_SSR__ = false;  // <----- DISABLES SERVER SIDE RENDERING FOR ERROR DEBUGGING
 global.__DEVELOPMENT__ = process.env.NODE_ENV !== 'production';
 
-if (__DEVELOPMENT__) {
-  if (!require('piping')({
-      hook: true,
-      ignore: /(\/\.|~$|\.json|\.scss$)/i
-    })) {
-    return;
-  }
-}
+/* TODO: what was this doing? */
+// if (__DEVELOPMENT__) {
+//   if (!require('piping')({
+//     hook: true,
+//     ignore: /(\/\.|~$|\.json|\.scss$)/i
+//   })) {
+//     return; //eslint-disable-line
+//   }
+// }
 
 const app = new Express();
 app.use(compression());
@@ -205,12 +206,12 @@ export default class Renderer {
   }
 
   static setup(userConfig, userToolsConfig) {
-    if(userConfig) {
+    if (userConfig) {
       Renderer.configure(userConfig, userToolsConfig);
     }
 
     let rootDir;
-    if(config.webpack.context) {
+    if (config.webpack.context) {
       rootDir = path.resolve(config.webpack.context);
     } else {
       rootDir = path.resolve(__dirname, '..');

@@ -34,7 +34,12 @@
     "__DEVELOPMENT__": true,
     "__CLIENT__": true,
     "__SERVER__": true,
+    "__LOGGER__": false,
     "__DISABLE_SSR__": true,
+    "__API_PREFIX__": 'api',
+    "__CONFIG_PATH__": '/fake/path',
+    "__REDUCER_PATH__": '/fake/path',
+    "__SOCKET__": false,
     "__DEVTOOLS__": true,
     "socket": true,
     "webpackIsomorphicTools": true

@@ -5,6 +5,9 @@ const methods = ['get', 'post', 'put', 'patch', 'del'];
 function formatUrl(path) {
   const adjustedPath = path[0] !== '/' ? '/' + path : path;
   if (__SERVER__) {
+    const pathLib = require('path');
+    const config = require(pathLib.resolve(__CONFIG_PATH__));
+
     return 'http://' + config.apiHost + ':' + config.apiPort + adjustedPath;
   }
   // Prepend api prefix to relative URL, to proxy to API server.

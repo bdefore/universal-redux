@@ -62,7 +62,7 @@ if (__DEVTOOLS__ && !window.devToolsExtension) {
 }
 
 if (__SOCKET__) {
-  function initSocket() {
+  global.socket = (function initSocket() {
     const socket = io('', {path: '/' + __API_PREFIX__ + '/ws', transports: ['polling']});
     socket.on('news', (data) => {
       console.log(data);
@@ -73,7 +73,5 @@ if (__SOCKET__) {
     });
 
     return socket;
-  }
-
-  global.socket = initSocket();
+  })();
 }

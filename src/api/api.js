@@ -4,6 +4,7 @@ import session from 'express-session';
 import bodyParser from 'body-parser';
 import {mapUrl} from './utils/url.js';
 import PrettyError from 'pretty-error';
+import SocketIo from 'socket.io';
 
 const path = require('path');
 const config = require(path.resolve(process.env.CONFIG_PATH || 'src/config.js'));
@@ -60,8 +61,6 @@ const runnable = app.listen(config.apiPort, (err) => {
 });
 
 if (config.socket && config.socket.enabled) {
-  import SocketIo from 'socket.io';
-
   const bufferSize = 100;
   const messageBuffer = new Array(bufferSize);
   let messageIndex = 0;
