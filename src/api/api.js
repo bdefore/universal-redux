@@ -7,7 +7,7 @@ import PrettyError from 'pretty-error';
 import SocketIo from 'socket.io';
 
 const path = require('path');
-const config = require(path.resolve(process.env.CONFIG_PATH || 'config/redux-universal-renderer.config.js'));
+const config = require(path.resolve('config/redux-universal-renderer.config.js'));
 const apiPrefix = config.apiPrefix || 'api';
 
 // resolve requires that rely on settings from external configuration

@@ -184,15 +184,13 @@ function validateConfig() {
     if (!resolve || !resolve.root) {
       errors.push('==>     ERROR: Webpack configuration must supply a root that maps to your project. See example at https://github.com/bdefore/redux-universal-renderer#usage');
     }
-    if (!resolve || !resolve.alias || !resolve.alias.routes || !resolve.alias.config || !resolve.alias.reducers) {
+    if (!resolve || !resolve.alias || !resolve.alias.routes || !resolve.alias.reducers) {
       errors.push('==>     ERROR: Webpack configuration must supply aliases for routes, config, and reducers. See example at https://github.com/bdefore/redux-universal-renderer#usage');
     }
   }
   // TODO: check for more
   return errors;
 }
-
-export configResolver from './helpers/configResolver';
 
 export default class Renderer {
 

@@ -2,10 +2,7 @@
 require('../server.babel'); // babel registration (runtime transpilation for node)
 var path = require('path');
 var renderer = require('../lib/server').default;
-
-process.env.CONFIG_PATH = process.env.CONFIG_PATH || 'config/redux-universal-renderer.config.js';
-
-var config = require(path.resolve(process.env.CONFIG_PATH));
+var config = require(path.resolve('config/redux-universal-renderer.config.js'));
 
 // TODO: why does this script execute twice, once before requires are resolved??
 if(renderer.app) {

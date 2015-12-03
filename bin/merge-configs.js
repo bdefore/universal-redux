@@ -13,7 +13,7 @@ var WebpackErrorNotificationPlugin = require('webpack-error-notification');
 var isProduction = process.env.NODE_ENV === 'production';
 
 // gather webpack config
-var userConfig = require(path.resolve(process.env.CONFIG_PATH || 'config/redux-universal-renderer.config.js'));
+var userConfig = require(path.resolve('config/redux-universal-renderer.config.js'));
 var baseConfig = isProduction ? baseProdConfig : baseDevConfig;
 
 combinedWebpackConfig = mergeWebpack(baseConfig, userConfig.webpack);
@@ -39,9 +39,7 @@ var definitions = {
   __API_PREFIX__: JSON.stringify(apiPrefix),
   __LOGGER__: false,
   __DEVTOOLS__: !isProduction,
-  __DEVELOPMENT__: !isProduction,
-  __CONFIG_PATH__: JSON.stringify(combinedWebpackConfig.resolve.alias.config),
-  __REDUCER_PATH__: JSON.stringify(combinedWebpackConfig.resolve.alias.reducers)
+  __DEVELOPMENT__: !isProduction
 };
 
 // override with user settings

@@ -22,7 +22,7 @@
     "boilerplate",
     "babel"
   ],
-  "main": "lib/server.js",
+  "main": "lib/index.js",
   "scripts": {
     "compile": "babel src/ -d lib/",
     "dev": "./bin/local-dev.sh",

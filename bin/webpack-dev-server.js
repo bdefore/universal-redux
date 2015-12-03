@@ -3,7 +3,7 @@ var path = require('path');
 var Express = require('express');
 var webpack = require('webpack');
 var webpackConfig = require('./merge-configs');
-var userConfig = require(path.resolve(process.env.CONFIG_PATH || 'config/redux-universal-renderer.config.js'));
+var userConfig = require(path.resolve('config/redux-universal-renderer.config.js'));
 
 var compiler = webpack(webpackConfig);
 

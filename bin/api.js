@@ -9,7 +9,7 @@ if (process.env.NODE_ENV !== 'production') {
 }
 
 const path = require('path');
-const config = require(path.resolve(process.env.CONFIG_PATH || 'config/redux-universal-renderer.config.js'));
+const config = require(path.resolve('config/redux-universal-renderer.config.js'));
 
 if (config.apiPort) {
   require('../server.babel'); // babel registration (runtime transpilation for node)

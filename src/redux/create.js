@@ -3,6 +3,7 @@ import path from 'path';
 import { createStore as _createStore, applyMiddleware, compose } from 'redux';
 import createMiddleware from './middleware/clientMiddleware';
 import transitionMiddleware from './middleware/transitionMiddleware';
+import configResolver from '../helpers/configResolver';
 
 export default function createStore(reduxReactRouter, getRoutes, createHistory, client, reducers, data) {
   const middleware = [createMiddleware(client), transitionMiddleware];
@@ -28,11 +29,11 @@ export default function createStore(reduxReactRouter, getRoutes, createHistory, 
 
   const store = finalCreateStore(reducers, data);
 
-  if (__DEVELOPMENT__ && module.hot) {
-    module.hot.accept(path.resolve(__REDUCER_PATH__), () => {
-      store.replaceReducer(path.resolve(__REDUCER_PATH__));
-    });
-  }
+  // if (__DEVELOPMENT__ && module.hot) {
+  //   module.hot.accept(path.resolve(configResolver().webpack.resolve.alias.reducers), () => {
+  //     store.replaceReducer(path.resolve(configResolver().webpack.resolve.alias.reducers));
+  //   });
+  // }
 
   return store;
 }
