@@ -45,7 +45,7 @@ app.use(compression());
 
 let hasSetup = false;
 let isomorphicTools;
-let config = require('./config');
+let config = require('../config/redux-universal-renderer.config.js');
 let toolsConfig = require('../config/webpack-isomorphic-tools-config');
 
 function setupProxy() {
@@ -232,7 +232,7 @@ export default class Renderer {
 
     const server = new http.Server(app);
 
-    if (config.isProduction && config.socket && config.socket.enabled) {
+    if (!__DEVELOPMENT__ && config.socket && config.socket.enabled) {
       const io = new SocketIo(server);
       io.path(`${config.apiPrefix}/ws`);
     }

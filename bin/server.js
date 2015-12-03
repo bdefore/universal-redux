@@ -3,7 +3,7 @@ require('../server.babel'); // babel registration (runtime transpilation for nod
 var path = require('path');
 var renderer = require('../lib/server');
 
-process.env.CONFIG_PATH = process.env.CONFIG_PATH || 'src/config.js';
+process.env.CONFIG_PATH = process.env.CONFIG_PATH || 'config/redux-universal-renderer.config.js';
 
 var config = require(path.resolve(process.env.CONFIG_PATH));
 
