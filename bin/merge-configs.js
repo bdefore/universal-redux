@@ -40,8 +40,8 @@ var definitions = {
   __LOGGER__: false,
   __DEVTOOLS__: !isProduction,
   __DEVELOPMENT__: !isProduction,
-  __CONFIG_PATH__: JSON.stringify(combinedWebpackConfig.resolve.root + combinedWebpackConfig.resolve.alias.config),
-  __REDUCER_PATH__: JSON.stringify(combinedWebpackConfig.resolve.root + combinedWebpackConfig.resolve.alias.reducers)
+  __CONFIG_PATH__: JSON.stringify(combinedWebpackConfig.resolve.alias.config),
+  __REDUCER_PATH__: JSON.stringify(combinedWebpackConfig.resolve.alias.reducers)
 };
 
 // override with user settings
