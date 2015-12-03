@@ -29,11 +29,11 @@ export default function createStore(reduxReactRouter, getRoutes, createHistory, 
 
   const store = finalCreateStore(reducers, data);
 
-  // if (__DEVELOPMENT__ && module.hot) {
-  //   module.hot.accept(path.resolve(configResolver().webpack.resolve.alias.reducers), () => {
-  //     store.replaceReducer(path.resolve(configResolver().webpack.resolve.alias.reducers));
-  //   });
-  // }
+  if (__DEVELOPMENT__ && module.hot) {
+    module.hot.accept(path.resolve(configResolver().webpack.resolve.alias.reducers), () => {
+      store.replaceReducer(path.resolve(configResolver().webpack.resolve.alias.reducers));
+    });
+  }
 
   return store;
 }

@@ -32,19 +32,8 @@ var toolsPlugin = new WebpackIsomorphicToolsPlugin(combinedToolsConfig);
 combinedWebpackConfig.module.loaders.push({ test: toolsPlugin.regular_expression('images'), loader: 'url-loader?limit=10240' });
 combinedWebpackConfig.plugins.push(isProduction ? toolsPlugin : toolsPlugin.development());
 
-// add default settings that are used by server via process.env
-var apiPrefix = userConfig.apiPrefix ? userConfig.apiPrefix : 'api';
-var definitions = {
-  __SOCKET__: userConfig.socket ? userConfig.socket.enabled : true,
-  __API_PREFIX__: JSON.stringify(apiPrefix),
-  __LOGGER__: false,
-  __DEVTOOLS__: !isProduction,
-  __DEVELOPMENT__: !isProduction
-};
-
-// override with user settings
-_.each(userConfig.env, function(value, key) { definitions[key] = value; });
-combinedWebpackConfig.plugins.push(new webpack.DefinePlugin(definitions));
+// alias the config, so clientside can import it
+combinedWebpackConfig.resolve.alias.config = combinedWebpackConfig.context + '/config/redux-universal-renderer.config.js';
 
 // turn on linting per webpack build, unless directed not to
 if(userConfig.lint !== false && !isProduction) {
@@ -55,6 +44,21 @@ if(userConfig.lint !== false && !isProduction) {
 if(userConfig.notifications === true && !isProduction) {
   combinedWebpackConfig.plugins.push(new WebpackErrorNotificationPlugin());
 }
+
+// add default settings that are used by server via process.env
+var apiPrefix = userConfig.apiPrefix ? userConfig.apiPrefix : 'api';
+var definitions = {
+  __SOCKET__: userConfig.socket ? userConfig.socket.enabled : true,
+  __API_PREFIX__: JSON.stringify(apiPrefix),
+  __LOGGER__: false,
+  __DEVTOOLS__: !isProduction,
+  __DEVELOPMENT__: !isProduction,
+  __CONFIG__: JSON.stringify(userConfig)
+};
+
+// override with user settings
+_.each(userConfig.env, function(value, key) { definitions[key] = value; });
+combinedWebpackConfig.plugins.push(new webpack.DefinePlugin(definitions));
 
 // output configuration files if user wants verbosity
 if(userConfig.verbose) {
