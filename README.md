@@ -19,7 +19,7 @@ An example project has been made here: https://github.com/bdefore/react-redux-un
 npm install redux-universal-renderer
 ```
 
-- Add a `webpack` object in `config/redux-universal-renderer.config.js` that defines what properties you want to override during the build step. You can start by copying the [annotated example](https://github.com/bdefore/redux-universal-renderer/blob/master/config/redux-universal-renderer.config.js) to your project directory.
+- Add configuration in your project at `config/redux-universal-renderer.config.js` that defines what properties you want to override during the build step. You can start by copying the [annotated example](https://github.com/bdefore/redux-universal-renderer/blob/master/config/redux-universal-renderer.config.js).
 
 - Specify your build steps 
 
