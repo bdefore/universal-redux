@@ -1,8 +1,4 @@
 #!/usr/bin/env bash
-# echo $BASH_SOURCE
-# MY_PATH="`dirname \"$0\"`"
-# echo $MY_PATH
-# pwd -P
 
 # find script base dir even with symlinks (such as when in node_modules/.bin) http://stackoverflow.com/a/246128/583755
 SOURCE="${BASH_SOURCE[0]}"
