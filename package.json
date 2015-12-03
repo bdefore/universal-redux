@@ -3,7 +3,7 @@
   "description": "A universal redux renderer (ES6, Webpack, Express)",
   "author": "Buck DeFore <bdefore@gmail.com> (http://github.com/bdefore)",
   "license": "MIT",
-  "version": "0.14.1",
+  "version": "0.14.2",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/bdefore/redux-universal-renderer.git"

@@ -22,6 +22,9 @@ import createStore from './redux/create';
 import Html from './helpers/Html';
 import getStatusFromRoutes from './helpers/getStatusFromRoutes';
 
+let app;
+let hasSetup = false;
+let isomorphicTools;
 let config = require('../config/redux-universal-renderer.config.js');
 let toolsConfig = require('../config/webpack-isomorphic-tools-config');
 
@@ -44,12 +47,6 @@ global.__CONFIG__ = config;
 //   }
 // }
 
-const app = new Express();
-app.use(compression());
-
-let hasSetup = false;
-let isomorphicTools;
-
 function setupProxy() {
   global.__API_PREFIX__ = config.apiPrefix;
 
@@ -67,7 +64,7 @@ function setupProxy() {
   proxy.on('error', (error, req, res) => {
     let json;
     if (error.code !== 'ECONNRESET') {
-      errors.push('proxy error', error);
+      console.error('proxy error', error);
     }
     if (!res.headersSent) {
       res.writeHead(500, {'content-type': 'application/json'});
@@ -195,6 +192,10 @@ function validateConfig() {
 export default class Renderer {
 
   static configure(userConfig, userToolsConfig) {
+    if (!hasSetup) {
+      Renderer.app();
+    }
+
     config = userConfig;
     config.apiPrefix = userConfig.apiPrefix || 'api';
 
@@ -218,6 +219,11 @@ export default class Renderer {
   }
 
   static app() {
+    app = new Express();
+    app.use(compression());
+
+    hasSetup = true;
+
     return app;
   }
 
@@ -237,8 +243,6 @@ export default class Renderer {
     setupTools(rootDir);
     setupAssets(rootDir);
     setupRenderer();
-
-    hasSetup = true;
   }
 
   static start() {

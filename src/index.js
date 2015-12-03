@@ -1,2 +1,6 @@
 export configResolver from './helpers/configResolver';
-export renderer from './server';
+
+// TODO: export this without blowing up in the client
+// export function renderer() {
+//   return require('./server');
+// };
