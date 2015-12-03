@@ -115,6 +115,7 @@
     "webpack": "^1.12.9",
     "webpack-config-merger": "0.0.3",
     "webpack-dev-middleware": "^1.4.0",
+    "webpack-error-notification": "^0.1.4",
     "webpack-hot-middleware": "^2.5.0",
     "webpack-isomorphic-tools": "^2.2.18"
   },

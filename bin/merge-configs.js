@@ -8,6 +8,8 @@ var baseWebpackConfig = require('../config/webpack.config.js');
 var baseDevConfig = mergeWebpack(baseWebpackConfig.common, baseWebpackConfig.development);
 var baseProdConfig = mergeWebpack(baseWebpackConfig.common, baseWebpackConfig.production);
 var baseToolsConfig = require('../config/webpack-isomorphic-tools-config');
+var WebpackErrorNotificationPlugin = require('webpack-error-notification');
+
 var isProduction = process.env.NODE_ENV === 'production';
 
 // gather webpack config
@@ -50,6 +52,12 @@ if(userConfig.lint !== false && !isProduction) {
   combinedWebpackConfig.module.loaders[0].loaders.push('eslint-loader');
 } 
 
+// turn on desktop notifications if user elects to
+if(userConfig.notifications === true && !isProduction) {
+  combinedWebpackConfig.plugins.push(new WebpackErrorNotificationPlugin());
+}
+
+// output configuration files if user wants verbosity
 if(userConfig.verbose) {
   var utilOptions = {
     depth: 6,
