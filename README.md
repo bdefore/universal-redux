@@ -19,37 +19,7 @@ An example project has been made here: https://github.com/bdefore/react-redux-un
 npm install redux-universal-renderer
 ```
 
-- Add a `webpack` object in `src/config.js` that defines what properties you want to override during the build step.
-
-```
-  const path = require('path');
-  const sourceRoot = path.resolve(__dirname);
-  const projectRoot = path.resolve(__dirname, '..');
-
-  ...
-
-  webpack: {
-    context: projectRoot,
-    entry: {
-      main: [
-        'bootstrap-sass!' + sourceRoot + '/theme/bootstrap.config.js',
-        'font-awesome-webpack!' + sourceRoot + '/theme/font-awesome.config.js'
-      ]
-    },
-    output: {
-      path: projectRoot + '/static/dist'
-    },
-    resolve: {
-      root: sourceRoot,
-      alias: {
-        routes: sourceRoot + '/routes.js',
-        config: sourceRoot + '/config.js',
-        reducers: sourceRoot + '/redux/modules/reducer.js',
-        actions: sourceRoot + '/api/actions/index.js'
-      }
-    }
-  }
-```
+- Add a `webpack` object in `config/redux-universal-renderer.config.js` that defines what properties you want to override during the build step. You can start by copying the [annotated example](https://github.com/bdefore/redux-universal-renderer/blob/master/config/redux-universal-renderer.config.js) to your project directory.
 
 - Specify your build steps 
 
@@ -74,7 +44,7 @@ You can add your own Express middleware like so:
 
 ```
 import renderer from 'redux-universal-renderer';
-import config from '../src/config';
+import config from '../config/redux-universal-renderer.config.js';
 
 const app = renderer.app();
 
@@ -85,33 +55,13 @@ renderer.setup(config);
 renderer.start();
 ```
 
-#### Webpack Isomorphic Tools configuration
-
-You can add or override the default [webpack-isomorphic-tools](https://github.com/halt-hammerzeit/webpack-isomorphic-tools) configuration, by providing a `toolsConfigPath` value to your `config.js`.
-
 #### Replacing the Html.js shell
 
 Inside of your `config.webpack.resolve.alias` array, you can specify `html: sourceRoot + '/path/to/your/Html.js'` and this will be used instead of the default one. This allows you to add your own additions to `<head>` as well as third party `<script>` tags such as for metrics tracking.
 
-#### Other configuration options
+#### Webpack Isomorphic Tools configuration
 
-There are a few other options you can specify in your configuration. They are:
-
-**apiPrefix** *(default: 'api')* - The prefix that Express will look for on incoming requests to determine if calls should be routed to the API.
-
-**env** - An object specifying environment variables to make available to the app. Defaults:
-
-  **`__LOGGER__`** *(default: false)* - Enable [Redux Logger](https://github.com/fcomb/redux-logger) in console.
-
-  **`__DEVTOOLS__`** *(default: true)* - Enable [Redux DevTools](https://github.com/gaearon/redux-devtools) as side panel in development mode.
-
-**lint** *(default: true)* - Lint JavaScript with each development Webpack build.
-
-**socket** - The Socket.IO configuration. Defaults:
-
-  **``enabled``** *(default: true)* - Whether to attach Socket.IO to the Express app.
-
-**verbose** *(default: false)* - Output Wepback and Webpack Isomorphic Tools configuration before building.
+You can add or override the default [webpack-isomorphic-tools](https://github.com/halt-hammerzeit/webpack-isomorphic-tools) configuration, by providing a `toolsConfigPath` value to your `config.js`.
 
 ### Local development
 
