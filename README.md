@@ -1,5 +1,10 @@
 # Redux Universal Renderer
 
+[![build status](https://img.shields.io/travis/bdefore/redux-universal-renderer/master.svg?style=flat-square)](https://travis-ci.org/bdefore/redux-universal-renderer)
+[![Dependency Status](https://david-dm.org/bdefore/redux-universal-renderer.svg?style=flat-square)](https://david-dm.org/bdefore/redux-universal-renderer)
+[![devDependency Status](https://david-dm.org/bdefore/redux-universal-renderer/dev-status.svg?style=flat-square)](https://david-dm.org/bdefore/redux-universal-renderer#info=devDependencies)
+[![Demo on Heroku](https://img.shields.io/badge/demo-heroku-brightgreen.svg?style=flat-square)](https://redux-universal-renderer.herokuapp.com)
+
 ### Why?
 
 This project forked off of [react-redux-universal-hot-example](https://github.com/erikras/react-redux-universal-hot-example) with the goal of making an npm module for an easier starting point for new projects. Please refer to the README there for more details and join the discussion at the pull request here: https://github.com/erikras/react-redux-universal-hot-example/pull/626, and please open an issue if you find one.
