@@ -13,7 +13,8 @@ var WebpackErrorNotificationPlugin = require('webpack-error-notification');
 var isProduction = process.env.NODE_ENV === 'production';
 
 // gather webpack config
-var userConfig = require(path.resolve('config/redux-universal-renderer.config.js'));
+var userConfigPath = 'config/redux-universal-renderer.config.js';
+var userConfig = require(path.resolve(userConfigPath));
 var baseConfig = isProduction ? baseProdConfig : baseDevConfig;
 
 combinedWebpackConfig = mergeWebpack(baseConfig, userConfig.webpack);
@@ -33,7 +34,7 @@ combinedWebpackConfig.module.loaders.push({ test: toolsPlugin.regular_expression
 combinedWebpackConfig.plugins.push(isProduction ? toolsPlugin : toolsPlugin.development());
 
 // alias the config, so clientside can import it
-combinedWebpackConfig.resolve.alias.config = combinedWebpackConfig.context + '/config/redux-universal-renderer.config.js';
+combinedWebpackConfig.resolve.alias.config = combinedWebpackConfig.context + '/' + userConfigPath;
 
 // turn on linting per webpack build, unless directed not to
 if(userConfig.lint !== false && !isProduction) {
@@ -57,7 +58,7 @@ var definitions = {
 };
 
 // override with user settings
-_.each(userConfig.env, function(value, key) { definitions[key] = value; });
+_.each(userConfig.globals, function(value, key) { definitions[key] = value; });
 combinedWebpackConfig.plugins.push(new webpack.DefinePlugin(definitions));
 
 // output configuration files if user wants verbosity
