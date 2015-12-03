@@ -112,7 +112,8 @@
   "devDependencies": {},
   "peerDependencies": {
     "react": "^0.14.3",
-    "react-dom": "^0.14.3"
+    "react-dom": "^0.14.3",
+    "redux-router": "1.0.0-beta4"
   },
   "engines": {
     "node": "4.1.1"
