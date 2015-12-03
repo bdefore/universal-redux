@@ -22,6 +22,9 @@ import createStore from './redux/create';
 import Html from './helpers/Html';
 import getStatusFromRoutes from './helpers/getStatusFromRoutes';
 
+let config = require('../config/redux-universal-renderer.config.js');
+let toolsConfig = require('../config/webpack-isomorphic-tools-config');
+
 /**
  * Define isomorphic constants.
  */
@@ -29,6 +32,7 @@ global.__CLIENT__ = false;
 global.__SERVER__ = true;
 global.__DISABLE_SSR__ = false;  // <----- DISABLES SERVER SIDE RENDERING FOR ERROR DEBUGGING
 global.__DEVELOPMENT__ = process.env.NODE_ENV !== 'production';
+global.__CONFIG__ = config;
 
 /* TODO: what was this doing? */
 // if (__DEVELOPMENT__) {
@@ -45,15 +49,13 @@ app.use(compression());
 
 let hasSetup = false;
 let isomorphicTools;
-let config = require('../config/redux-universal-renderer.config.js');
-let toolsConfig = require('../config/webpack-isomorphic-tools-config');
 
 function setupProxy() {
   global.__API_PREFIX__ = config.apiPrefix;
 
   const proxy = httpProxy.createProxyServer({
     target: 'http://' + config.apiHost + ':' + config.apiPort,
-    ws: true
+    ws: config.socket && config.socket.enabled
   });
 
   // Proxy to API server
@@ -65,7 +67,7 @@ function setupProxy() {
   proxy.on('error', (error, req, res) => {
     let json;
     if (error.code !== 'ECONNRESET') {
-      console.error('proxy error', error);
+      errors.push('proxy error', error);
     }
     if (!res.headersSent) {
       res.writeHead(500, {'content-type': 'application/json'});
@@ -162,32 +164,35 @@ function setupRenderer() {
 }
 
 function validateConfig() {
+  const errors = [];
   if (!config) {
-    console.error('==>     ERROR: No configuration supplied.');
+    errors.push('==>     ERROR: No configuration supplied.');
   }
   if (!toolsConfig) {
-    console.error('==>     ERROR: Invalid tools configuration supplied.');
+    errors.push('==>     ERROR: Invalid tools configuration supplied.');
   }
   if (!config.port) {
-    console.error('==>     ERROR: No PORT variable has been configured');
+    errors.push('==>     ERROR: No PORT variable has been configured');
   }
   if (!config.host) {
-    console.error('==>     ERROR: No HOST variable has been configured');
+    errors.push('==>     ERROR: No HOST variable has been configured');
   }
   if (!config.webpack) {
-    console.error('==>     ERROR: No webpack configuration supplied. See example at https://github.com/bdefore/redux-universal-renderer#usage');
+    errors.push('==>     ERROR: No webpack configuration supplied. See example at https://github.com/bdefore/redux-universal-renderer#usage');
   } else {
     const resolve = config.webpack.resolve;
     if (!resolve || !resolve.root) {
-      console.error('==>     ERROR: Webpack configuration must supply a root that maps to your project. See example at https://github.com/bdefore/redux-universal-renderer#usage');
+      errors.push('==>     ERROR: Webpack configuration must supply a root that maps to your project. See example at https://github.com/bdefore/redux-universal-renderer#usage');
     }
     if (!resolve || !resolve.alias || !resolve.alias.routes || !resolve.alias.config || !resolve.alias.reducers) {
-      console.error('==>     ERROR: Webpack configuration must supply aliases for routes, config, and reducers. See example at https://github.com/bdefore/redux-universal-renderer#usage');
+      errors.push('==>     ERROR: Webpack configuration must supply aliases for routes, config, and reducers. See example at https://github.com/bdefore/redux-universal-renderer#usage');
     }
   }
   // TODO: check for more
-  console.log('Redux universal renderer configuration is valid.');
+  return errors;
 }
+
+export configResolver from './helpers/configResolver';
 
 export default class Renderer {
 
@@ -195,10 +200,23 @@ export default class Renderer {
     config = userConfig;
     config.apiPrefix = userConfig.apiPrefix || 'api';
 
+    // for access during serverside rendering, which
+    // does not have access to the webpack alias
+    global.__CONFIG__ = config;
+
     if (userToolsConfig) {
       toolsConfig = userToolsConfig;
     }
-    validateConfig();
+    const errors = validateConfig();
+
+    if(errors.length > 0) {
+      console.log('Configuration errors for redux universal renderer.');
+      for(var i = 0; i < errors.length; i++) {
+        console.error(errors[i]);
+      }
+    } else {
+      console.log('Redux universal renderer configuration is valid.');
+    }
   }
 
   static app() {

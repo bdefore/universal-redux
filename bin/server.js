@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 require('../server.babel'); // babel registration (runtime transpilation for node)
 var path = require('path');
-var renderer = require('../lib/server');
+var renderer = require('../lib/server').default;
 
 process.env.CONFIG_PATH = process.env.CONFIG_PATH || 'config/redux-universal-renderer.config.js';
 
@@ -22,4 +22,6 @@ if(renderer.app) {
   // renderer.configure(config);
   // renderer.setup();
   // renderer.start();
+} else {
+  console.log('Renderer not found.');
 }
