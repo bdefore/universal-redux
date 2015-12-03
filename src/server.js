@@ -8,6 +8,7 @@ import httpProxy from 'http-proxy';
 import path from 'path';
 import PrettyError from 'pretty-error';
 import http from 'http';
+import { each } from 'lodash';
 import SocketIo from 'socket.io';
 import {ReduxRouter} from 'redux-router';
 import createHistory from 'history/lib/createMemoryHistory';
@@ -208,11 +209,9 @@ export default class Renderer {
     }
     const errors = validateConfig();
 
-    if(errors.length > 0) {
+    if (errors.length > 0) {
       console.log('Configuration errors for redux universal renderer.');
-      for(var i = 0; i < errors.length; i++) {
-        console.error(errors[i]);
-      }
+      each(errors, (error) => { console.error(error); });
     } else {
       console.log('Redux universal renderer configuration is valid.');
     }
