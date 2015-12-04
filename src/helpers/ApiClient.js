@@ -8,7 +8,7 @@ function formatUrl(path) {
     return 'http://' + __CONFIG__.apiHost + ':' + __CONFIG__.apiPort + adjustedPath;
   }
   // Prepend api prefix to relative URL, to proxy to API server.
-  return '/' + __API_PREFIX__ + adjustedPath;
+  return '/' + __CONFIG__.apiPrefix + adjustedPath;
 }
 
 /*

@@ -36,11 +36,8 @@
     "__SERVER__": true,
     "__LOGGER__": false,
     "__DISABLE_SSR__": true,
-    "__API_PREFIX__": 'api',
-    "__SOCKET__": false,
     "__DEVTOOLS__": true,
     "__CONFIG__": { fake: 'json' },
-    "socket": true,
     "webpackIsomorphicTools": true
   }
 }

@@ -3,8 +3,6 @@ const path = require('path');
 const isProduction = process.env.NODE_ENV === 'production';
 const projectRoot = path.resolve(__dirname, '..');
 const sourceRoot = path.resolve(__dirname, '../src');
-const apiPortDefault = isProduction ? 443 : 3000;
-const apiPort = process.env.API_PORT || apiPortDefault;
 
 module.exports = Object.assign({
 
@@ -29,35 +27,6 @@ module.exports = Object.assign({
   // Expects: String
   */ 
   // apiPrefix: 'api',
-
-  /*
-  // The host at which the Express API will be run. If left undefined, the API
-  // server will not be started. See src/api/api.js.
-  //
-  // Expects: String
-  */ 
-  apiHost: process.env.API_HOST || 'http://localhost',
-
-  /*
-  // The port at which the Express API will be run. If left undefined, the API
-  // server will not be started. See src/api/api.js.
-  //
-  // Expects: Number
-  */ 
-  apiPort: process.env.API_PORT || apiPortDefault,
-
-  /*
-  // Configuration for Socket.IO
-  */
-  socket: {
-
-    /*
-    // Whether or not to run Socket.IO
-    //
-    // Expects: Boolean
-    */
-    enabled: false
-  },
 
   /*
   // Globals available to both serverside and clientside rendering.
@@ -169,12 +138,7 @@ module.exports = Object.assign({
         // The path to your replacement for the default HTML shell. Optional.
         // If not provided, the default used will be that in src/helpers/Html.js.
         */
-        html: sourceRoot + '/helpers/Html.js',
-
-        /*
-        // The path to the index of your API actions. Optional.
-        */
-        actions: sourceRoot + '/api/actions/index.js'
+        html: sourceRoot + '/helpers/Html.js'
       }
     }
   },

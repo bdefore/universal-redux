@@ -7,7 +7,6 @@ import compression from 'compression';
 import httpProxy from 'http-proxy';
 import path from 'path';
 import PrettyError from 'pretty-error';
-import http from 'http';
 import { each } from 'lodash';
 import {ReduxRouter} from 'redux-router';
 import createHistory from 'history/lib/createMemoryHistory';
@@ -36,44 +35,6 @@ global.__SERVER__ = true;
 global.__DISABLE_SSR__ = false;  // <----- DISABLES SERVER SIDE RENDERING FOR ERROR DEBUGGING
 global.__DEVELOPMENT__ = process.env.NODE_ENV !== 'production';
 global.__CONFIG__ = config;
-
-/* TODO: what was this doing? */
-// if (__DEVELOPMENT__) {
-//   if (!require('piping')({
-//     hook: true,
-//     ignore: /(\/\.|~$|\.json|\.scss$)/i
-//   })) {
-//     return; //eslint-disable-line
-//   }
-// }
-
-function setupProxy() {
-  global.__API_PREFIX__ = config.apiPrefix;
-
-  const proxy = httpProxy.createProxyServer({
-    target: 'http://' + config.apiHost + ':' + config.apiPort,
-    ws: true
-  });
-
-  // Proxy to API server
-  app.use(`/${config.apiPrefix}`, (req, res) => {
-    proxy.web(req, res);
-  });
-
-  // added the error handling to avoid https://github.com/nodejitsu/node-http-proxy/issues/527
-  proxy.on('error', (error, req, res) => {
-    let json;
-    if (error.code !== 'ECONNRESET') {
-      console.error('proxy error', error);
-    }
-    if (!res.headersSent) {
-      res.writeHead(500, {'content-type': 'application/json'});
-    }
-
-    json = {error: 'proxy_error', reason: error.message};
-    res.end(JSON.stringify(json));
-  });
-}
 
 function setupTools(rootDir) {
   toolsConfig.webpack_assets_file_path = rootDir + '/webpack-assets.json';
