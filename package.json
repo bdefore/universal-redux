@@ -28,8 +28,7 @@
     "dev": "./bin/local-dev.sh",
     "prepublish": "npm run compile",
     "lint": "eslint -c .eslintrc src",
-    "test": "karma start",
-    "test-node": "./node_modules/mocha/bin/mocha ./src/api/**/__tests__/*-test.js --compilers js:babel-core/register"
+    "test": "karma start"
   },
   "dependencies": {
     "autoprefixer-loader": "^3.1.0",
@@ -122,7 +121,6 @@
     "redux-universal-renderer-dev": "./bin/local-dev.sh",
     "redux-universal-renderer-watch": "./bin/webpack-dev-server.js",
     "redux-universal-renderer-server": "./bin/server.js",
-    "redux-universal-renderer-api": "./bin/api.js",
     "redux-universal-renderer-build": "./bin/build.js"
   },
   "bugs": {

@@ -9,7 +9,6 @@ import path from 'path';
 import PrettyError from 'pretty-error';
 import http from 'http';
 import { each } from 'lodash';
-import SocketIo from 'socket.io';
 import {ReduxRouter} from 'redux-router';
 import createHistory from 'history/lib/createMemoryHistory';
 import {reduxReactRouter, match} from 'redux-router/server';
@@ -53,7 +52,7 @@ function setupProxy() {
 
   const proxy = httpProxy.createProxyServer({
     target: 'http://' + config.apiHost + ':' + config.apiPort,
-    ws: config.socket && config.socket.enabled
+    ws: true
   });
 
   // Proxy to API server
@@ -249,14 +248,7 @@ export default class Renderer {
       Renderer.app();
     }
 
-    const server = new http.Server(app);
-
-    if (!__DEVELOPMENT__ && config.socket && config.socket.enabled) {
-      const io = new SocketIo(server);
-      io.path(`${config.apiPrefix}/ws`);
-    }
-
-    server.listen(config.port, (err) => {
+    app.listen(config.port, (err) => {
       if (err) {
         console.error(err);
       }
