@@ -26,9 +26,9 @@ npm install redux-universal-renderer
 The following npm bin aliases have been defined:
 
 ```
+redux-universal-renderer-dev
 redux-universal-renderer-watch
 redux-universal-renderer-server
-redux-universal-renderer-api
 redux-universal-renderer-build
 ```
 
