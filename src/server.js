@@ -4,7 +4,6 @@ import React from 'react';
 import ReactDOM from 'react-dom/server';
 import favicon from 'serve-favicon';
 import compression from 'compression';
-import httpProxy from 'http-proxy';
 import path from 'path';
 import PrettyError from 'pretty-error';
 import { each } from 'lodash';
@@ -198,7 +197,6 @@ export default class Renderer {
       rootDir = path.resolve(__dirname, '..');
     }
 
-    setupProxy();
     setupTools(rootDir);
     setupAssets(rootDir);
     setupRenderer();
@@ -213,7 +211,7 @@ export default class Renderer {
       if (err) {
         console.error(err);
       }
-      console.info('----\n==> ✅  %s is running, talking to API server on %s.', config.app.title, config.apiPort);
+      console.info('----\n==> ✅  %s is running.', config.app.title);
       console.info('==> 💻  Open http://%s:%s in a browser to view the app.', config.host, config.port);
     });
   }

@@ -21,12 +21,11 @@ module.exports = Object.assign({
   port: process.env.PORT || 3000,
 
   /*
-  // The prefix that Express will look for on incoming requests to determine if
-  // calls should be routed to the API. Optional.
+  // The prefix that will be prepending for all calls intended for an external API
   //
   // Expects: String
   */ 
-  // apiPrefix: 'api',
+  apiPrefix: 'api',
 
   /*
   // Globals available to both serverside and clientside rendering.
