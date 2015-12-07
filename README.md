@@ -55,6 +55,10 @@ renderer.setup(config);
 renderer.start();
 ```
 
+#### Redux middleware
+
+You can enable universal redux middleware by specifying the `middleware` property in the configuration file. This file should export each middleware as a function. On serverside renders, those functions will be called with two parameters: the Express request and response objects. All properties specified in `globals` will be available to the middleware.
+
 #### Replacing the Html.js shell
 
 Inside of your `config.webpack.resolve.alias` array, you can specify `html: sourceRoot + '/path/to/your/Html.js'` and this will be used instead of the default one. This allows you to add your own additions to `<head>` as well as third party `<script>` tags such as for metrics tracking.

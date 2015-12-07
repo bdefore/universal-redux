@@ -106,7 +106,7 @@ module.exports = Object.assign({
     //
     // Expects: String
     */
-    // middleware:
+    // middleware: sourceRoot + '/redux/middleware/index.js',
   },
 
   /*
