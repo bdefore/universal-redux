@@ -28,7 +28,7 @@ const scrollablehistory = useScroll(createHistory);
 const dest = document.getElementById('content');
 
 // assemble custom middleware, pass req, res
-const middleware = []
+const middleware = [];
 each(customMiddleware, (customMiddlewareToAdd) => {
   if (typeof customMiddlewareToAdd === 'function') {
     middleware.push(customMiddlewareToAdd());

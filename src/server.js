@@ -69,7 +69,7 @@ function setupRenderer() {
     const pretty = new PrettyError();
 
     // assemble custom middleware, pass req, res
-    const middleware = []
+    const middleware = [];
     if (config.redux.middleware) {
       const customMiddleware = require(path.resolve(config.redux.middleware));
       each(customMiddleware, (customMiddlewareToAdd) => {
