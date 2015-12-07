@@ -10,9 +10,9 @@ An npm module that lets you jump right into coding [React](https://facebook.gith
 
 With the default configuration, Universal Redux provides routing with [React Router](https://github.com/rackt/react-router) as well as a hot-reloading development server. Fonts and styles (SASS, Less, CSS) are also ready to go.
 
-### Usage
+There is an [example project](https://github.com/bdefore/react-redux-universal-hot-example/tree/example-project) which is continuously deployed [on Heroku](https://universal-redux.herokuapp.com).
 
-There is an [example project](https://github.com/bdefore/react-redux-universal-hot-example/tree/example-project) which is continuously deployed [https://universal-redux.herokuapp.com](on Heroku).
+### Usage
 
 - Install
 
@@ -41,9 +41,13 @@ Generally kept in `src/routes.js`, this is where you define what routes map to w
 
 - Make some code!
 
-### Adding new functionality
+### Customization
 
-The npm module also exposes a few ways of integrating your code with what's in the module.
+The npm module also exposes a few ways of integrating your code with that of the module.
+
+#### Webpack configuration
+
+Any items specified in the `webpack.config` of your configuration will be merged with the [default Webpack configuration](https://github.com/bdefore/universal-redux/blob/master/config/webpack.config.js). You may also turn on `verbose` mode to see the exact Webpack configuration you are running.
 
 #### Express middleware
 
@@ -66,11 +70,11 @@ Alternatively, you may pass your own Express instance as a parameter when callin
 
 #### Redux middleware
 
-You can provide your own Redux middleware by specifying the `middleware` property in the configuration file. This file should export each middleware as a function. On serverside renders, those functions will be called with two parameters: the Express request and response objects. On clientside renders, they will be called with none. All properties specified in `globals` will be available to the middleware.
+You can activate your own Redux middleware by specifying the `middleware` property in the configuration file. This should be a path to a file whcih exports each middleware as a function. On serverside renders, those functions will be called with two parameters: the Express request and response objects. On clientside renders, they will be called with none. All properties specified in `globals` will be available to the middleware.
 
 #### Replacing the HTML shell
 
-You can specify `htmlShell: sourceRoot + '/path/to/your/Html.js'` in your configuration and this will be used instead of the default one. This allows you to add your own additions to `<head>` as well as third party `<script>` tags such as for metrics tracking.
+You can specify `htmlShell: '/path/to/your/Html.js'` in your configuration and this will be used instead of the default one. This allows you to add your own additions to `<head>` as well as third party `<script>` tags such as for metrics tracking.
 
 #### Webpack Isomorphic Tools configuration
 
@@ -87,6 +91,7 @@ If you'd like to develop on Universal Redux, clone the repo and while testing wi
 - [ ] Built-in page transitions
 - [ ] Example with JWT authentication
 - [ ] Branch for `redux-simple-router` rather than `redux-router`
+- [ ] Finalize API before 1.0
 
 ### Inspirations
 
