@@ -126,10 +126,10 @@ function validateConfig() {
     errors.push('==>     ERROR: No configuration supplied.');
   }
   if (config.server) {
-    if(!config.server.host) {
+    if (!config.server.host) {
       errors.push('==>     ERROR: No host parameter supplied.');
     }
-    if(!config.server.port) {
+    if (!config.server.port) {
       errors.push('==>     ERROR: No port parameter supplied.');
     }
   }
