@@ -1,9 +1,9 @@
 # Redux Universal Renderer
 
-[![build status](https://img.shields.io/travis/bdefore/redux-universal-renderer/master.svg?style=flat-square)](https://travis-ci.org/bdefore/redux-universal-renderer)
-[![Dependency Status](https://david-dm.org/bdefore/redux-universal-renderer.svg?style=flat-square)](https://david-dm.org/bdefore/redux-universal-renderer)
-[![devDependency Status](https://david-dm.org/bdefore/redux-universal-renderer/dev-status.svg?style=flat-square)](https://david-dm.org/bdefore/redux-universal-renderer#info=devDependencies)
-[![Demo on Heroku](https://img.shields.io/badge/demo-heroku-brightgreen.svg?style=flat-square)](https://redux-universal-renderer.herokuapp.com)
+[![build status](https://img.shields.io/travis/bdefore/universal-redux/master.svg?style=flat-square)](https://travis-ci.org/bdefore/universal-redux)
+[![Dependency Status](https://david-dm.org/bdefore/universal-redux.svg?style=flat-square)](https://david-dm.org/bdefore/universal-redux)
+[![devDependency Status](https://david-dm.org/bdefore/universal-redux/dev-status.svg?style=flat-square)](https://david-dm.org/bdefore/universal-redux#info=devDependencies)
+[![Demo on Heroku](https://img.shields.io/badge/demo-heroku-brightgreen.svg?style=flat-square)](https://universal-redux.herokuapp.com)
 
 ### Why?
 
@@ -11,25 +11,25 @@ This project forked off of [react-redux-universal-hot-example](https://github.co
 
 ### Usage
 
-An example project has been made here: https://github.com/bdefore/react-redux-universal-hot-example/tree/example-project and is deployed on Heroku here: https://redux-universal-renderer.herokuapp.com
+An example project has been made here: https://github.com/bdefore/react-redux-universal-hot-example/tree/example-project and is deployed on Heroku here: https://universal-redux.herokuapp.com
 
 - Install
 
 ```
-npm install redux-universal-renderer
+npm install universal-redux
 ```
 
-- Add configuration in your project at `config/redux-universal-renderer.config.js` that defines what properties you want to override during the build step. You can start by copying the [annotated example](https://github.com/bdefore/redux-universal-renderer/blob/master/config/redux-universal-renderer.config.js).
+- Add configuration in your project at `config/universal-redux.config.js` that defines what properties you want to override during the build step. You can start by copying the [annotated example](https://github.com/bdefore/universal-redux/blob/master/config/universal-redux.config.js).
 
 - Specify your build steps 
 
 The following npm bin aliases have been defined:
 
 ```
-redux-universal-renderer-dev
-redux-universal-renderer-watch
-redux-universal-renderer-server
-redux-universal-renderer-build
+universal-redux-dev
+universal-redux-watch
+universal-redux-server
+universal-redux-build
 ```
 
 You'll generally call these from the corresponding section of your project's scripts. See `package.json` in the example project: https://github.com/bdefore/react-redux-universal-hot-example/blob/example-project/package.json#L39
@@ -43,8 +43,8 @@ The npm module also exposes a few methods for adding additional functionality.
 You can add your own Express middleware like so:
 
 ```
-import renderer from 'redux-universal-renderer';
-import config from '../config/redux-universal-renderer.config.js';
+import renderer from 'universal-redux';
+import config from '../config/universal-redux.config.js';
 
 const app = renderer.app();
 
@@ -65,7 +65,7 @@ You can add or override the default [webpack-isomorphic-tools](https://github.co
 
 ### Local development
 
-If you'd like to modify the renderer while running a project that uses it, I've found that npm version 2 tends to cause issues including multiple versions of React, which cause script errors, if you symlink or drop it into your project's `node_modules` manually. You may prefer to use `PROJECT_PATH=/path/to/project npm run dev` from the renderer root, which will watch for changes and copy them over to your project's `node_modules/redux-universal-renderer/lib` directory.
+If you'd like to modify the renderer while running a project that uses it, I've found that npm version 2 tends to cause issues including multiple versions of React, which cause script errors, if you symlink or drop it into your project's `node_modules` manually. You may prefer to use `PROJECT_PATH=/path/to/project npm run dev` from the renderer root, which will watch for changes and copy them over to your project's `node_modules/universal-redux/lib` directory.
 
 ### Known Issues
 
