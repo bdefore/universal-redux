@@ -7,8 +7,8 @@ var userConfig = require(path.resolve('config/universal-redux.config.js'));
 
 var compiler = webpack(webpackConfig);
 
-var host = userConfig.host || 'localhost';
-var port = parseInt(userConfig.port) + 1 || 3001;
+var host = userConfig.server.host || 'localhost';
+var port = parseInt(userConfig.server.port) + 1 || 3001;
 var serverOptions = {
   contentBase: 'http://' + host + ':' + port,
   quiet: true,

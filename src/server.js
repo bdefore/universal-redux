@@ -52,12 +52,12 @@ function setupAssets(rootDir) {
 function setupRenderer() {
   app.use((req, res) => {
 
-    const getRoutes = require(path.resolve(config.webpack.resolve.alias.routes));
-    const reducers = require(path.resolve(config.webpack.resolve.alias.reducers));
+    const getRoutes = require(path.resolve(config.routes));
+    const reducers = require(path.resolve(config.reducers));
 
     let CustomHtml;
-    if (config.webpack.resolve.alias.html) {
-      CustomHtml = require(path.resolve(config.webpack.resolve.alias.html));
+    if (config.html) {
+      CustomHtml = require(path.resolve(config.html));
     } else {
       CustomHtml = Html;
     }
@@ -125,25 +125,19 @@ function validateConfig() {
   if (!config) {
     errors.push('==>     ERROR: No configuration supplied.');
   }
-  if (!toolsConfig) {
-    errors.push('==>     ERROR: Invalid tools configuration supplied.');
-  }
-  if (!config.port) {
-    errors.push('==>     ERROR: No PORT variable has been configured');
-  }
-  if (!config.host) {
-    errors.push('==>     ERROR: No HOST variable has been configured');
-  }
-  if (!config.webpack) {
-    errors.push('==>     ERROR: No webpack configuration supplied. See example at https://github.com/bdefore/universal-redux#usage');
-  } else {
-    const resolve = config.webpack.resolve;
-    if (!resolve || !resolve.root) {
-      errors.push('==>     ERROR: Webpack configuration must supply a root that maps to your project. See example at https://github.com/bdefore/universal-redux#usage');
+  if (config.server) {
+    if(!config.server.host) {
+      errors.push('==>     ERROR: No host parameter supplied.');
     }
-    if (!resolve || !resolve.alias || !resolve.alias.routes || !resolve.alias.reducers) {
-      errors.push('==>     ERROR: Webpack configuration must supply aliases for routes, config, and reducers. See example at https://github.com/bdefore/universal-redux#usage');
+    if(!config.server.port) {
+      errors.push('==>     ERROR: No port parameter supplied.');
     }
+  }
+  if (!config.routes) {
+    errors.push('==>     ERROR: Must supply routes.');
+  }
+  if (!config.reducers) {
+    errors.push('==>     ERROR: Must supply reducers.');
   }
   // TODO: check for more
   return errors;
@@ -169,15 +163,15 @@ export default class Renderer {
     const errors = validateConfig();
 
     if (errors.length > 0) {
-      console.log('Configuration errors for redux universal renderer.');
+      console.log('Configuration errors for universal-redux.');
       each(errors, (error) => { console.error(error); });
     } else {
-      console.log('Redux universal renderer configuration is valid.');
+      console.log('universal-redux configuration is valid.');
     }
   }
 
-  static app() {
-    app = new Express();
+  static app(userSuppliedApp) {
+    app = userSuppliedApp || new Express();
     app.use(compression());
 
     hasSetup = true;
@@ -191,8 +185,8 @@ export default class Renderer {
     }
 
     let rootDir;
-    if (config.webpack.context) {
-      rootDir = path.resolve(config.webpack.context);
+    if (config.webpack.config.context) {
+      rootDir = path.resolve(config.webpack.config.context);
     } else {
       rootDir = path.resolve(__dirname, '..');
     }
@@ -207,12 +201,12 @@ export default class Renderer {
       Renderer.app();
     }
 
-    app.listen(config.port, (err) => {
+    app.listen(config.server.port, (err) => {
       if (err) {
         console.error(err);
       }
       console.info('----\n==> ✅  %s is running.', config.app.title);
-      console.info('==> 💻  Open http://%s:%s in a browser to view the app.', config.host, config.port);
+      console.info('==> 💻  Open http://%s:%s in a browser to view the app.', config.server.host, config.server.port);
     });
   }
 }

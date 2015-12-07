@@ -15,9 +15,14 @@ var isProduction = process.env.NODE_ENV === 'production';
 // gather webpack config
 var userConfigPath = 'config/universal-redux.config.js';
 var userConfig = require(path.resolve(userConfigPath));
-var baseConfig = isProduction ? baseProdConfig : baseDevConfig;
 
-combinedWebpackConfig = mergeWebpack(baseConfig, userConfig.webpack);
+// merge with base config if directed to
+if(userConfig.webpack.merge) {
+  var baseConfig = isProduction ? baseProdConfig : baseDevConfig;
+  combinedWebpackConfig = mergeWebpack(baseConfig, userConfig.webpack.config);
+} else {
+  combinedWebpackConfig = userConfig.webpack.config;
+}
 
 // gather tools config
 var combinedToolsConfig = baseToolsConfig;
@@ -32,9 +37,6 @@ var toolsPlugin = new WebpackIsomorphicToolsPlugin(combinedToolsConfig);
 
 combinedWebpackConfig.module.loaders.push({ test: toolsPlugin.regular_expression('images'), loader: 'url-loader?limit=10240' });
 combinedWebpackConfig.plugins.push(isProduction ? toolsPlugin : toolsPlugin.development());
-
-// alias the config, so clientside can import it
-combinedWebpackConfig.resolve.alias.config = combinedWebpackConfig.context + '/' + userConfigPath;
 
 // turn on linting per webpack build, unless directed not to
 if(userConfig.lint !== false && !isProduction) {
@@ -58,6 +60,12 @@ var definitions = {
 // override with user settings
 _.each(userConfig.globals, function(value, key) { definitions[key] = value; });
 combinedWebpackConfig.plugins.push(new webpack.DefinePlugin(definitions));
+
+// add routes and reducer aliases so that client has access to them
+combinedWebpackConfig.resolve.alias = combinedWebpackConfig.resolve.alias || {};
+combinedWebpackConfig.resolve.alias.routes = userConfig.routes;
+combinedWebpackConfig.resolve.alias.reducers = userConfig.reducers;
+combinedWebpackConfig.resolve.alias.config = combinedWebpackConfig.context + '/' + userConfigPath;
 
 // output configuration files if user wants verbosity
 if(userConfig.verbose) {
