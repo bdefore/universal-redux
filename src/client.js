@@ -15,11 +15,11 @@ import getRoutes from 'routes';
 import reducers from 'reducers';
 
 // dependencies of serverside render
-import ApiClient from './helpers/ApiClient';
+import ApiFetcher from './helpers/ApiFetcher';
 import createStore from './redux/create';
 import makeRouteHooksSafe from './helpers/makeRouteHooksSafe';
 
-const client = new ApiClient();
+const client = new ApiFetcher();
 
 // Three different types of scroll behavior available.
 // Documented here: https://github.com/rackt/scroll-behavior

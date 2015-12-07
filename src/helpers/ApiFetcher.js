@@ -12,12 +12,12 @@ function formatUrl(path) {
 }
 
 /*
- * This silly underscore is here to avoid a mysterious "ReferenceError: ApiClient is not defined" error.
+ * This silly underscore is here to avoid a mysterious "ReferenceError: ApiFetcher is not defined" error.
  * See Issue #14. https://github.com/erikras/react-redux-universal-hot-example/issues/14
  *
  * Remove it at your own risk.
  */
-class _ApiClient {
+class _ApiFetcher {
   constructor(req) {
     methods.forEach((method) =>
       this[method] = (path, { params, data } = {}) => new Promise((resolve, reject) => {
@@ -47,6 +47,6 @@ class _ApiClient {
   }
 }
 
-const ApiClient = _ApiClient;
+const ApiFetcher = _ApiFetcher;
 
-export default ApiClient;
+export default ApiFetcher;

@@ -15,7 +15,7 @@ import qs from 'query-string';
 import WebpackIsomorphicTools from 'webpack-isomorphic-tools';
 
 // dependencies of serverside render
-import ApiClient from './helpers/ApiClient';
+import ApiFetcher from './helpers/ApiFetcher';
 import createStore from './redux/create';
 import Html from './helpers/Html';
 import getStatusFromRoutes from './helpers/getStatusFromRoutes';
@@ -69,7 +69,7 @@ function setupRenderer() {
     }
     const pretty = new PrettyError();
 
-    const client = new ApiClient(req);
+    const client = new ApiFetcher(req);
     const store = createStore(reduxReactRouter, getRoutes, createHistory, client, reducers);
 
     function hydrateOnClient() {
