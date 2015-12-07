@@ -109,7 +109,7 @@ module.exports = Object.assign({
   // If not provided, the default used will be that in src/helpers/Html.js.
   // Will be added to Webpack aliases.
   */
-  html: sourceRoot + '/helpers/Html.js',
+  htmlShell: sourceRoot + '/helpers/Html.js',
 
   webpack: {
 

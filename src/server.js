@@ -56,8 +56,8 @@ function setupRenderer() {
     const reducers = require(path.resolve(config.reducers));
 
     let CustomHtml;
-    if (config.html) {
-      CustomHtml = require(path.resolve(config.html));
+    if (config.htmlShell) {
+      CustomHtml = require(path.resolve(config.htmlShell));
     } else {
       CustomHtml = Html;
     }
