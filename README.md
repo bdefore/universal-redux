@@ -68,7 +68,7 @@ Alternatively, you may pass your own Express instance as a parameter when callin
 
 #### Redux middleware
 
-You can activate your own Redux middleware by specifying the `middleware` property in the configuration file. This should be a path to a file whcih exports each middleware as a function. On serverside renders, those functions will be called with two parameters: the Express request and response objects. On clientside renders, they will be called with none. All properties specified in `globals` will be available to the middleware.
+You can activate your own Redux middleware by specifying the `middleware` property in the configuration file. This must be a path to a file which exports each middleware as a function. On serverside renders, those functions will be called with two parameters: the Express request and response objects. On clientside renders, they will be called with none. All properties specified in `globals` will be available to the middleware.
 
 #### Replacing the HTML shell
 
