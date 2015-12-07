@@ -95,7 +95,6 @@
     "serve-favicon": "^2.3.0",
     "strip-loader": "^0.1.0",
     "style-loader": "^0.13.0",
-    "superagent": "^1.4.0",
     "webpack": "^1.12.9",
     "webpack-config-merger": "0.0.3",
     "webpack-dev-middleware": "^1.4.0",
