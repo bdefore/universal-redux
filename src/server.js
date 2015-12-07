@@ -15,7 +15,6 @@ import qs from 'query-string';
 import WebpackIsomorphicTools from 'webpack-isomorphic-tools';
 
 // dependencies of serverside render
-import fetcher from './redux/middleware/fetcher';
 import createStore from './redux/create';
 import Html from './helpers/Html';
 import getStatusFromRoutes from './helpers/getStatusFromRoutes';
@@ -53,7 +52,7 @@ function setupRenderer() {
   app.use((req, res) => {
 
     const getRoutes = require(path.resolve(config.routes));
-    const reducers = require(path.resolve(config.reducers));
+    const reducers = require(path.resolve(config.redux.reducers));
 
     let CustomHtml;
     if (config.htmlShell) {
@@ -69,7 +68,18 @@ function setupRenderer() {
     }
     const pretty = new PrettyError();
 
-    const store = createStore(reduxReactRouter, getRoutes, createHistory, fetcher(req.get('cookie')), reducers);
+    // assemble custom middleware, pass req, res
+    const middleware = []
+    if (config.redux.middleware) {
+      const customMiddleware = require(path.resolve(config.redux.middleware));
+      each(customMiddleware, (customMiddlewareToAdd) => {
+        if (typeof customMiddlewareToAdd === 'function') {
+          middleware.push(customMiddlewareToAdd(req, res));
+        }
+      });
+    }
+
+    const store = createStore(reduxReactRouter, getRoutes, createHistory, middleware, reducers);
 
     function hydrateOnClient() {
       res.send('<!doctype html>\n' + ReactDOM.renderToString(<CustomHtml assets={tools.assets()} store={store}/>));
@@ -135,7 +145,9 @@ function validateConfig() {
   if (!config.routes) {
     errors.push('==>     ERROR: Must supply routes.');
   }
-  if (!config.reducers) {
+  if (!config.redux.reducers) {
+    errors.push('==>     ERROR: Must supply redux configuration.');
+  } else if (!config.redux.reducers) {
     errors.push('==>     ERROR: Must supply reducers.');
   }
   // TODO: check for more
@@ -167,6 +179,8 @@ export default class Renderer {
     } else {
       console.log('universal-redux configuration is valid.');
     }
+
+    return errors;
   }
 
   static app(userSuppliedApp) {
@@ -180,7 +194,10 @@ export default class Renderer {
 
   static setup(userConfig, userToolsConfig) {
     if (userConfig) {
-      Renderer.configure(userConfig, userToolsConfig);
+      const errors = Renderer.configure(userConfig, userToolsConfig);
+      if (errors.length > 0) {
+        return;
+      }
     }
 
     let rootDir;

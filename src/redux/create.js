@@ -4,8 +4,9 @@ import { createStore as _createStore, applyMiddleware, compose } from 'redux';
 import routing from './middleware/routing';
 import configResolver from '../helpers/configResolver';
 
-export default function createStore(reduxReactRouter, getRoutes, createHistory, fetcher, reducers, data) {
-  const middleware = [fetcher, routing];
+export default function createStore(reduxReactRouter, getRoutes, createHistory, customMiddleware, reducers, data) {
+  const defaultMiddleware = [routing];
+  const middleware = defaultMiddleware.concat(customMiddleware);
 
   if (__CLIENT__ && __LOGGER__) {
     middleware.push(logger);
@@ -29,8 +30,8 @@ export default function createStore(reduxReactRouter, getRoutes, createHistory, 
   const store = finalCreateStore(reducers, data);
 
   if (__DEVELOPMENT__ && module.hot) {
-    module.hot.accept(path.resolve(configResolver().reducers), () => {
-      store.replaceReducer(path.resolve(configResolver().reducers));
+    module.hot.accept(path.resolve(configResolver().redux.reducers), () => {
+      store.replaceReducer(path.resolve(configResolver().redux.reducers));
     });
   }
 

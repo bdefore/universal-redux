@@ -64,8 +64,11 @@ combinedWebpackConfig.plugins.push(new webpack.DefinePlugin(definitions));
 // add routes and reducer aliases so that client has access to them
 combinedWebpackConfig.resolve.alias = combinedWebpackConfig.resolve.alias || {};
 combinedWebpackConfig.resolve.alias.routes = userConfig.routes;
-combinedWebpackConfig.resolve.alias.reducers = userConfig.reducers;
+combinedWebpackConfig.resolve.alias.reducers = userConfig.redux.reducers;
 combinedWebpackConfig.resolve.alias.config = combinedWebpackConfig.context + '/' + userConfigPath;
+if(userConfig.redux.middleware) {
+  combinedWebpackConfig.resolve.alias.middleware = userConfig.redux.middleware;
+}
 
 // output configuration files if user wants verbosity
 if(userConfig.verbose) {

@@ -98,11 +98,23 @@ module.exports = Object.assign({
   */
   routes: sourceRoot + '/routes.js',
 
-  /*
-  // The path to the index of your Redux reducers. Required. Will be added
-  // to Webpcak aliases.
-  */
-  reducers: sourceRoot + '/redux/modules/reducer.js',
+  redux: {
+    /*
+    // The path to the index of your Redux reducers. Required. Will be added
+    // to Webpcak aliases.
+    //
+    // Expects: String
+    */
+    reducers: sourceRoot + '/redux/modules/reducer.js',
+
+    /*
+    // A path to an index of middleware functions. On the serverside, these will
+    // be called with the Express request and response. Optional.
+    //
+    // Expects: String
+    */
+    // middleware:
+  },
 
   /*
   // The path to your replacement for the default HTML shell. Optional.

@@ -4,18 +4,20 @@
 // node modules dependencies
 import 'babel/polyfill';
 import React from 'react';
+import { each } from 'lodash';
 import ReactDOM from 'react-dom';
 import createHistory from 'history/lib/createBrowserHistory';
 import useScroll from 'scroll-behavior/lib/useStandardScroll';
 import {Provider} from 'react-redux';
 import {reduxReactRouter, ReduxRouter} from 'redux-router';
 
-// dependencies of external source
+// dependencies of external source. these resolve via webpack aliases
+// as assigned in merge-configs.js
 import getRoutes from 'routes';
 import reducers from 'reducers';
+import customMiddleware from 'middleware';
 
 // dependencies of serverside render
-import fetcher from './redux/middleware/fetcher';
 import createStore from './redux/create';
 import makeRouteHooksSafe from './helpers/makeRouteHooksSafe';
 
@@ -24,7 +26,16 @@ import makeRouteHooksSafe from './helpers/makeRouteHooksSafe';
 const scrollablehistory = useScroll(createHistory);
 
 const dest = document.getElementById('content');
-const store = createStore(reduxReactRouter, makeRouteHooksSafe(getRoutes), scrollablehistory, fetcher(), reducers, window.__data);
+
+// assemble custom middleware, pass req, res
+const middleware = []
+each(customMiddleware, (customMiddlewareToAdd) => {
+  if (typeof customMiddlewareToAdd === 'function') {
+    middleware.push(customMiddlewareToAdd());
+  }
+});
+
+const store = createStore(reduxReactRouter, makeRouteHooksSafe(getRoutes), scrollablehistory, middleware, reducers, window.__data);
 
 const component = (
   <ReduxRouter routes={getRoutes(store)} />
