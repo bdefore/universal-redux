@@ -34,13 +34,6 @@ module.exports = Object.assign({
   },
 
   /*
-  // The prefix that will be prepending for all calls intended for an external API
-  //
-  // Expects: String
-  */ 
-  apiPrefix: 'api',
-
-  /*
   // Globals available to both serverside and clientside rendering.
   // You may also add your own here.
   */
