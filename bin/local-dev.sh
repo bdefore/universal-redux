@@ -20,14 +20,14 @@ fi
 # lifted from http://stackoverflow.com/a/13864829/583755
 compile() {
   echo
-  echo Files have changed, updating redux-universal-renderer...
+  echo Files have changed, updating universal-redux...
   echo
   echo Source: $ROOT_DIR
-  echo Destination: $PROJECT_PATH/node_modules/redux-universal-renderer
+  echo Destination: $PROJECT_PATH/node_modules/universal-redux
   echo
-  cp $ROOT_DIR/bin/* $PROJECT_PATH/node_modules/redux-universal-renderer/bin/ > /dev/null
-  cp $ROOT_DIR/config/* $PROJECT_PATH/node_modules/redux-universal-renderer/config/ > /dev/null
-  babel $ROOT_DIR/src/ -d $PROJECT_PATH/node_modules/redux-universal-renderer/lib > /dev/null
+  cp $ROOT_DIR/bin/* $PROJECT_PATH/node_modules/universal-redux/bin/ > /dev/null
+  cp $ROOT_DIR/config/* $PROJECT_PATH/node_modules/universal-redux/config/ > /dev/null
+  babel $ROOT_DIR/src/ -d $PROJECT_PATH/node_modules/universal-redux/lib > /dev/null
   echo Update complete, continuing to watch...
 }
 

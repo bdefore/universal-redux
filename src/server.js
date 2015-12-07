@@ -23,7 +23,7 @@ import getStatusFromRoutes from './helpers/getStatusFromRoutes';
 let app;
 let hasSetup = false;
 let isomorphicTools;
-let config = require('../config/redux-universal-renderer.config.js');
+let config = require('../config/universal-redux.config.js');
 let toolsConfig = require('../config/webpack-isomorphic-tools-config');
 
 /**
@@ -135,14 +135,14 @@ function validateConfig() {
     errors.push('==>     ERROR: No HOST variable has been configured');
   }
   if (!config.webpack) {
-    errors.push('==>     ERROR: No webpack configuration supplied. See example at https://github.com/bdefore/redux-universal-renderer#usage');
+    errors.push('==>     ERROR: No webpack configuration supplied. See example at https://github.com/bdefore/universal-redux#usage');
   } else {
     const resolve = config.webpack.resolve;
     if (!resolve || !resolve.root) {
-      errors.push('==>     ERROR: Webpack configuration must supply a root that maps to your project. See example at https://github.com/bdefore/redux-universal-renderer#usage');
+      errors.push('==>     ERROR: Webpack configuration must supply a root that maps to your project. See example at https://github.com/bdefore/universal-redux#usage');
     }
     if (!resolve || !resolve.alias || !resolve.alias.routes || !resolve.alias.reducers) {
-      errors.push('==>     ERROR: Webpack configuration must supply aliases for routes, config, and reducers. See example at https://github.com/bdefore/redux-universal-renderer#usage');
+      errors.push('==>     ERROR: Webpack configuration must supply aliases for routes, config, and reducers. See example at https://github.com/bdefore/universal-redux#usage');
     }
   }
   // TODO: check for more

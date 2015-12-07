@@ -1,14 +1,14 @@
 {
-  "name": "redux-universal-renderer",
+  "name": "universal-redux",
   "description": "A universal redux renderer (ES6, Webpack, Express)",
   "author": "Buck DeFore <bdefore@gmail.com> (http://github.com/bdefore)",
   "license": "MIT",
   "version": "0.15.1",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/bdefore/redux-universal-renderer.git"
+    "url": "git+https://github.com/bdefore/universal-redux.git"
   },
-  "homepage": "https://github.com/bdefore/redux-universal-renderer",
+  "homepage": "https://github.com/bdefore/universal-redux",
   "keywords": [
     "react",
     "isomorphic",
@@ -112,13 +112,13 @@
     "node": "4.1.1"
   },
   "bin": {
-    "redux-universal-renderer-dev": "./bin/local-dev.sh",
-    "redux-universal-renderer-watch": "./bin/webpack-dev-server.js",
-    "redux-universal-renderer-server": "./bin/server.js",
-    "redux-universal-renderer-build": "./bin/build.js"
+    "universal-redux-dev": "./bin/local-dev.sh",
+    "universal-redux-watch": "./bin/webpack-dev-server.js",
+    "universal-redux-server": "./bin/server.js",
+    "universal-redux-build": "./bin/build.js"
   },
   "bugs": {
-    "url": "https://github.com/bdefore/redux-universal-renderer/issues"
+    "url": "https://github.com/bdefore/universal-redux/issues"
   },
   "directories": {
     "doc": "docs"

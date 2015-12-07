@@ -13,7 +13,7 @@ var WebpackErrorNotificationPlugin = require('webpack-error-notification');
 var isProduction = process.env.NODE_ENV === 'production';
 
 // gather webpack config
-var userConfigPath = 'config/redux-universal-renderer.config.js';
+var userConfigPath = 'config/universal-redux.config.js';
 var userConfig = require(path.resolve(userConfigPath));
 var baseConfig = isProduction ? baseProdConfig : baseDevConfig;
 

@@ -81,7 +81,7 @@ module.exports = {
       modulesDirectories: [
         'src',
         'node_modules',
-        'node_modules/redux-universal-renderer/node_modules'
+        'node_modules/universal-redux/node_modules'
       ],
       extensions: ['', '.json', '.js']
     },
@@ -89,7 +89,7 @@ module.exports = {
       modulesDirectories: [
         'src',
         'node_modules',
-        'node_modules/redux-universal-renderer/node_modules'
+        'node_modules/universal-redux/node_modules'
       ]
     }
   },
