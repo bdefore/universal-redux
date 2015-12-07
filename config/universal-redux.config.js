@@ -4,7 +4,7 @@ const isProduction = process.env.NODE_ENV === 'production';
 const projectRoot = path.resolve(__dirname, '..');
 const sourceRoot = path.resolve(__dirname, '../src');
 
-module.exports = Object.assign({
+module.exports = {
 
   /*
   // Metadata for the site
@@ -172,5 +172,5 @@ module.exports = Object.assign({
     }
   }
 
-});
+};
 /* eslint-enable */

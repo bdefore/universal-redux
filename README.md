@@ -87,9 +87,11 @@ If you'd like to develop on Universal Redux, clone the repo and while testing wi
 - [x] Pass in your own Express app instance
 - [x] Configurable custom Redux middleware
 - [ ] Built-in page transitions
+- [ ] Review dependencies, move applicable ones to devDependencies
+- [ ] Review adding additional peeDependencies
 - [ ] Example with JWT authentication
-- [ ] Branch for `redux-simple-router` rather than `redux-router`
 - [ ] Finalize API before 1.0
+- [ ] Branch for `redux-simple-router` rather than `redux-router`
 
 ### Inspirations
 
