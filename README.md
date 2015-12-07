@@ -6,8 +6,6 @@
 [![devDependency Status](https://david-dm.org/bdefore/universal-redux/dev-status.svg?style=flat-square)](https://david-dm.org/bdefore/universal-redux#info=devDependencies)
 [![Demo on Heroku](https://img.shields.io/badge/demo-heroku-brightgreen.svg?style=flat-square)](https://universal-redux.herokuapp.com)
 
-An npm module that lets you jump right into coding [React](https://facebook.github.io/react/) and [Redux](http://redux.js.org/), with universal (also known as isomorphic) rendering on both server and client, and without having to manage or maintain Express setups or Webpack configurations.
-
 With the default configuration, Universal Redux provides routing with [React Router](https://github.com/rackt/react-router) as well as a hot-reloading development server. Fonts and styles (SASS, Less, CSS) are also ready to go.
 
 There is an [example project](https://github.com/bdefore/react-redux-universal-hot-example/tree/example-project) which is continuously deployed [on Heroku](https://universal-redux.herokuapp.com).
