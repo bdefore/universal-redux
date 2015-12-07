@@ -1,12 +1,11 @@
 import logger from 'redux-logger';
 import path from 'path';
 import { createStore as _createStore, applyMiddleware, compose } from 'redux';
-import fetcher from './middleware/fetcher';
 import routing from './middleware/routing';
 import configResolver from '../helpers/configResolver';
 
-export default function createStore(reduxReactRouter, getRoutes, createHistory, fetcherInstance, reducers, data) {
-  const middleware = [fetcher(fetcherInstance), routing];
+export default function createStore(reduxReactRouter, getRoutes, createHistory, fetcher, reducers, data) {
+  const middleware = [fetcher, routing];
 
   if (__CLIENT__ && __LOGGER__) {
     middleware.push(logger);

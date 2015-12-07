@@ -15,18 +15,16 @@ import getRoutes from 'routes';
 import reducers from 'reducers';
 
 // dependencies of serverside render
-import ApiFetcher from './helpers/ApiFetcher';
+import fetcher from './redux/middleware/fetcher';
 import createStore from './redux/create';
 import makeRouteHooksSafe from './helpers/makeRouteHooksSafe';
-
-const client = new ApiFetcher();
 
 // Three different types of scroll behavior available.
 // Documented here: https://github.com/rackt/scroll-behavior
 const scrollablehistory = useScroll(createHistory);
 
 const dest = document.getElementById('content');
-const store = createStore(reduxReactRouter, makeRouteHooksSafe(getRoutes), scrollablehistory, client, reducers, window.__data);
+const store = createStore(reduxReactRouter, makeRouteHooksSafe(getRoutes), scrollablehistory, fetcher(), reducers, window.__data);
 
 const component = (
   <ReduxRouter routes={getRoutes(store)} />

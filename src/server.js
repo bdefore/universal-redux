@@ -15,14 +15,14 @@ import qs from 'query-string';
 import WebpackIsomorphicTools from 'webpack-isomorphic-tools';
 
 // dependencies of serverside render
-import ApiFetcher from './helpers/ApiFetcher';
+import fetcher from './redux/middleware/fetcher';
 import createStore from './redux/create';
 import Html from './helpers/Html';
 import getStatusFromRoutes from './helpers/getStatusFromRoutes';
 
 let app;
 let hasSetup = false;
-let isomorphicTools;
+let tools;
 let config = require('../config/universal-redux.config.js');
 let toolsConfig = require('../config/webpack-isomorphic-tools-config');
 
@@ -38,8 +38,8 @@ global.__CONFIG__ = config;
 function setupTools(rootDir) {
   toolsConfig.webpack_assets_file_path = rootDir + '/webpack-assets.json';
 
-  isomorphicTools = new WebpackIsomorphicTools(toolsConfig);
-  isomorphicTools
+  tools = new WebpackIsomorphicTools(toolsConfig);
+  tools
     .development(__DEVELOPMENT__)
     .server(rootDir);
 }
@@ -65,15 +65,14 @@ function setupRenderer() {
     if (__DEVELOPMENT__) {
       // Do not cache webpack stats: the script file would change since
       // hot module replacement is enabled in the development env
-      isomorphicTools.refresh();
+      tools.refresh();
     }
     const pretty = new PrettyError();
 
-    const client = new ApiFetcher(req);
-    const store = createStore(reduxReactRouter, getRoutes, createHistory, client, reducers);
+    const store = createStore(reduxReactRouter, getRoutes, createHistory, fetcher(req.get('cookie')), reducers);
 
     function hydrateOnClient() {
-      res.send('<!doctype html>\n' + ReactDOM.renderToString(<CustomHtml assets={isomorphicTools.assets()} store={store}/>));
+      res.send('<!doctype html>\n' + ReactDOM.renderToString(<CustomHtml assets={tools.assets()} store={store}/>));
     }
 
     if (__DISABLE_SSR__) {
@@ -109,7 +108,7 @@ function setupRenderer() {
           if (status) {
             res.status(status);
           }
-          res.send('<!doctype html>\n' + ReactDOM.renderToString(<CustomHtml assets={isomorphicTools.assets()} component={component} store={store} headers={res._headers} />));
+          res.send('<!doctype html>\n' + ReactDOM.renderToString(<CustomHtml assets={tools.assets()} component={component} store={store} headers={res._headers} />));
         }).catch((err) => {
           console.error('DATA FETCHING ERROR:', pretty.render(err));
           res.status(500);
