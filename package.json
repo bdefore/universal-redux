@@ -20,7 +20,8 @@
     "redux",
     "renderer",
     "boilerplate",
-    "babel"
+    "babel",
+    "npm"
   ],
   "main": "lib/index.js",
   "scripts": {
