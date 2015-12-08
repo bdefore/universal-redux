@@ -3,6 +3,8 @@ require('../server.babel'); // babel registration (runtime transpilation for nod
 
 var webpack = require('webpack');
 var webpackConfig = require('./merge-configs');
+var fs = require('fs');
+// var outputStatsPath = './webpack-stats.json';
 
 console.log('\nBuilding webpack bundle...');
 webpack(webpackConfig, function(err, stats) {
@@ -34,4 +36,13 @@ webpack(webpackConfig, function(err, stats) {
 
   console.log(stats.toString(options));
 
+  if(outputStatsPath) {
+    fs.writeFile(outputStatsPath, JSON.stringify(stats.toJson()), function(err) {
+      if(err) {
+        return console.log(err);
+      }
+
+      console.log('Webpack output stats were saved to', outputStatsPath);
+    });
+  }
 });
