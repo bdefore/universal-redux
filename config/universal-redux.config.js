@@ -143,7 +143,7 @@ module.exports = {
       // The Webpack devtool configuration. May affect build times.
       // See https://webpack.github.io/docs/configuration.html#devtool
       */
-      devtool: 'inline-eval-cheap-source-map',
+      devtool: isProduction ? 'source-map' : 'inline-eval-cheap-source-map',
 
       /*
       // Not recommended to change.
