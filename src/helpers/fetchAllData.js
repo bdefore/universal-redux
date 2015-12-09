@@ -15,11 +15,11 @@ export default (components, getState, dispatch, location, params) => {
         .catch(error => {
           // TODO: You may want to handle errors for fetchDataDeferred here
           console.warn('Warning: Error in fetchDataDeferred', error);
-          return reject(error);
+          return resolve();
         });
     };
 
-    return Promise.all(fetchAllData(components, getState, dispatch, location, params))
+    Promise.all(fetchAllData(components, getState, dispatch, location, params))
       .then(doTransition)
       .catch(error => {
         // TODO: You may want to handle errors for fetchData here
