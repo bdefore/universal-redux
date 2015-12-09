@@ -67,7 +67,7 @@ module.exports = {
     },
     module: {
       loaders: [
-        { test: /\.js$/, exclude: /node_modules/, loaders: jsLoaders},
+        { test: /\.jsx?$/, exclude: /node_modules/, loaders: jsLoaders},
         { test: /\.json$/, loader: 'json-loader' },
         { test: /\.woff(\?v=\d+\.\d+\.\d+)?$/, loader: "url?limit=10000&mimetype=application/font-woff" },
         { test: /\.woff2(\?v=\d+\.\d+\.\d+)?$/, loader: "url?limit=10000&mimetype=application/font-woff" },
@@ -83,7 +83,7 @@ module.exports = {
         'node_modules',
         'node_modules/universal-redux/node_modules'
       ],
-      extensions: ['', '.json', '.js']
+      extensions: ['', '.json', '.js', '.jsx']
     },
     resolveLoader: {
       modulesDirectories: [
