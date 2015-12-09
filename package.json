@@ -77,13 +77,13 @@
     "redux-devtools-dock-monitor": "^1.0.0-beta-3",
     "redux-devtools-log-monitor": "^1.0.0-beta-3",
     "redux-logger": "0.0.3",
-    "redux-router": "1.0.0-beta4",
+    "redux-simple-router": "0.0.10",
     "sass-loader": "^3.1.2",
-    "scroll-behavior": "^0.3.0",
     "serialize-javascript": "^1.1.2",
     "serve-favicon": "^2.3.0",
     "strip-loader": "^0.1.0",
     "style-loader": "^0.13.0",
+    "url-loader": "^0.5.7",
     "webpack": "^1.12.9",
     "webpack-config-merger": "0.0.3",
     "webpack-dev-middleware": "^1.4.0",
@@ -108,7 +108,7 @@
     "react": "^0.14.3",
     "react-dom": "^0.14.3",
     "react-router": "1.0.0",
-    "redux-router": "1.0.0-beta4"
+    "redux-simple-router": "0.0.10"
   },
   "engines": {
     "node": "4.1.1"
