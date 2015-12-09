@@ -111,10 +111,10 @@ module.exports = {
 
   /*
   // The path to your replacement for the default HTML shell. Optional.
-  // If not provided, the default used will be that in src/helpers/Html.js.
-  // Will be added to Webpack aliases.
+  // If not provided, the default used will be that in
+  // src/containers/HtmlShell/HtmlShell.js. Will be added to Webpack aliases.
   */
-  htmlShell: sourceRoot + '/helpers/Html.js',
+  htmlShell: sourceRoot + '/containers/HtmlShell/HtmlShell.js',
 
   webpack: {
 

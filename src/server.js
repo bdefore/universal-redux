@@ -16,7 +16,7 @@ import WebpackIsomorphicTools from 'webpack-isomorphic-tools';
 
 // dependencies of serverside render
 import createStore from './redux/create';
-import Html from './helpers/Html';
+import Html from './containers/HtmlShell/HtmlShell';
 import getStatusFromRoutes from './helpers/getStatusFromRoutes';
 
 let app;
