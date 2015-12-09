@@ -94,11 +94,11 @@ module.exports = {
   redux: {
     /*
     // The path to the index of your Redux reducers. Required. Will be added
-    // to Webpcak aliases.
+    // to Webpack aliases.
     //
     // Expects: String
     */
-    reducers: sourceRoot + '/redux/modules/reducer.js',
+    reducers: sourceRoot + '/redux/modules/index.js',
 
     /*
     // A path to an index of middleware functions. On the serverside, these will
