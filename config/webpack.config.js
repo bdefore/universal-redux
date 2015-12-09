@@ -146,9 +146,6 @@ module.exports = {
         __SERVER__: false
       }),
 
-      // ignore dev config
-      new webpack.IgnorePlugin(/\.\/dev/, /\/config$/),
-
       // set global vars
       new webpack.DefinePlugin({
         'process.env': {
