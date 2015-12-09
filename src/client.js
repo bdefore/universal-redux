@@ -6,19 +6,17 @@ import 'babel/polyfill';
 import React from 'react';
 import { each } from 'lodash';
 import ReactDOM from 'react-dom';
+import createHistory from 'history/lib/createBrowserHistory';
+import createStore from './redux/create';
 import {Provider} from 'react-redux';
+import {Router} from 'react-router';
+import {syncReduxAndRouter} from 'redux-simple-router';
 
 // dependencies of external source. these resolve via webpack aliases
 // as assigned in merge-configs.js
 import getRoutes from 'routes';
 import reducers from 'reducers';
 import customMiddleware from 'middleware';
-
-// dependencies of serverside render
-import createStore from './redux/create';
-// import makeRouteHooksSafe from './helpers/makeRouteHooksSafe';
-
-const dest = document.getElementById('content');
 
 // assemble custom middleware, pass req, res
 const middleware = [];
@@ -28,11 +26,29 @@ each(customMiddleware, (customMiddlewareToAdd) => {
   }
 });
 
-const store = createStore(getRoutes, middleware, reducers, window.__data);
+const dest = document.getElementById('content');
+const store = createStore(middleware, reducers, window.__data);
+const history = createHistory();
+
+syncReduxAndRouter(history, store);
+
+function createElement(Component, props) {
+  if (Component.fetchData) {
+    Component.fetchData(store.getState, store.dispatch,
+                        props.location, props.params);
+  }
+  return React.createElement(Component, props);
+}
+
+const component = (
+  <Router createElement={createElement} history={history}>
+    {getRoutes(store)}
+  </Router>
+);
 
 ReactDOM.render(
   <Provider store={store} key="provider">
-    {getRoutes(store)}
+    {component}
   </Provider>,
   dest
 );
