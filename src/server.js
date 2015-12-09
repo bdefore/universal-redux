@@ -121,7 +121,7 @@ function setupRenderer() {
             }
             res.send('<!doctype html>\n' + ReactDOM.renderToString(<CustomHtml assets={tools.assets()} component={component} store={store} headers={res._headers} />));
           });
-        } catch(err) {
+        } catch (err) {
           console.error('DATA FETCHING ERROR:', pretty.render(err));
           res.status(500);
           hydrateOnClient();
