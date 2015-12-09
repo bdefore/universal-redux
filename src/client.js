@@ -33,12 +33,12 @@ const history = useScroll(createHistory)();
 
 syncReduxAndRouter(history, store);
 
-function createElement(Component, props) {
+function createElement(Component, propz) {
   if (Component.fetchData) {
     Component.fetchData(store.getState, store.dispatch,
-                        props.location, props.params);
+                        propz.location, propz.params);
   }
-  return React.createElement(Component, props);
+  return React.createElement(Component, propz);
 }
 
 const component = (
