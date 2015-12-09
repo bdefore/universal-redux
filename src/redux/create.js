@@ -1,11 +1,13 @@
 import logger from 'redux-logger';
 import path from 'path';
 import { createStore as _createStore, applyMiddleware, compose } from 'redux';
-import routing from './middleware/routing';
+// import routing from './middleware/routing';
 import configResolver from '../helpers/configResolver';
+import { createHistory } from 'history'
+import { syncReduxAndRouter, routeReducer } from 'redux-simple-router';
 
-export default function createStore(reduxReactRouter, getRoutes, createHistory, customMiddleware, reducers, data) {
-  const defaultMiddleware = [routing];
+export default function createStore(getRoutes, customMiddleware, reducers, data) {
+  const defaultMiddleware = [];
   const middleware = defaultMiddleware.concat(customMiddleware);
 
   if (__CLIENT__ && __LOGGER__) {
@@ -25,9 +27,15 @@ export default function createStore(reduxReactRouter, getRoutes, createHistory, 
     finalCreateStore = applyMiddleware(...middleware)(_createStore);
   }
 
-  finalCreateStore = reduxReactRouter({ getRoutes, createHistory })(finalCreateStore);
+  // finalCreateStore = reduxReactRouter({ getRoutes, createHistory })(finalCreateStore);
 
   const store = finalCreateStore(reducers, data);
+
+  let history;
+  if(__CLIENT__) {
+    history = createHistory();
+    syncReduxAndRouter(history, store);
+  }
 
   if (__DEVELOPMENT__ && module.hot) {
     module.hot.accept(path.resolve(configResolver().redux.reducers), () => {

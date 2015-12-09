@@ -6,10 +6,7 @@ import 'babel/polyfill';
 import React from 'react';
 import { each } from 'lodash';
 import ReactDOM from 'react-dom';
-import createHistory from 'history/lib/createBrowserHistory';
-import useScroll from 'scroll-behavior/lib/useStandardScroll';
 import {Provider} from 'react-redux';
-import {reduxReactRouter, ReduxRouter} from 'redux-router';
 
 // dependencies of external source. these resolve via webpack aliases
 // as assigned in merge-configs.js
@@ -19,11 +16,7 @@ import customMiddleware from 'middleware';
 
 // dependencies of serverside render
 import createStore from './redux/create';
-import makeRouteHooksSafe from './helpers/makeRouteHooksSafe';
-
-// Three different types of scroll behavior available.
-// Documented here: https://github.com/rackt/scroll-behavior
-const scrollablehistory = useScroll(createHistory);
+// import makeRouteHooksSafe from './helpers/makeRouteHooksSafe';
 
 const dest = document.getElementById('content');
 
@@ -35,15 +28,11 @@ each(customMiddleware, (customMiddlewareToAdd) => {
   }
 });
 
-const store = createStore(reduxReactRouter, makeRouteHooksSafe(getRoutes), scrollablehistory, middleware, reducers, window.__data);
-
-const component = (
-  <ReduxRouter routes={getRoutes(store)} />
-);
+const store = createStore(getRoutes, middleware, reducers, window.__data);
 
 ReactDOM.render(
   <Provider store={store} key="provider">
-    {component}
+    {getRoutes(store)}
   </Provider>,
   dest
 );
