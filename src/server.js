@@ -168,6 +168,9 @@ export default class Renderer {
     // does not have access to the webpack alias
     global.__CONFIG__ = config;
 
+    // add user defined globals for serverside access
+    each(userConfig.globals, function(value, key) { global[key] = value; });
+
     if (userToolsConfig) {
       toolsConfig = userToolsConfig;
     }
