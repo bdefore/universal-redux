@@ -68,6 +68,8 @@ combinedWebpackConfig.resolve.alias.reducers = userConfig.redux.reducers;
 combinedWebpackConfig.resolve.alias.config = combinedWebpackConfig.context + '/' + userConfigPath;
 if(userConfig.redux.middleware) {
   combinedWebpackConfig.resolve.alias.middleware = userConfig.redux.middleware;
+} else {
+  combinedWebpackConfig.resolve.alias.middleware = path.resolve(__dirname, '../lib/redux/middleware/index.js');
 }
 
 // output configuration files if user wants verbosity
