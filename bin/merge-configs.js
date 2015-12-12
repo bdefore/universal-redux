@@ -41,6 +41,9 @@ combinedWebpackConfig.plugins.push(isProduction ? toolsPlugin : toolsPlugin.deve
 // turn on linting per webpack build, unless directed not to
 if(userConfig.lint !== false && !isProduction) {
   combinedWebpackConfig.module.loaders[0].loaders.push('eslint-loader');
+  combinedWebpackConfig.eslint = {
+    configFile: path.resolve(__dirname, '../.eslintrc')
+  }
 } 
 
 // turn on desktop notifications if user elects to
