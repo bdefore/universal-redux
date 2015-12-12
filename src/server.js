@@ -169,7 +169,7 @@ export default class Renderer {
     global.__CONFIG__ = config;
 
     // add user defined globals for serverside access
-    each(userConfig.globals, function(value, key) { global[key] = value; });
+    each(userConfig.globals, (value, key) => { global[key] = value; });
 
     if (userToolsConfig) {
       toolsConfig = userToolsConfig;

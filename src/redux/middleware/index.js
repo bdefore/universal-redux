@@ -1,2 +1,2 @@
 // user provided redux middleware
-export default {}
+export default {};
