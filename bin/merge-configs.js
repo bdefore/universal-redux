@@ -30,6 +30,7 @@ if(userConfig.toolsConfigPath) {
   var userToolsConfig = require(path.resolve(userConfig.toolsConfigPath));
   combinedToolsConfig = _.merge(baseToolsConfig, userToolsConfig);
 }
+combinedToolsConfig.webpack_assets_file_path = 'node_modules/universal-redux/webpack-assets.json';
 
 // add tools settings to combined weback config
 var WebpackIsomorphicToolsPlugin = require('webpack-isomorphic-tools/plugin');

@@ -35,7 +35,7 @@ global.__DEVELOPMENT__ = process.env.NODE_ENV !== 'production';
 global.__CONFIG__ = config;
 
 function setupTools(rootDir) {
-  toolsConfig.webpack_assets_file_path = rootDir + '/webpack-assets.json';
+  toolsConfig.webpack_assets_file_path = 'node_modules/universal-redux/webpack-assets.json';
 
   tools = new WebpackIsomorphicTools(toolsConfig);
   tools
