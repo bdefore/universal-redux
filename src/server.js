@@ -32,7 +32,6 @@ global.__CLIENT__ = false;
 global.__SERVER__ = true;
 global.__DISABLE_SSR__ = false;  // <----- DISABLES SERVER SIDE RENDERING FOR ERROR DEBUGGING
 global.__DEVELOPMENT__ = process.env.NODE_ENV !== 'production';
-global.__CONFIG__ = config;
 
 function setupTools(rootDir) {
   toolsConfig.webpack_assets_file_path = 'node_modules/universal-redux/webpack-assets.json';
@@ -162,11 +161,6 @@ export default class Renderer {
     }
 
     config = userConfig;
-    config.apiPrefix = userConfig.apiPrefix || 'api';
-
-    // for access during serverside rendering, which
-    // does not have access to the webpack alias
-    global.__CONFIG__ = config;
 
     // add user defined globals for serverside access
     each(userConfig.globals, (value, key) => { global[key] = value; });

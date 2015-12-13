@@ -2,7 +2,6 @@ import logger from 'redux-logger';
 import path from 'path';
 import { createStore as _createStore, applyMiddleware, compose } from 'redux';
 import routing from './middleware/routing';
-import configResolver from '../helpers/configResolver';
 
 export default function createStore(reduxReactRouter, getRoutes, createHistory, customMiddleware, reducers, data) {
   const defaultMiddleware = [routing];
@@ -29,11 +28,11 @@ export default function createStore(reduxReactRouter, getRoutes, createHistory, 
 
   const store = finalCreateStore(reducers, data);
 
-  if (__DEVELOPMENT__ && module.hot) {
-    module.hot.accept(path.resolve(configResolver().redux.reducers), () => {
-      store.replaceReducer(path.resolve(configResolver().redux.reducers));
-    });
-  }
+  // if (__DEVELOPMENT__ && module.hot) {
+  //   module.hot.accept(__REDUCER_INDEX__, () => {
+  //     store.replaceReducer(path.resolve(__REDUCER_INDEX__));
+  //   });
+  // }
 
   return store;
 }

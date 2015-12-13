@@ -60,7 +60,10 @@ module.exports = {
   //
   // Expects: Boolean
   */  
-  lint: !isProduction,
+  lint: {
+    enabled: true
+    // config: projectRoot + '.eslintrc'
+  },
 
   /*
   // Enable native desktop notifications for Webpack build events.

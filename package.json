@@ -111,7 +111,8 @@
     "redux-router": "1.0.0-beta4"
   },
   "engines": {
-    "node": "4.1.1"
+    "node": ">=4.0.0",
+    "npm": ">=2.0.0"
   },
   "bin": {
     "universal-redux-dev": "./bin/local-dev.sh",

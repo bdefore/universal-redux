@@ -38,7 +38,6 @@
     "__LOGGER__": false,
     "__DISABLE_SSR__": true,
     "__DEVTOOLS__": true,
-    "__CONFIG__": { fake: 'json' },
     "webpackIsomorphicTools": true
   }
 }

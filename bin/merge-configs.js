@@ -40,10 +40,11 @@ combinedWebpackConfig.module.loaders.push({ test: toolsPlugin.regular_expression
 combinedWebpackConfig.plugins.push(isProduction ? toolsPlugin : toolsPlugin.development());
 
 // turn on linting per webpack build, unless directed not to
-if(userConfig.lint !== false && !isProduction) {
+if(userConfig.lint && userConfig.lint.enabled !== false && !isProduction) {
   combinedWebpackConfig.module.loaders[0].loaders.push('eslint-loader');
+  const lintConfigPath = userConfig.lint.config || path.resolve(__dirname, '../.eslintrc');
   combinedWebpackConfig.eslint = {
-    configFile: path.resolve(__dirname, '../.eslintrc')
+    configFile: lintConfigPath
   }
 } 
 
@@ -53,12 +54,11 @@ if(userConfig.notifications === true && !isProduction) {
 }
 
 // add default settings that are used by server via process.env
-var apiPrefix = userConfig.apiPrefix ? userConfig.apiPrefix : 'api';
 var definitions = {
   __LOGGER__: false,
   __DEVTOOLS__: !isProduction,
   __DEVELOPMENT__: !isProduction,
-  __CONFIG__: JSON.stringify(userConfig)
+  __REDUCER_INDEX__: userConfig.redux.reducers // only used for hot reloader in src/redux/create.js. may be able to remove?
 };
 
 // override with user settings
