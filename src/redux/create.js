@@ -1,5 +1,5 @@
 import logger from 'redux-logger';
-import path from 'path';
+// import path from 'path';
 import { createStore as _createStore, applyMiddleware, compose } from 'redux';
 import routing from './middleware/routing';
 
