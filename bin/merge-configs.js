@@ -62,7 +62,7 @@ var definitions = {
 };
 
 // override with user settings
-_.each(userConfig.globals, function(value, key) { definitions[key] = value; });
+_.each(userConfig.globals, function(value, key) { definitions[key] = JSON.stringify(value); });
 combinedWebpackConfig.plugins.push(new webpack.DefinePlugin(definitions));
 
 // add routes and reducer aliases so that client has access to them
