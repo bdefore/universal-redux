@@ -27,7 +27,7 @@
   "scripts": {
     "compile": "babel src/ -d lib/",
     "dev": "./bin/local-dev.sh",
-    "prepublis": "npm run compile",
+    "prepublish": "npm run compile",
     "lint": "eslint -c .eslintrc src",
     "test": "karma start",
     "postinstall": "node ./bin/npm-postinstall.js"
