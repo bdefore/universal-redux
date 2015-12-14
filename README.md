@@ -89,6 +89,8 @@ If you'd like to develop on Universal Redux, clone the repo and while testing wi
 - [x] Review dependencies, move applicable ones to devDependencies
 - [x] Review adding additional peerDependencies
 - [ ] Example with JWT authentication
+- [ ] npm2 instructions
+- [ ] Hot reloadable redux modules
 - [ ] Finalize API before 1.0
 - [ ] Branch for `redux-simple-router` rather than `redux-router`
 - [ ] Built-in page transitions

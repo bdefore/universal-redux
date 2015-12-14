@@ -30,7 +30,9 @@ export default function createStore(reduxReactRouter, getRoutes, createHistory, 
 
   // if (__DEVELOPMENT__ && module.hot) {
   //   module.hot.accept(__REDUCER_INDEX__, () => {
-  //     store.replaceReducer(path.resolve(__REDUCER_INDEX__));
+  //   module.hot.accept('../../../../src/redux/modules/index', () => {
+  //     store.replaceReducer(require(path.resolve(__REDUCER_INDEX__)));
+  //     store.replaceReducer(require('../../../../src/redux/modules/index'));
   //   });
   // }
 
