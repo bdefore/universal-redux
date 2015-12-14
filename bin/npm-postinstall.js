@@ -21,10 +21,6 @@ if ((process.env.NODE_ENV === 'production') || (process.env.npm_config_productio
   return;
 }
 
-// See https://github.com/npm/npm/blob/master/bin/npm-cli.js L#26
-npm = require(path.resolve(path.dirname(process.env.npm_execpath), '../lib') + '/npm.js');
-
-
 for (npmPackage in devDependencies) {
   if (devDependencies.hasOwnProperty(npmPackage)) {
     install.push(npmPackage + '@' + devDependencies[npmPackage]);
@@ -35,6 +31,8 @@ if (install[0] === undefined) {
   return;
 }
 
+// See https://github.com/npm/npm/blob/master/bin/npm-cli.js L#26
+npm = require(path.resolve(path.dirname(process.env.npm_execpath), '../lib') + '/npm.js');
 npm.load({}, function (error) {
   if (error) {
     console.log('NPM error', error);
