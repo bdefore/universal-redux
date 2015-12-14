@@ -163,7 +163,7 @@ export default class Renderer {
     config = userConfig;
 
     // add user defined globals for serverside access
-    each(userConfig.globals, (value, key) => { global[key] = value; });
+    each(userConfig.globals, (value, key) => { global[key] = JSON.stringify(value); });
     global.__REDUCER_INDEX__ = userConfig.redux.reducers;
 
     if (userToolsConfig) {
