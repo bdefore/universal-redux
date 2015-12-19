@@ -39,6 +39,10 @@ Generally kept in `src/routes.js`, this is where you define what routes map to w
 
 - Make some code!
 
+### Examples
+
+- [A minimal example to get started](https://github.com/bartolkaruza/universal-redux-simple-example)
+
 ### Customization
 
 The npm module also exposes a few ways of integrating your code with that of the module.
@@ -51,7 +55,7 @@ Any items specified in the `webpack.config` of your configuration will be merged
 
 You can add your own Express middleware like so:
 
-```
+```javascript
 import universal from 'universal-redux';
 import config from '../config/universal-redux.config.js';
 
@@ -88,12 +92,12 @@ If you'd like to develop on Universal Redux, clone the repo and while testing wi
 - [x] Configurable custom Redux middleware
 - [x] Review dependencies, move applicable ones to devDependencies
 - [x] Review adding additional peerDependencies
-- [ ] Example with JWT authentication
-- [ ] npm2 instructions
-- [ ] Hot reloadable redux modules
+- [x] Example with JWT authentication
 - [ ] Finalize API before 1.0
+- [ ] Add CHANGELOG
+- [ ] npm2 instructions
+- [ ] Hot reloadable redux modules (see https://github.com/bdefore/universal-redux/issues/7)
 - [ ] Branch for `redux-simple-router` rather than `redux-router`
-- [ ] Built-in page transitions
 
 ### Inspirations
 
