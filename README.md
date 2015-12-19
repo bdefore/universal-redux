@@ -42,6 +42,7 @@ Generally kept in `src/routes.js`, this is where you define what routes map to w
 ### Examples
 
 - [A minimal example to get started](https://github.com/bartolkaruza/universal-redux-simple-example)
+- [An example with JWT authentication](https://github.com/bdefore/universal-redux/tree/0.x/examples/jwt)
 
 ### Customization
 
