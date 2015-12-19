@@ -1,5 +1,7 @@
 This is a minimal example of how to use the [Universal Redux](https://github.com/bdefore/universal-redux) npm package with [express-jwt-proxy](https://github.com/bdefore/express-jwt-proxy) to provide JWT authentication with an external API. It is intended to be modular; you can replace either the auth server or API server with the implementation of your choice.
 
+An example is [deployed to Heroku](https://universal-redux-jwt-example.herokuapp.com).
+
 ---
 
 ## Requirements

@@ -3,8 +3,10 @@
   "version": "0.0.1",
   "description": "JWT example with Universal Redux",
   "main": "index.js",
-  "scripts": {
+  "scripts": {    
+    "start": "concurrent --kill-others \"better-npm-run api\" \"better-npm-run auth\" \"better-npm-run server\"",
     "build": "better-npm-run build",
+    "postinstall": "./bin/build_for_heroku.sh",
     "dev-server": "better-npm-run dev-server",
     "api-server": "better-npm-run api-server",
     "auth-server": "better-npm-run auth-server",
@@ -13,6 +15,29 @@
     "watch-client": "better-npm-run watch-client"
   },
   "betterScripts": {
+    "server": {
+      "command": "node ./bin/start",
+      "env": {
+        "NODE_PATH": "./src",
+        "NODE_ENV": "development"
+      }
+    },
+    "api": {
+      "command": "node ./bin/start_api",
+      "env": {
+        "NODE_PATH": "./src",
+        "NODE_ENV": "development",
+        "PORT": 3030
+      }
+    },
+    "auth": {
+      "command": "node ./bin/start_auth",
+      "env": {
+        "NODE_PATH": "./src",
+        "NODE_ENV": "development",
+        "PORT": 3060
+      }
+    },
     "dev-server": {
       "command": "node ./bin/start",
       "env": {
@@ -58,6 +83,7 @@
   "license": "MIT",
   "dependencies": {
     "body-parser": "^1.14.2",
+    "concurrently": "1.0.0",
     "jsonwebtoken": "^5.4.1",
     "superagent": "^1.6.1",
     "universal-redux": "^0.17.3"
@@ -70,7 +96,6 @@
     "babel-runtime": "~5.8.29",
     "better-npm-run": "0.0.5",
     "classnames": "^2.2.0",
-    "concurrently": "1.0.0",
     "deep-equal": "^1.0.1",
     "eslint": "1.8.0",
     "eslint-config-airbnb": "0.1.0",
