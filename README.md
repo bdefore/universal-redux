@@ -8,9 +8,11 @@
 
 With the default configuration, Universal Redux provides routing with [React Router](https://github.com/rackt/react-router) as well as a hot-reloading development server. Fonts and styles (SASS, Less, CSS) are also ready to go.
 
-There is an [example project](https://github.com/bdefore/react-redux-universal-hot-example/tree/example-project) which is continuously deployed [on Heroku](https://universal-redux.herokuapp.com).
-
 ### Usage
+
+- Requirements
+
+Node.JS > 4.1.1 and npm > 3 are strongly recommended. If you are using npm 2, note that you may need to add additional dependencies yourself. If you are using `redux-router`, you must stay with version `^0`, otherwise if you are using `redux-simple-router` version `^1`.
 
 - Install
 
@@ -42,7 +44,8 @@ Generally kept in `src/routes.js`, this is where you define what routes map to w
 ### Examples
 
 - [A minimal example to get started](https://github.com/bartolkaruza/universal-redux-simple-example)
-- [An example with JWT authentication](https://github.com/bdefore/universal-redux/tree/0.x/examples/jwt)
+- [An example with JWT authentication](https://github.com/bdefore/universal-redux/tree/0.x/examples/jwt) ([Heroku demo](https://universal-redux-jwt-example.herokuapp.com))
+- [A refactor of react-redux-universal-hot-example with universal-redux and redux-simple-router](https://github.com/bdefore/react-redux-universal-hot-example/tree/example-project-simple-router) ([Heroku demo](https://universal-redux.herokuapp.com))
 
 ### Customization
 
