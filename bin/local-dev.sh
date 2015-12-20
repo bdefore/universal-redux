@@ -30,7 +30,7 @@ compile() {
   cp $ROOT_DIR/.babelrc $PROJECT_PATH/node_modules/universal-redux
   cp $ROOT_DIR/.eslintrc $PROJECT_PATH/node_modules/universal-redux
   cp $ROOT_DIR/server.babel.js $PROJECT_PATH/node_modules/universal-redux
-  babel $ROOT_DIR/src/ -d $PROJECT_PATH/node_modules/universal-redux/lib > /dev/null
+  babel $ROOT_DIR/src/ --presets es2015,stage-0,react --plugins transform-runtime --out-dir $PROJECT_PATH/node_modules/universal-redux/lib > /dev/null
   echo Update complete, continuing to watch...
 }
 
