@@ -23,7 +23,7 @@ module.exports = {
     //
     // Expects: String
     */
-    host: process.env.HOST || 'http://localhost',
+    host: process.env.HOST || 'localhost',
 
     /*
     // The port to run Express universal renderer will run on. See src/server.js.
@@ -60,7 +60,10 @@ module.exports = {
   //
   // Expects: Boolean
   */  
-  lint: true,
+  lint: {
+    enabled: true
+    // config: projectRoot + '.eslintrc'
+  },
 
   /*
   // Enable native desktop notifications for Webpack build events.

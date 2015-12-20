@@ -30,6 +30,7 @@ if(userConfig.toolsConfigPath) {
   var userToolsConfig = require(path.resolve(userConfig.toolsConfigPath));
   combinedToolsConfig = _.merge(baseToolsConfig, userToolsConfig);
 }
+combinedToolsConfig.webpack_assets_file_path = 'node_modules/universal-redux/webpack-assets.json';
 
 // add tools settings to combined weback config
 var WebpackIsomorphicToolsPlugin = require('webpack-isomorphic-tools/plugin');
@@ -39,8 +40,12 @@ combinedWebpackConfig.module.loaders.push({ test: toolsPlugin.regular_expression
 combinedWebpackConfig.plugins.push(isProduction ? toolsPlugin : toolsPlugin.development());
 
 // turn on linting per webpack build, unless directed not to
-if(userConfig.lint !== false && !isProduction) {
+if(userConfig.lint && userConfig.lint.enabled !== false && !isProduction) {
   combinedWebpackConfig.module.loaders[0].loaders.push('eslint-loader');
+  const lintConfigPath = userConfig.lint.config || path.resolve(__dirname, '../.eslintrc');
+  combinedWebpackConfig.eslint = {
+    configFile: lintConfigPath
+  }
 } 
 
 // turn on desktop notifications if user elects to
@@ -49,16 +54,15 @@ if(userConfig.notifications === true && !isProduction) {
 }
 
 // add default settings that are used by server via process.env
-var apiPrefix = userConfig.apiPrefix ? userConfig.apiPrefix : 'api';
 var definitions = {
   __LOGGER__: false,
   __DEVTOOLS__: !isProduction,
   __DEVELOPMENT__: !isProduction,
-  __CONFIG__: JSON.stringify(userConfig)
+  __REDUCER_INDEX__: userConfig.redux.reducers // only used for hot reloader in src/redux/create.js. may be able to remove?
 };
 
 // override with user settings
-_.each(userConfig.globals, function(value, key) { definitions[key] = value; });
+_.each(userConfig.globals, function(value, key) { definitions[key] = JSON.stringify(value); });
 combinedWebpackConfig.plugins.push(new webpack.DefinePlugin(definitions));
 
 // add routes and reducer aliases so that client has access to them
@@ -68,6 +72,8 @@ combinedWebpackConfig.resolve.alias.reducers = userConfig.redux.reducers;
 combinedWebpackConfig.resolve.alias.config = combinedWebpackConfig.context + '/' + userConfigPath;
 if(userConfig.redux.middleware) {
   combinedWebpackConfig.resolve.alias.middleware = userConfig.redux.middleware;
+} else {
+  combinedWebpackConfig.resolve.alias.middleware = path.resolve(__dirname, '../lib/redux/middleware/index.js');
 }
 
 // output configuration files if user wants verbosity
