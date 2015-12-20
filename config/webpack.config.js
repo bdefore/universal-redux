@@ -83,7 +83,7 @@ module.exports = {
         'node_modules',
         'node_modules/universal-redux/node_modules'
       ],
-      extensions: ['', '.css', '.less', '.scss', '.json', '.js', '.jsx']
+      extensions: ['', '.json', '.js', '.jsx']
     },
     resolveLoader: {
       modulesDirectories: [
