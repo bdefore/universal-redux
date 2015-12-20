@@ -6,13 +6,17 @@
 [![devDependency Status](https://david-dm.org/bdefore/universal-redux/dev-status.svg?style=flat-square)](https://david-dm.org/bdefore/universal-redux#info=devDependencies)
 [![Demo on Heroku](https://img.shields.io/badge/demo-heroku-brightgreen.svg?style=flat-square)](https://universal-redux.herokuapp.com)
 
-With the default configuration, Universal Redux provides routing with [React Router](https://github.com/rackt/react-router) as well as a hot-reloading development server. Fonts and styles (SASS, Less, CSS) are also ready to go.
+### What and Why
+
+Universal Redux is an npm package that when used as a dependency in your project provides a universal (isomorphic) rendering server. You can either use its defaults and begin coding your project, or configure it to your liking with custom Webpack options and Express or Redux middleware. It's intended as both an easy starting point for developers new to React and Redux, as well as an extensible base by which advanced developers can augment easily and keep up to date with the fast-moving React ecosystem.
 
 ### Usage
 
 - Requirements
 
-Node.JS > 4.1.1 and npm > 3 are strongly recommended. If you are using npm 2, note that you may need to add additional dependencies yourself. If you are using `redux-router`, you must stay with version `^0`, otherwise if you are using `redux-simple-router` version `^1`.
+Your project must define a set of routes as specified by a [React Router](https://github.com/rackt/react-router) configuration, but other than that, your folder structure and development path is up to you. Depending on your other dependencies, you may want to use a version of Universal Redux that is not the latest, using the [section below](https://github.com/bdefore/universal-redux#what-version-to-use) to decide.
+
+Node.JS > 4.1.1 and npm > 3 are strongly recommended. If you are using npm 2, note that you may need to add additional dependencies yourself.
 
 - Install
 
@@ -86,21 +90,35 @@ You can specify `htmlShell: '/path/to/your/Html.js'` in your configuration and t
 
 You can add or override the default [webpack-isomorphic-tools](https://github.com/halt-hammerzeit/webpack-isomorphic-tools) configuration, by providing a `toolsConfigPath` value to your `config.js`.
 
+### What version to use
+
+Peer dependencies for each version:
+
+#### 0.x
+
+```
+"react": "^0.14.3",
+"react-dom": "^0.14.3",
+"react-router": "^1.0.0",
+"redux-router": "^1.0.0-beta4"
+```
+
+#### 1.x
+
+```
+"react": "^0.14.3",
+"react-dom": "^0.14.3",
+"react-router": "^1.0.0",
+"redux-simple-router": "^1.0.1"
+```
+
+#### 2.x
+
+Still being discussed [here](https://github.com/bdefore/universal-redux/issues/10).
+
 ### Local development
 
 If you'd like to develop on Universal Redux, clone the repo and while testing with a project that uses it, you can run `PROJECT_PATH=/path/to/project npm run dev` from the Universal Redux root, which will watch for changes and copy them over to your project's `node_modules/universal-redux/lib` directory. If any of your changes add dependencies, you will need to copy those over manually.
-
-### Todo
-
-- [x] Pass in your own Express app instance
-- [x] Configurable custom Redux middleware
-- [x] Review dependencies, move applicable ones to devDependencies
-- [x] Review adding additional peerDependencies
-- [x] Example with JWT authentication
-- [ ] Finalize API before 1.0
-- [ ] Add CHANGELOG
-- [ ] npm2 instructions
-- [ ] Hot reloadable redux modules (see https://github.com/bdefore/universal-redux/issues/7)
 
 ### Inspirations
 
