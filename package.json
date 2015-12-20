@@ -123,8 +123,5 @@
   },
   "bugs": {
     "url": "https://github.com/bdefore/universal-redux/issues"
-  },
-  "directories": {
-    "doc": "docs"
   }
 }
