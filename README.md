@@ -8,25 +8,25 @@
 
 ### What and Why
 
-Universal Redux is an npm package that when used as a dependency in your project provides a universal (isomorphic) rendering server. You can either use its defaults and begin coding your project, or configure it to your liking with custom Webpack options and Express or Redux middleware. It's intended as both an easy starting point for developers new to React and Redux, as well as an extensible base by which advanced developers can augment easily and keep up to date with the fast-moving React ecosystem.
+Universal Redux is an npm package that when used as a dependency in your project provides a universal (isomorphic) rendering server. You can either use its defaults and begin coding your project, or configure it to your liking with custom Webpack options and Express or Redux middleware. It's intended as both an easy starting point for developers new to React and Redux, as well as an extensible base by which advanced developers can augment with their own middleware and keep up to date with the fast-moving React ecosystem.
 
 ### Usage
 
-- Requirements
-
 Your project must define a set of routes as specified by a [React Router](https://github.com/rackt/react-router) configuration, but other than that, your folder structure and development path is up to you. Depending on your other dependencies, you may want to use a version of Universal Redux that is not the latest, using the [section below](https://github.com/bdefore/universal-redux#what-version-to-use) to decide.
 
-Node.JS > 4.1.1 and npm > 3 are strongly recommended. If you are using npm 2, note that you may need to add additional dependencies yourself.
+#### Requirements
 
-- Install
+Node.JS >= 4.1.1 and npm >= 3 are strongly recommended. If you are using npm 2, note that you may need to add additional dependencies yourself.
+
+#### Install
 
 ```
-npm install universal-redux
+npm install --save universal-redux
 ```
 
-- Add a configuration file in your project at `config/universal-redux.config.js` that defines what properties you want to customize. You can start by copying the [annotated example](https://github.com/bdefore/universal-redux/blob/master/config/universal-redux.config.js).
+#### Add a configuration file in your project at `config/universal-redux.config.js` that defines what properties you want to customize. You can start by copying the [annotated example](https://github.com/bdefore/universal-redux/blob/master/config/universal-redux.config.js).
 
-- Specify your build steps 
+#### Specify your build steps 
 
 The following npm bin aliases have been defined:
 
@@ -39,11 +39,11 @@ universal-redux-build
 
 You'll generally call these from the corresponding section of your project's scripts. See [`package.json`](https://github.com/bdefore/react-redux-universal-hot-example/blob/example-project/package.json) in the example project.
 
-- Create a routes file
+#### Create a routes file
 
 Generally kept in `src/routes.js`, this is where you define what routes map to what views. See [`routes.js`](https://github.com/bdefore/react-redux-universal-hot-example/blob/example-project/src/routes.js) in the example project.
 
-- Make some code!
+#### Make some code!
 
 ### Examples
 
