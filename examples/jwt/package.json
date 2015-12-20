@@ -86,7 +86,7 @@
     "concurrently": "1.0.0",
     "jsonwebtoken": "^5.4.1",
     "superagent": "^1.6.1",
-    "universal-redux": "^0.17.3"
+    "universal-redux": "^1.0.0-beta4"
   },
   "devDependencies": {
     "babel-core": "~5.8.33",
@@ -113,7 +113,7 @@
     "react-tools": "^0.10.0",
     "react-transform-catch-errors": "^1.0.0",
     "redbox-react": "^1.1.1",
-    "redux-router": "1.0.0-beta4",
+    "redux-simple-router": "0.0.10",
     "url-loader": "^0.5.7",
     "warning": "^2.1.0"
   }

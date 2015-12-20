@@ -164,7 +164,9 @@ module.exports = {
         /*
          // Not recommended to change.
          */
-        root: sourceRoot
+        root: sourceRoot,
+
+        extensions: [ '.scss' ] // use of import style from './style' in react-toolbox requires having it be a valid extension
       }
     }
   }
