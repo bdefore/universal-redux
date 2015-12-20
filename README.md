@@ -24,9 +24,11 @@ Node.JS >= 4.1.1 and npm >= 3 are strongly recommended. If you are using npm 2, 
 npm install --save universal-redux
 ```
 
-#### Add a configuration file in your project at `config/universal-redux.config.js` that defines what properties you want to customize. You can start by copying the [annotated example](https://github.com/bdefore/universal-redux/blob/master/config/universal-redux.config.js).
+#### Configure
 
-#### Specify your build steps 
+Add a configuration file in your project at `config/universal-redux.config.js` that defines what properties you want to customize. You can start by copying the [annotated example](https://github.com/bdefore/universal-redux/blob/master/config/universal-redux.config.js).
+
+#### Specify your build steps
 
 The following npm bin aliases have been defined:
 
