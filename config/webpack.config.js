@@ -7,49 +7,12 @@ var relativeAssetsPath = '../static/dist';
 var assetsPath = path.join(__dirname, relativeAssetsPath);
 
 // begin dev setup
-var fs = require('fs');
 var host = (process.env.HOST || 'localhost');
 var port = parseInt(process.env.PORT) + 1 || 3001;
 
 // begin prod setup
 var CleanPlugin = require('clean-webpack-plugin');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
-var strip = require('strip-loader');
-
-var babelrc = fs.readFileSync(path.resolve(__dirname, '..', './.babelrc'));
-var babelrcObject = {};
-
-try {
-  babelrcObject = JSON.parse(babelrc);
-} catch (err) {
-  console.error('==>     ERROR: Error parsing your .babelrc.');
-  console.error(err);
-}
-
-if (process.env.NODE_ENV !== 'production') {
-
-  var hmrConfig = [
-      "react-transform", {
-        "transforms": [
-          {
-            "transform": "react-transform-hmr",
-            "imports": ["react"],
-            "locals": ["module"]
-          },
-          {
-            "transform": "react-transform-catch-errors",
-            "imports": ["react", "redbox-react"]
-          }
-        ]
-      }
-    ]
-
-  babelrcObject.env.development.plugins.unshift(hmrConfig);
-
-  var jsLoaders = ['babel-loader?' + JSON.stringify(babelrcObject)];
-} else {
-  var jsLoaders = [strip.loader('debug'), 'babel-loader?' + JSON.stringify(babelrcObject)];
-}
 
 module.exports = {
   common: {
@@ -64,7 +27,7 @@ module.exports = {
     },
     module: {
       loaders: [
-        { test: /\.jsx?$/, exclude: /node_modules/, loaders: jsLoaders },
+        // { test: /\.jsx?$/, exclude: /node_modules/, loaders: jsLoaders }, // now prepended in merge-configs and merge-babel-config
         { test: /\.json$/, loader: 'json-loader' },
         { test: /\.woff(\?v=\d+\.\d+\.\d+)?$/, loader: "url?limit=10000&mimetype=application/font-woff" },
         { test: /\.woff2(\?v=\d+\.\d+\.\d+)?$/, loader: "url?limit=10000&mimetype=application/font-woff" },
