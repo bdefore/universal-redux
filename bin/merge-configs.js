@@ -16,6 +16,7 @@ var isProduction = process.env.NODE_ENV === 'production';
 var userConfigPath = 'config/universal-redux.config.js';
 var userConfig = require(path.resolve(userConfigPath));
 
+var combinedWebpackConfig;
 // merge with base config if directed to
 if(userConfig.webpack.merge) {
   var baseConfig = isProduction ? baseProdConfig : baseDevConfig;
@@ -46,7 +47,7 @@ if(userConfig.lint && userConfig.lint.enabled !== false && !isProduction) {
   combinedWebpackConfig.eslint = {
     configFile: lintConfigPath
   }
-} 
+}
 
 // turn on desktop notifications if user elects to
 if(userConfig.notifications === true && !isProduction) {
