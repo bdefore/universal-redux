@@ -3,7 +3,7 @@
 var fs = require('fs');
 var path = require('path');
 
-var babelrc = fs.readFileSync(path.resolve(__dirname, '../.babelrc'));
+var babelrc = fs.readFileSync(path.resolve(__dirname, '../node_modules/universal-redux/.babelrc'));
 var config;
 
 try {
