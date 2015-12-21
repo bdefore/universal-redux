@@ -3,7 +3,7 @@
   "description": "A universal redux renderer (ES6, Webpack, Express)",
   "author": "Buck DeFore <bdefore@gmail.com> (http://github.com/bdefore)",
   "license": "MIT",
-  "version": "1.0.0-beta6",
+  "version": "2.0.0-beta1",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/bdefore/universal-redux.git"
@@ -25,7 +25,7 @@
   ],
   "main": "lib/index.js",
   "scripts": {
-    "compile": "babel src/ --out-dir lib/",
+    "compile": "babel --presets es2015,stage-0,react --plugins transform-runtime src/ --out-dir lib/",
     "dev": "./bin/local-dev.sh",
     "prepublish": "npm run compile",
     "lint": "eslint -c .eslintrc src",
