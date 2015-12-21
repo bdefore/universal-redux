@@ -4,13 +4,17 @@
     "stage-0",
     "react"
   ],
+  "plugins": [
+    [ "transform-runtime" ],
+    [ "typecheck" ],
+    [ "transform-decorators-legacy" ]
+  ],
   "env": {
     "development": {
-      "plugins": [
-        [ "transform-runtime" ],
-        [ "typecheck" ],
-        [ "transform-decorators-legacy" ]
-      ]
+      "plugins": []
+    },
+    "production": {
+      "plugins": []
     }
   }
 }

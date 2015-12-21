@@ -16,11 +16,39 @@ var CleanPlugin = require('clean-webpack-plugin');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var strip = require('strip-loader');
 
-var babelConfig = 'babel-loader?presets[]=es2015,presets[]=stage-0,presets[]=react,plugins[]=transform-runtime,plugins[]=transform-decorators-legacy'
+var babelrc = fs.readFileSync(path.resolve(__dirname, '..', './.babelrc'));
+var babelrcObject = {};
+
+try {
+  babelrcObject = JSON.parse(babelrc);
+} catch (err) {
+  console.error('==>     ERROR: Error parsing your .babelrc.');
+  console.error(err);
+}
+
 if (process.env.NODE_ENV !== 'production') {
-  var jsLoaders = [babelConfig];
+
+  var hmrConfig = [
+      "react-transform", {
+        "transforms": [
+          {
+            "transform": "react-transform-hmr",
+            "imports": ["react"],
+            "locals": ["module"]
+          },
+          {
+            "transform": "react-transform-catch-errors",
+            "imports": ["react", "redbox-react"]
+          }
+        ]
+      }
+    ]
+
+  babelrcObject.env.development.plugins.unshift(hmrConfig);
+
+  var jsLoaders = ['babel-loader?' + JSON.stringify(babelrcObject)];
 } else {
-  var jsLoaders = [strip.loader('debug'), babelConfig];
+  var jsLoaders = [strip.loader('debug'), 'babel-loader?' + JSON.stringify(babelrcObject)];
 }
 
 module.exports = {
