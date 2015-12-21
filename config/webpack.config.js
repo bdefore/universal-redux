@@ -16,7 +16,7 @@ var CleanPlugin = require('clean-webpack-plugin');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var strip = require('strip-loader');
 
-var babelConfig = 'babel-loader?presets[]=es2015,presets[]=stage-0,presets[]=react'
+var babelConfig = 'babel-loader?presets[]=es2015,presets[]=stage-0,presets[]=react,plugins[]=transform-runtime,plugins[]=transform-decorators-legacy'
 if (process.env.NODE_ENV !== 'production') {
   var jsLoaders = [babelConfig];
 } else {
