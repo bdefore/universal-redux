@@ -2,7 +2,7 @@
 require('../server.babel'); // babel registration (runtime transpilation for node)
 
 var path = require('path');
-var renderer = require('../lib/server');
+var renderer = require('../lib/server').default;
 var config = require(path.resolve('config/universal-redux.config.js'));
 
 // TODO: why does this script execute twice, once before requires are resolved??
