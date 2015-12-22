@@ -3,19 +3,16 @@
   "env": {
     "browser": true,
     "node": true,
-    "mocha": true,
+    "mocha": true
   },
   "rules": {
-    "react/jsx-uses-react": 2,
-    "react/jsx-uses-vars": 2,
-    "react/jsx-quotes": 0,
-    "react/no-did-update-set-state": 0, // due to react-router and react css transition shenanigans. see App.js
-    "jsx-quotes": 2,
-    // Material-UI proptypes expect booleans, not 'true' strings, so we override here
-    "react/jsx-boolean-value": 0,
-    // Disabled for now while SignUpPauseBeforeOptional because of need for HoC, will be refactored away later and then this should be reenabled
-    "react/react-in-jsx-scope": 2,
     "react/no-multi-comp": 0,
+    "import/default": 0,
+    "import/no-duplicates": 0,
+    "import/named": 0,
+    "import/namespace": 0,
+    "import/no-unresolved": 0,
+    "import/no-named-as-default": 2,
     // Temporarirly disabled due to a possible bug in babel-eslint (todomvc example)
     "block-scoped-var": 0,
     // Temporarily disabled for test/* until babel/babel-eslint#33 is resolved
@@ -23,13 +20,17 @@
     "comma-dangle": 0,  // not sure why airbnb turned this on. gross!
     "indent": [2, 2, {"SwitchCase": 1}],
     "no-console": 0,
-    "no-alert": 0,
-    "id-length": 0,
-    "new-cap": 0
+    "no-alert": 0
   },
   "plugins": [
-    "react"
+    "react", "import"
   ],
+  "settings": {
+    "import/parser": "babel-eslint",
+    "import/resolve": {
+      moduleDirectory: ["node_modules", "node_modules/universal-redux/node_modules", "src"]
+    }
+  },
   "globals": {
     "__DEVELOPMENT__": true,
     "__CLIENT__": true,

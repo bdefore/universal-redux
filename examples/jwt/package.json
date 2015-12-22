@@ -91,26 +91,16 @@
   "devDependencies": {
     "better-npm-run": "0.0.5",
     "classnames": "^2.2.0",
-    "deep-equal": "^1.0.1",
-    "eslint": "1.8.0",
     "eslint-config-airbnb": "0.1.0",
-    "eslint-plugin-import": "^0.8.0",
-    "eslint-plugin-react": "^3.5.0",
     "express-jwt-proxy": "^0.5.2",
     "flexboxgrid": "^6.3.0",
-    "invariant": "^2.2.0",
-    "normalize.css": "^3.0.3",
     "react": "^0.14.3",
     "react-addons-css-transition-group": "^0.14.3",
     "react-dom": "^0.14.3",
     "react-redux": "4.0.0",
     "react-router": "1.0.2",
     "react-toolbox": "^0.13.4",
-    "react-tools": "^0.10.0",
-    "react-transform-catch-errors": "^1.0.0",
-    "redbox-react": "^1.1.1",
     "redux-simple-router": "1.0.1",
-    "url-loader": "^0.5.7",
-    "warning": "^2.1.0"
+    "url-loader": "^0.5.7"
   }
 }
