@@ -99,6 +99,8 @@ Peer dependencies for each version:
 
 #### 0.x
 
+[Babel](https://github.com/babel/babel) 5, [Redux Router](https://github.com/acdlite/redux-router)
+
 ```
 "react": "^0.14.3",
 "react-dom": "^0.14.3",
@@ -108,6 +110,8 @@ Peer dependencies for each version:
 
 #### 1.x
 
+[Babel](https://github.com/babel/babel) 5, [Redux Simple Router](https://github.com/rackt/redux-simple-router)
+
 ```
 "react": "^0.14.3",
 "react-dom": "^0.14.3",
@@ -115,7 +119,16 @@ Peer dependencies for each version:
 "redux-simple-router": "^1.0.1"
 ```
 
-#### 2.x
+#### 2.x (Beta - dependencies may change)
+
+[Babel](https://github.com/babel/babel) 6, [Redux Simple Router](https://github.com/rackt/redux-simple-router)
+
+```
+"react": "^0.14.3",
+"react-dom": "^0.14.3",
+"react-router": "^1.0.0",
+"redux-simple-router": "^1.0.1"
+```
 
 Still being discussed [here](https://github.com/bdefore/universal-redux/issues/10).
 
