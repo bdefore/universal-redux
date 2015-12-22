@@ -47,13 +47,13 @@ function setupAssets(rootDir) {
 
 function setupRenderer() {
 
-  const getRoutes = require(path.resolve(config.routes));
-  const reducers = require(path.resolve(config.redux.reducers));
+  const getRoutes = require(path.resolve(config.routes)).default;
+  const reducers = require(path.resolve(config.redux.reducers)).default;
   const pretty = new PrettyError();
 
   let CustomHtml;
   if (config.htmlShell) {
-    CustomHtml = require(path.resolve(config.htmlShell));
+    CustomHtml = require(path.resolve(config.htmlShell)).default;
   } else {
     CustomHtml = Html;
   }
@@ -69,7 +69,7 @@ function setupRenderer() {
     // assemble custom middleware, pass req, res
     const middleware = [];
     if (config.redux.middleware) {
-      const customMiddleware = require(path.resolve(config.redux.middleware));
+      const customMiddleware = require(path.resolve(config.redux.middleware)).default;
       each(customMiddleware, (customMiddlewareToAdd) => {
         if (typeof customMiddlewareToAdd === 'function') {
           middleware.push(customMiddlewareToAdd(req, res));

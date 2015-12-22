@@ -62,8 +62,10 @@ module.exports = {
   */  
   lint: {
     enabled: true
-    // config: projectRoot + '.eslintrc'
+    // config: projectRoot + '/.eslintrc'
   },
+
+  babelConfig: projectRoot + '/.babelrc',
 
   /*
   // Enable native desktop notifications for Webpack build events.

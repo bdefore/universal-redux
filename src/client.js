@@ -2,7 +2,6 @@
  * THIS IS THE ENTRY POINT FOR THE CLIENT, JUST LIKE server.js IS THE ENTRY POINT FOR THE SERVER.
  */
 // node modules dependencies
-import 'babel/polyfill';
 import React from 'react';
 import { each } from 'lodash';
 import ReactDOM from 'react-dom';
@@ -63,7 +62,7 @@ if (process.env.NODE_ENV !== 'production') {
 }
 
 if (__DEVTOOLS__ && !window.devToolsExtension) {
-  const DevTools = require('./containers/DevTools/DevTools');
+  const DevTools = require('./containers/DevTools/DevTools').default;
   ReactDOM.render(
     <Provider store={store} key="provider">
       <div>

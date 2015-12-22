@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-require('../server.babel'); // babel registration (runtime transpilation for node)
+// require('../server.babel'); // babel registration (runtime transpilation for node)
 
 var webpack = require('webpack');
 var webpackConfig = require('./merge-configs');

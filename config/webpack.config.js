@@ -1,4 +1,4 @@
-require('babel/polyfill');
+// require('babel/polyfill');
 
 // begin shared setup
 var path = require('path');
@@ -7,52 +7,12 @@ var relativeAssetsPath = '../static/dist';
 var assetsPath = path.join(__dirname, relativeAssetsPath);
 
 // begin dev setup
-var fs = require('fs');
 var host = (process.env.HOST || 'localhost');
 var port = parseInt(process.env.PORT) + 1 || 3001;
-var babelrc = fs.readFileSync(path.resolve(__dirname, '..', './.babelrc'));
-var babelrcObject = {};
 
 // begin prod setup
 var CleanPlugin = require('clean-webpack-plugin');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
-var strip = require('strip-loader');
-
-if (process.env.NODE_ENV !== 'production') {
-
-  try {
-    babelrcObject = JSON.parse(babelrc);
-  } catch (err) {
-    console.error('==>     ERROR: Error parsing your .babelrc.');
-    console.error(err);
-  }
-
-  var babelrcObjectDevelopment = babelrcObject.env && babelrcObject.env.development || {};
-  var babelLoaderQuery = Object.assign({}, babelrcObject, babelrcObjectDevelopment);
-  delete babelLoaderQuery.env;
-
-  babelLoaderQuery.plugins = babelLoaderQuery.plugins || [];
-  if (babelLoaderQuery.plugins.indexOf('react-transform') < 0) {
-    babelLoaderQuery.plugins.push('react-transform');
-  }
-
-  babelLoaderQuery.extra = babelLoaderQuery.extra || {};
-  if (!babelLoaderQuery.extra['react-transform']) {
-    babelLoaderQuery.extra['react-transform'] = {};
-  }
-  if (!babelLoaderQuery.extra['react-transform'].transforms) {
-    babelLoaderQuery.extra['react-transform'].transforms = [];
-  }
-  babelLoaderQuery.extra['react-transform'].transforms.push({
-    transform: 'react-transform-hmr',
-    imports: ['react'],
-    locals: ['module']
-  });
-
-  var jsLoaders = ['babel?' + JSON.stringify(babelLoaderQuery)];
-} else {
-  var jsLoaders = [strip.loader('debug'), 'babel'];
-}
 
 module.exports = {
   common: {
@@ -67,7 +27,7 @@ module.exports = {
     },
     module: {
       loaders: [
-        { test: /\.jsx?$/, exclude: /node_modules/, loaders: jsLoaders},
+        // { test: /\.jsx?$/, exclude: /node_modules/, loaders: jsLoaders }, // now prepended in merge-configs and merge-babel-config
         { test: /\.json$/, loader: 'json-loader' },
         { test: /\.woff(\?v=\d+\.\d+\.\d+)?$/, loader: "url?limit=10000&mimetype=application/font-woff" },
         { test: /\.woff2(\?v=\d+\.\d+\.\d+)?$/, loader: "url?limit=10000&mimetype=application/font-woff" },

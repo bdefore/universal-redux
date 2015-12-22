@@ -4,6 +4,7 @@ var path = require('path');
 var util = require('util');
 var webpack = require('webpack');
 var mergeWebpack = require('webpack-config-merger');
+var mergeBabel = require('./merge-babel-config');
 var baseWebpackConfig = require('../config/webpack.config.js');
 var baseDevConfig = mergeWebpack(baseWebpackConfig.common, baseWebpackConfig.development);
 var baseProdConfig = mergeWebpack(baseWebpackConfig.common, baseWebpackConfig.production);
@@ -23,6 +24,10 @@ if(userConfig.webpack.merge) {
 } else {
   combinedWebpackConfig = userConfig.webpack.config;
 }
+
+// add babel for js transpiling
+var babelConfig = mergeBabel(userConfig.babelConfig, userConfig.verbose);
+combinedWebpackConfig.module.loaders.unshift({ test: /\.jsx?$/, exclude: /node_modules/, loaders: babelConfig });
 
 // gather tools config
 var combinedToolsConfig = baseToolsConfig;
