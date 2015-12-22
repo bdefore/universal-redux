@@ -55,7 +55,7 @@ module.exports = {
    // Expects: Boolean
    */
   lint: {
-    enabled: false,
+    enabled: true,
     config: projectRoot + '/.eslintrc'
   },
 
