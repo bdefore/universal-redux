@@ -108,9 +108,14 @@ function setupRenderer() {
             renderProps.location,
             renderProps.params
           ).then(() => {
+            // const component = (
+            //   <Provider store={store} key="provider">
+            //     <RoutingContext {...renderProps}/>
+            //   </Provider>
+            // );
             const component = (
               <Provider store={store} key="provider">
-                <RoutingContext {...renderProps}/>
+                <RoutingContext />
               </Provider>
             );
 
@@ -125,15 +130,6 @@ function setupRenderer() {
           res.status(500);
           hydrateOnClient();
         }
-
-        // or just render:
-        // const component = (
-        //   <Provider store={store} key="provider">
-        //     <RoutingContext {...renderProps}/>
-        //   </Provider>
-        // );
-
-        // res.send('<!doctype html>\n' + ReactDOM.renderToString(<CustomHtml assets={tools.assets()} component={component} store={store} headers={res._headers} />));
       }
     });
   });
