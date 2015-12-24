@@ -7,9 +7,9 @@ import { each } from 'lodash';
 import ReactDOM from 'react-dom';
 import createHistory from 'history/lib/createBrowserHistory';
 import createStore from './redux/create';
-import {Provider} from 'react-redux';
-import {Router} from 'react-router';
-import {syncReduxAndRouter} from 'redux-simple-router';
+import { Provider } from 'react-redux';
+import { Router } from 'react-router';
+import { syncReduxAndRouter } from 'redux-simple-router';
 import useScroll from 'scroll-behavior/lib/useStandardScroll';
 
 // dependencies of external source. these resolve via webpack aliases
