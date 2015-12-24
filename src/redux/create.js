@@ -1,4 +1,4 @@
-import logger from 'redux-logger';
+import createLogger from 'redux-logger';
 // import path from 'path';
 import { routeReducer } from 'redux-simple-router';
 
@@ -9,7 +9,7 @@ export default function createStore(customMiddleware, reducers, data) {
   const middleware = defaultMiddleware.concat(customMiddleware);
 
   if (__CLIENT__ && __LOGGER__) {
-    middleware.push(logger);
+    middleware.push(createLogger({ collapsed: true }));
   }
 
   let finalCreateStore;
