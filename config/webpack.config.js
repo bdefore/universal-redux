@@ -15,6 +15,7 @@ var CleanPlugin = require('clean-webpack-plugin');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 var vendor = [
+  'lodash',
   'react',
   'react-dom',
   'react-router',
