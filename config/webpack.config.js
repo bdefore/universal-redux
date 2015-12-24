@@ -14,6 +14,17 @@ var port = parseInt(process.env.PORT) + 1 || 3001;
 var CleanPlugin = require('clean-webpack-plugin');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 
+var vendor = [
+  'react',
+  'react-dom',
+  'react-router',
+  'react-redux',
+  'redux',
+  'redux-form',
+  'redux-logger',
+  'redux-simple-router'
+];
+
 module.exports = {
   common: {
     context: path.resolve(__dirname, '..'),
@@ -84,6 +95,9 @@ module.exports = {
   },
   production: {
     devtool: 'source-map',
+    entry: {
+      vendor
+    },
     output: {
       filename: '[name]-[chunkhash].js',
       chunkFilename: '[name]-[chunkhash].js',
@@ -121,6 +135,10 @@ module.exports = {
         compress: {
           warnings: false
         }
+      }),
+      new webpack.optimize.CommonsChunkPlugin({
+        names: ['vendor'],
+        minChunks: Infinity
       })
     ]
   }
