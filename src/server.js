@@ -51,7 +51,8 @@ function setupAssets() {
     app.use(favicon(path.resolve(config.server.favicon)));
   }
   if (config.server.staticPath) {
-    app.use(Express.static(path.resolve(config.server.staticPath)));
+    const maxAge = config.server.maxAge || 0;
+    app.use(Express.static(path.resolve(config.server.staticPath), { maxage: maxAge }));
   }
 }
 
