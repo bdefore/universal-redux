@@ -81,6 +81,13 @@ if(userConfig.redux.middleware) {
   combinedWebpackConfig.resolve.alias.middleware = path.resolve(__dirname, '../lib/redux/middleware/index.js');
 }
 
+// add project level vendor libs
+if(userConfig.webpack.vendorLibraries && isProduction) {
+  _.each(userConfig.webpack.vendorLibraries, (lib) => {
+    combinedWebpackConfig.entry.vendor.push(lib);
+  });
+}
+
 // output configuration files if user wants verbosity
 if(userConfig.verbose) {
   var utilOptions = {
