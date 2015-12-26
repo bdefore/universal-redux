@@ -14,7 +14,6 @@ import WebpackIsomorphicTools from 'webpack-isomorphic-tools';
 // dependencies of serverside render
 import createStore from './redux/create';
 import Html from './containers/HtmlShell/HtmlShell';
-import fetchAllData from './helpers/fetchAllData';
 import getStatusFromRoutes from './helpers/getStatusFromRoutes';
 
 let app;
@@ -111,36 +110,17 @@ function setupRenderer() {
         res.status(500);
         hydrateOnClient();
       } else {
-        // fetch and render:
-        try {
-          fetchAllData(
-            renderProps.components,
-            store.getState, store.dispatch,
-            renderProps.location,
-            renderProps.params
-          ).then(() => {
-            // const component = (
-            //   <Provider store={store} key="provider">
-            //     <RoutingContext {...renderProps}/>
-            //   </Provider>
-            // );
-            const component = (
-              <Provider store={store} key="provider">
-                <RoutingContext />
-              </Provider>
-            );
+        const component = (
+          <Provider store={store} key="provider">
+            <RoutingContext {...renderProps}/>
+          </Provider>
+        );
 
-            const status = getStatusFromRoutes(renderProps.routes);
-            if (status) {
-              res.status(status);
-            }
-            res.send('<!doctype html>\n' + ReactDOM.renderToString(<CustomHtml assets={tools.assets()} component={component} store={store} headers={res._headers} />));
-          });
-        } catch (err) {
-          console.error('DATA FETCHING ERROR:', pretty.render(err));
-          res.status(500);
-          hydrateOnClient();
+        const status = getStatusFromRoutes(renderProps.routes);
+        if (status) {
+          res.status(status);
         }
+        res.send('<!doctype html>\n' + ReactDOM.renderToString(<CustomHtml assets={tools.assets()} component={component} store={store} headers={res._headers} />));
       }
     });
   });
