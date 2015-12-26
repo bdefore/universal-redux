@@ -82,7 +82,7 @@ if(userConfig.redux.middleware) {
 }
 
 // add project level vendor libs
-if(userConfig.webpack.vendorLibraries && isProduction) {
+if(userConfig.webpack && userConfig.webpack.vendorLibraries && isProduction) {
   _.each(userConfig.webpack.vendorLibraries, (lib) => {
     combinedWebpackConfig.entry.vendor.push(lib);
   });
