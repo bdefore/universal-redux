@@ -48,9 +48,7 @@ function setupTools() {
 }
 
 function setupAssets() {
-  console.log('setting up asets');
   if (config.server.favicon) {
-    console.log('favicon being set');
     app.use(favicon(path.resolve(config.server.favicon)));
   }
   if (config.server.staticPath) {

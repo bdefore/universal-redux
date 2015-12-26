@@ -24,8 +24,20 @@ module.exports = {
     */
     port: process.env.PORT || 3000,
 
+    /*
+    // The path at which static assets are served from. If omitted, Express will
+    // not serve any static assets. Optional.
+    //
+    // Expects: String
+    */
     staticPath: projectRoot + '/static',
 
+    /*
+    // The path at which a favicon image will be served from using the `serve-favicon`
+    // library. If omitted, Express will not serve a favicon. Optional.
+    //
+    // Expects: String
+    */
     // favicon: projectRoot + '/static/favicon.ico'
   },
 
@@ -133,6 +145,12 @@ module.exports = {
     */  
     merge: true,
 
+    /*
+    // A list of libraries that do not change frequently between deploys
+    // and are best served in the vendor bundle.
+    //
+    // Expects: Array
+    */
     vendorLibraries: [],
 
     /*
