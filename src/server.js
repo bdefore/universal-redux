@@ -31,8 +31,15 @@ global.__SERVER__ = true;
 global.__DISABLE_SSR__ = false;  // <----- DISABLES SERVER SIDE RENDERING FOR ERROR DEBUGGING
 global.__DEVELOPMENT__ = process.env.NODE_ENV !== 'production';
 
-function setupTools(rootDir) {
+function setupTools() {
   toolsConfig.webpack_assets_file_path = 'node_modules/universal-redux/webpack-assets.json';
+
+  let rootDir;
+  if (config.webpack.config.context) {
+    rootDir = path.resolve(config.webpack.config.context);
+  } else {
+    rootDir = path.resolve(__dirname, '..');
+  }
 
   tools = new WebpackIsomorphicTools(toolsConfig);
   tools
@@ -40,9 +47,15 @@ function setupTools(rootDir) {
     .server(rootDir);
 }
 
-function setupAssets(rootDir) {
-  app.use(favicon(path.join(rootDir, 'static', 'favicon.ico')));
-  app.use(Express.static(path.resolve(rootDir, 'static')));
+function setupAssets() {
+  console.log('setting up asets');
+  if (config.server.favicon) {
+    console.log('favicon being set');
+    app.use(favicon(path.resolve(config.server.favicon)));
+  }
+  if (config.server.staticPath) {
+    app.use(Express.static(path.resolve(config.server.staticPath)));
+  }
 }
 
 function setupRenderer() {
@@ -205,15 +218,8 @@ export default class Renderer {
       }
     }
 
-    let rootDir;
-    if (config.webpack.config.context) {
-      rootDir = path.resolve(config.webpack.config.context);
-    } else {
-      rootDir = path.resolve(__dirname, '..');
-    }
-
-    setupTools(rootDir);
-    setupAssets(rootDir);
+    setupTools();
+    setupAssets();
     setupRenderer();
   }
 

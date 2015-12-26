@@ -7,14 +7,6 @@ const sourceRoot = path.resolve(__dirname, '../src');
 module.exports = {
 
   /*
-  // Metadata for the site
-  */  
-  app: {
-    title: 'Redux Universal Render App',
-    description: 'Lorem Ipsum'
-  },
-
-  /*
   // Express configuration
   */
   server: {
@@ -30,7 +22,11 @@ module.exports = {
     //
     // Expects: Number
     */
-    port: process.env.PORT || 3000
+    port: process.env.PORT || 3000,
+
+    staticPath: projectRoot + '/static',
+
+    // favicon: projectRoot + '/static/favicon.ico'
   },
 
   /*
@@ -136,6 +132,8 @@ module.exports = {
     // be the complete settings required for building.
     */  
     merge: true,
+
+    vendorLibraries: [],
 
     /*
     // Webpack configuration cusomtizations. There are more parameters
