@@ -86,7 +86,7 @@
     "concurrently": "1.0.0",
     "jsonwebtoken": "^5.4.1",
     "superagent": "^1.6.1",
-    "universal-redux": "^2.0.0-beta3"
+    "universal-redux": "^2.0.0-beta12"
   },
   "devDependencies": {
     "better-npm-run": "0.0.5",
@@ -94,6 +94,7 @@
     "eslint-config-airbnb": "0.1.0",
     "express-jwt-proxy": "^0.5.2",
     "flexboxgrid": "^6.3.0",
+    "normalize.css": "^3.0.3",
     "react": "^0.14.3",
     "react-addons-css-transition-group": "^0.14.3",
     "react-dom": "^0.14.3",
