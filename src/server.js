@@ -6,7 +6,7 @@ import favicon from 'serve-favicon';
 import compression from 'compression';
 import path from 'path';
 import PrettyError from 'pretty-error';
-import { each } from 'lodash';
+import { each, merge } from 'lodash';
 import { RoutingContext, match } from 'react-router';
 import { Provider } from 'react-redux';
 import WebpackIsomorphicTools from 'webpack-isomorphic-tools';
@@ -159,7 +159,7 @@ export default class Renderer {
       Renderer.app();
     }
 
-    config = userConfig;
+    config = merge(config, userConfig);
 
     // add user defined globals for serverside access
     each(userConfig.globals, (value, key) => { global[key] = JSON.stringify(value); });
