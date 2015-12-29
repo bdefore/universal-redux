@@ -9,6 +9,7 @@ import PrettyError from 'pretty-error';
 import { each } from 'lodash';
 import { RoutingContext, match } from 'react-router';
 import { Provider } from 'react-redux';
+import { getPrefetchedData } from 'react-fetcher';
 import WebpackIsomorphicTools from 'webpack-isomorphic-tools';
 
 // dependencies of serverside render
@@ -99,29 +100,58 @@ function setupRenderer() {
       return;
     }
 
-    match({ routes: getRoutes(store),
-            location: req.originalUrl }, (error, redirectLocation, renderProps) => {
+    match({ routes: getRoutes(), location: req.originalUrl }, (routerError, redirectLocation, renderProps) => {
       if (redirectLocation) {
         res.redirect(redirectLocation.pathname + redirectLocation.search);
-      } else if (error) {
-        console.error('ROUTER ERROR:', pretty.render(error));
+      } else if (routerError) {
+        console.error('ROUTER ERROR:', pretty.render(routerError));
         res.status(500);
         hydrateOnClient();
       } else if (!renderProps) {
         res.status(500);
         hydrateOnClient();
       } else {
-        const component = (
-          <Provider store={store} key="provider">
-            <RoutingContext />
-          </Provider>
-        );
 
-        const status = getStatusFromRoutes(renderProps.routes);
-        if (status) {
-          res.status(status);
-        }
-        res.send('<!doctype html>\n' + ReactDOM.renderToString(<CustomHtml assets={tools.assets()} component={component} store={store} headers={res._headers} />));
+        // Get array of route components:
+        const components = renderProps.routes.map(route => route.component);
+
+        // Define locals to be provided to all fetcher functions:
+        const locals = {
+          path: renderProps.location.pathname,
+          query: renderProps.location.query,
+          params: renderProps.params,
+
+          // Allow fetcher functions to dispatch Redux actions:
+          dispatch: store.dispatch
+        };
+
+        // Wait for async actions to complete, then render:
+        getPrefetchedData(components, locals)
+          .then(() => {
+
+            const reduxComponent = (
+              <Provider store={store} key="provider">
+                <RoutingContext />
+              </Provider>
+            );
+
+            const appComponent = (
+              <CustomHtml assets={tools.assets()} component={reduxComponent} store={store} headers={res._headers} />
+            );
+
+            // const data = store.getState();
+            const html = '<!doctype html>\n' + ReactDOM.renderToString(appComponent);
+
+            const status = getStatusFromRoutes(renderProps.routes);
+            if (status) {
+              res.status(status);
+            }
+            res.send(html);
+          }).catch((err) => {
+            console.error('DATA FETCHING ERROR:', pretty.render(err));
+            res.status(500);
+            hydrateOnClient();
+          });
       }
     });
   });
