@@ -1,7 +1,10 @@
+import { combineReducers } from 'redux';
+import { routeReducer } from 'redux-simple-router';
 import auth from './auth';
 import api from './api';
 
-export default {
+export default combineReducers({
   auth: auth,
-  api: api
-};
+  api: api,
+  routing: routeReducer
+});

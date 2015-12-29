@@ -1,8 +1,7 @@
 import createLogger from 'redux-logger';
 // import path from 'path';
-import { routeReducer } from 'redux-simple-router';
 
-import { createStore as _createStore, applyMiddleware, combineReducers, compose } from 'redux';
+import { createStore as _createStore, applyMiddleware, compose } from 'redux';
 
 export default function createStore(customMiddleware, reducers, data) {
   const defaultMiddleware = [];
@@ -25,9 +24,7 @@ export default function createStore(customMiddleware, reducers, data) {
     finalCreateStore = applyMiddleware(...middleware)(_createStore);
   }
 
-  const reducer = combineReducers(Object.assign({}, reducers, { routing: routeReducer } ));
-
-  const store = finalCreateStore(reducer, data);
+  const store = finalCreateStore(reducers, data);
 
   // if (__DEVELOPMENT__ && module.hot) {
   //   module.hot.accept(__REDUCER_INDEX__, () => {
