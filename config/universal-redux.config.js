@@ -30,7 +30,7 @@ module.exports = {
     //
     // Expects: String
     */
-    staticPath: projectRoot + '/static',
+    // staticPath: projectRoot + '/static',
 
     /*
     // The path at which a favicon image will be served from using the `serve-favicon`
