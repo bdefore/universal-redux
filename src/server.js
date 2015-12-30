@@ -211,7 +211,6 @@ export default class Renderer {
       if (err) {
         console.error(err);
       }
-      console.info('----\n==> ✅  %s is running.', config.app.title);
       console.info('==> 💻  Open http://%s:%s in a browser to view the app.', config.server.host, config.server.port);
     });
   }
