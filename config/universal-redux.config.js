@@ -142,7 +142,7 @@ module.exports = {
   //
   // Expects: String
   */
-  htmlShell: sourceRoot + '/containers/HtmlShell/HtmlShell.js',
+  // htmlShell: sourceRoot + '/containers/HtmlShell/HtmlShell.js',
 
   webpack: {
 
