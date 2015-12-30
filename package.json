@@ -27,9 +27,9 @@
   "scripts": {
     "compile": "babel --presets es2015,stage-0,react --plugins transform-runtime src/ --out-dir lib/",
     "dev": "./bin/local-dev.sh",
-    "prepublish": "npm run compile",
-    "lint": "eslint -c .eslintrc src",
-    "test": "karma start"
+    "lint": "eslint -c .eslintrc src bin config",
+    "test": "karma start",
+    "prepublish": "npm run compile"
   },
   "dependencies": {
     "autoprefixer-loader": "^3.1.0",

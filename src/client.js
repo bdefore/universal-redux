@@ -18,7 +18,7 @@ import getRoutes from 'routes';
 import reducers from 'reducers';
 import customMiddleware from 'middleware';
 
-// assemble custom middleware, pass req, res
+// assemble custom middleware
 const middleware = [];
 each(customMiddleware, (customMiddlewareToAdd) => {
   if (typeof customMiddlewareToAdd === 'function') {

@@ -1,4 +1,3 @@
-/* eslint-disable */
 const path = require('path');
 const isProduction = process.env.NODE_ENV === 'production';
 const projectRoot = path.resolve(__dirname, '..');
@@ -76,12 +75,17 @@ module.exports = {
   // on production.
   //
   // Expects: Boolean
-  */  
+  */
   lint: {
     enabled: true
     // config: projectRoot + '/.eslintrc'
   },
 
+  /*
+  // Project level babelConfig to be merged with defaults. Optional.
+  //
+  // Expects: String
+  */
   babelConfig: projectRoot + '/.babelrc',
 
   /*
@@ -89,7 +93,7 @@ module.exports = {
   // Will not be run on production.
   //
   // Expects: Boolean
-  */  
+  */
   notifications: false,
 
   /*
@@ -97,7 +101,7 @@ module.exports = {
   // webpack-isomorphic-tools configuration. Optional.
   //
   // Expects: String
-  */  
+  */
   // toolsConfigPath: __dirname + '/webpack-isomorphic-tools.config.js',
 
   /*
@@ -105,7 +109,7 @@ module.exports = {
   // Tools configurations at startup
   //
   // Expects: Boolean
-  */  
+  */
   verbose: true,
 
   /*
@@ -135,6 +139,8 @@ module.exports = {
   // The path to your replacement for the default HTML shell. Optional.
   // If not provided, the default used will be that in
   // src/containers/HtmlShell/HtmlShell.js. Will be added to Webpack aliases.
+  //
+  // Expects: String
   */
   htmlShell: sourceRoot + '/containers/HtmlShell/HtmlShell.js',
 
@@ -149,9 +155,9 @@ module.exports = {
     // be merged.
     //
     // If the `merge` parameter is `false`, default webpack settings
-    // will not be used and the config specified here will need to 
+    // will not be used and the config specified here will need to
     // be the complete settings required for building.
-    */  
+    */
     merge: true,
 
     /*
@@ -164,9 +170,9 @@ module.exports = {
 
     /*
     // Webpack configuration cusomtizations. There are more parameters
-    // available than specified here. For the full list, see 
+    // available than specified here. For the full list, see
     // https://webpack.github.io/docs/configuration.html.
-    */  
+    */
     config: {
 
       /*
@@ -195,12 +201,11 @@ module.exports = {
       resolve: {
 
         /*
-        // Not recommended to change.
+        // Ensure this maps to the source root of your project, not that of
+        // Universal Redux
         */
         root: sourceRoot
       }
     }
   }
-
 };
-/* eslint-enable */
