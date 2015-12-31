@@ -10,11 +10,4 @@ const app = universal.app();
 JwtProxy(app, authConfig);
 
 universal.setup(universalConfig);
-
-app.listen(universalConfig.server.port, (err) => {
-  if (err) {
-    console.error(err);
-  }
-  console.info('==> 💻  Open http://localhost:%s in a browser to view the app.', universalConfig.server.port);
-});
-
+universal.start();
