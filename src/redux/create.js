@@ -1,5 +1,5 @@
 import createLogger from 'redux-logger';
-import { syncHistory } from 'redux-simple-router';
+import { syncHistory } from '../redux-simple-router';
 import { createStore as _createStore, applyMiddleware, compose } from 'redux';
 // import path from 'path';
 

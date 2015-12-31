@@ -92,7 +92,6 @@ function setupRenderer() {
     const store = createStore(middleware, createMemoryHistory(), reducers);
 
     function hydrateOnClient() {
-      console.log('hydrating on client');
       res.send('<!doctype html>\n' + ReactDOM.renderToString(<CustomHtml assets={tools.assets()} store={store} headers={res._headers} />));
     }
 
@@ -103,7 +102,6 @@ function setupRenderer() {
 
     match({ routes: getRoutes(),
             location: req.originalUrl }, (error, redirectLocation, renderProps) => {
-      console.log('renderProps', renderProps);
       if (redirectLocation) {
         res.redirect(redirectLocation.pathname + redirectLocation.search);
       } else if (error) {
@@ -111,7 +109,6 @@ function setupRenderer() {
         res.status(500);
         hydrateOnClient();
       } else if (!renderProps) {
-        console.log('No render props!');
         res.status(500);
         hydrateOnClient();
       } else {
