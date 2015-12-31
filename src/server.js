@@ -1,20 +1,21 @@
 // node modules dependencies
+import path from 'path';
 import Express from 'express';
 import React from 'react';
 import ReactDOM from 'react-dom/server';
 import favicon from 'serve-favicon';
 import compression from 'compression';
-import path from 'path';
 import PrettyError from 'pretty-error';
 import { each, merge } from 'lodash';
-import { RoutingContext, match } from 'react-router';
+import { RouterContext, match } from 'react-router';
+import createMemoryHistory from 'react-router/lib/createMemoryHistory';
 import { Provider } from 'react-redux';
 import WebpackIsomorphicTools from 'webpack-isomorphic-tools';
 
 // dependencies of serverside render
 import createStore from './redux/create';
 import Html from './containers/HtmlShell/HtmlShell';
-import getStatusFromRoutes from './helpers/getStatusFromRoutes';
+// import getStatusFromRoutes from './helpers/getStatusFromRoutes';
 
 let app;
 let hasSetup = false;
@@ -88,7 +89,7 @@ function setupRenderer() {
       });
     }
 
-    const store = createStore(middleware, reducers);
+    const store = createStore(middleware, createMemoryHistory(), reducers);
 
     function hydrateOnClient() {
       res.send('<!doctype html>\n' + ReactDOM.renderToString(<CustomHtml assets={tools.assets()} store={store} headers={res._headers} />));
@@ -99,7 +100,7 @@ function setupRenderer() {
       return;
     }
 
-    match({ routes: getRoutes(store),
+    match({ routes: getRoutes(),
             location: req.originalUrl }, (error, redirectLocation, renderProps) => {
       if (redirectLocation) {
         res.redirect(redirectLocation.pathname + redirectLocation.search);
@@ -113,14 +114,14 @@ function setupRenderer() {
       } else {
         const component = (
           <Provider store={store} key="provider">
-            <RoutingContext />
+            <RouterContext {...renderProps}/>
           </Provider>
         );
 
-        const status = getStatusFromRoutes(renderProps.routes);
-        if (status) {
-          res.status(status);
-        }
+        // const status = getStatusFromRoutes(renderProps.router);
+        // if (status) {
+        res.status(200);
+        // }
         res.send('<!doctype html>\n' + ReactDOM.renderToString(<CustomHtml assets={tools.assets()} component={component} store={store} headers={res._headers} />));
       }
     });

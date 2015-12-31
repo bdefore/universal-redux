@@ -3,7 +3,7 @@
   "description": "A universal redux renderer (ES6, Webpack, Express)",
   "author": "Buck DeFore <bdefore@gmail.com> (http://github.com/bdefore)",
   "license": "MIT",
-  "version": "2.0.0",
+  "version": "3.0.0-beta1",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/bdefore/universal-redux.git"
@@ -56,7 +56,6 @@
     "express": "^4.13.3",
     "extract-text-webpack-plugin": "^0.9.1",
     "file-loader": "^0.8.5",
-    "history": "^1.17.0",
     "json-loader": "^0.5.4",
     "less": "^2.5.3",
     "less-loader": "^2.2.1",
@@ -69,7 +68,7 @@
     "react-document-meta": "^2.0.0",
     "react-dom": "^0.14.3",
     "react-redux": "^4.0.0",
-    "react-router": "1.0.3",
+    "react-router": "^2.0.0-rc4",
     "react-transform-catch-errors": "^1.0.0",
     "react-transform-hmr": "^1.0.1",
     "redbox-react": "^1.1.1",
@@ -78,7 +77,6 @@
     "redux-devtools-dock-monitor": "^1.0.0-beta-3",
     "redux-devtools-log-monitor": "^1.0.0-beta-3",
     "redux-logger": "2.3.1",
-    "redux-simple-router": "^1.0.2",
     "sass-loader": "^3.1.2",
     "scroll-behavior": "^0.3.0",
     "serialize-javascript": "^1.1.2",
@@ -109,8 +107,7 @@
   "peerDependencies": {
     "react": "^0.14.3",
     "react-dom": "^0.14.3",
-    "react-router": "^1.0.0",
-    "redux-simple-router": "^1.0.1"
+    "react-router": "^2.0.0-rc4"
   },
   "engines": {
     "node": ">=4.0.0",
