@@ -1,3 +1,4 @@
+/* eslint-disable */
 // Constants
 
 export const TRANSITION = '@@router/TRANSITION'
@@ -110,3 +111,4 @@ export function syncHistory(history) {
 
   return middleware
 }
+/* eslint-enable */

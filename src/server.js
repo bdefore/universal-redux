@@ -120,7 +120,7 @@ function setupRenderer() {
 
         // const status = getStatusFromRoutes(renderProps.router);
         // if (status) {
-          res.status(200);
+        res.status(200);
         // }
         res.send('<!doctype html>\n' + ReactDOM.renderToString(<CustomHtml assets={tools.assets()} component={component} store={store} headers={res._headers} />));
       }
