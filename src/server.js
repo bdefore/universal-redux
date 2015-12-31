@@ -7,14 +7,14 @@ import compression from 'compression';
 import path from 'path';
 import PrettyError from 'pretty-error';
 import { each, merge } from 'lodash';
-import { RoutingContext, match } from 'react-router';
+import { RouterContext, match } from 'react-router';
 import { Provider } from 'react-redux';
 import WebpackIsomorphicTools from 'webpack-isomorphic-tools';
 
 // dependencies of serverside render
 import createStore from './redux/create';
 import Html from './containers/HtmlShell/HtmlShell';
-import getStatusFromRoutes from './helpers/getStatusFromRoutes';
+// import getStatusFromRoutes from './helpers/getStatusFromRoutes';
 
 let app;
 let hasSetup = false;
@@ -91,6 +91,7 @@ function setupRenderer() {
     const store = createStore(middleware, reducers);
 
     function hydrateOnClient() {
+      console.log('hydrating on client');
       res.send('<!doctype html>\n' + ReactDOM.renderToString(<CustomHtml assets={tools.assets()} store={store} headers={res._headers} />));
     }
 
@@ -101,6 +102,7 @@ function setupRenderer() {
 
     match({ routes: getRoutes(store),
             location: req.originalUrl }, (error, redirectLocation, renderProps) => {
+      console.log('renderProps', renderProps);
       if (redirectLocation) {
         res.redirect(redirectLocation.pathname + redirectLocation.search);
       } else if (error) {
@@ -108,19 +110,20 @@ function setupRenderer() {
         res.status(500);
         hydrateOnClient();
       } else if (!renderProps) {
+        console.log('No render props!');
         res.status(500);
         hydrateOnClient();
       } else {
         const component = (
           <Provider store={store} key="provider">
-            <RoutingContext />
+            <RouterContext {...renderProps}/>
           </Provider>
         );
 
-        const status = getStatusFromRoutes(renderProps.routes);
-        if (status) {
-          res.status(status);
-        }
+        // const status = getStatusFromRoutes(renderProps.router);
+        // if (status) {
+          res.status(200);
+        // }
         res.send('<!doctype html>\n' + ReactDOM.renderToString(<CustomHtml assets={tools.assets()} component={component} store={store} headers={res._headers} />));
       }
     });

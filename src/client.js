@@ -5,12 +5,11 @@
 import React from 'react';
 import { each } from 'lodash';
 import ReactDOM from 'react-dom';
-import createHistory from 'history/lib/createBrowserHistory';
 import createStore from './redux/create';
 import { Provider } from 'react-redux';
-import { Router } from 'react-router';
+import { Router, browserHistory } from 'react-router';
 import { syncReduxAndRouter } from 'redux-simple-router';
-import useScroll from 'scroll-behavior/lib/useStandardScroll';
+// import useScroll from 'scroll-behavior/lib/useStandardScroll';
 
 // dependencies of external source. these resolve via webpack aliases
 // as assigned in merge-configs.js
@@ -28,9 +27,9 @@ each(customMiddleware, (customMiddlewareToAdd) => {
 
 const dest = document.getElementById('content');
 const store = createStore(middleware, reducers, window.__data);
-const history = useScroll(createHistory)();
+// const history = useScroll(browserHistory)();
 
-syncReduxAndRouter(history, store);
+syncReduxAndRouter(browserHistory, store);
 
 function createElement(Component, propz) {
   if (Component.fetchData) {
