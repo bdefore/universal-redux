@@ -42,11 +42,11 @@ module.exports = {
     /*
     // The maximum age, in milliseconds, for which a static asset will be
     // considered fresh, per the Cache-Control max-age property. If
-    // ommitted, defaults to 0.
+    // ommitted, defaults to 0. Optional.
     //
     // Expects: Number
     */
-    maxAge: 0
+    // maxAge: 0
   },
 
   /*

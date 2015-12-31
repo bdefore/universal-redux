@@ -8,8 +8,10 @@ import ReactDOM from 'react-dom';
 import createStore from './redux/create';
 import { Provider } from 'react-redux';
 import { Router, browserHistory } from 'react-router';
-import { syncReduxAndRouter } from 'redux-simple-router';
+
+// TODO: get useScroll working again with react-router 2
 // import useScroll from 'scroll-behavior/lib/useStandardScroll';
+// const history = useScroll(browserHistory)();
 
 // dependencies of external source. these resolve via webpack aliases
 // as assigned in merge-configs.js
@@ -26,22 +28,19 @@ each(customMiddleware, (customMiddlewareToAdd) => {
 });
 
 const dest = document.getElementById('content');
-const store = createStore(middleware, reducers, window.__data);
-// const history = useScroll(browserHistory)();
+const store = createStore(middleware, browserHistory, reducers, window.__data);
 
-syncReduxAndRouter(browserHistory, store);
-
-function createElement(Component, propz) {
-  if (Component.fetchData) {
-    Component.fetchData(store.getState, store.dispatch,
-                        propz.location, propz.params);
-  }
-  return React.createElement(Component, propz);
-}
+// function createElement(Component, propz) {
+//   if (Component.fetchData) {
+//     Component.fetchData(store.getState, store.dispatch,
+//                         propz.location, propz.params);
+//   }
+//   return React.createElement(Component, propz);
+// }
 
 const component = (
-  <Router createElement={createElement} history={history}>
-    {getRoutes(store)}
+  <Router history={browserHistory}>
+    {getRoutes()}
   </Router>
 );
 

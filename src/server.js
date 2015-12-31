@@ -1,13 +1,14 @@
 // node modules dependencies
+import path from 'path';
 import Express from 'express';
 import React from 'react';
 import ReactDOM from 'react-dom/server';
 import favicon from 'serve-favicon';
 import compression from 'compression';
-import path from 'path';
 import PrettyError from 'pretty-error';
 import { each, merge } from 'lodash';
 import { RouterContext, match } from 'react-router';
+import createMemoryHistory from 'react-router/lib/createMemoryHistory';
 import { Provider } from 'react-redux';
 import WebpackIsomorphicTools from 'webpack-isomorphic-tools';
 
@@ -88,7 +89,7 @@ function setupRenderer() {
       });
     }
 
-    const store = createStore(middleware, reducers);
+    const store = createStore(middleware, createMemoryHistory(), reducers);
 
     function hydrateOnClient() {
       console.log('hydrating on client');
@@ -100,7 +101,7 @@ function setupRenderer() {
       return;
     }
 
-    match({ routes: getRoutes(store),
+    match({ routes: getRoutes(),
             location: req.originalUrl }, (error, redirectLocation, renderProps) => {
       console.log('renderProps', renderProps);
       if (redirectLocation) {

@@ -56,7 +56,6 @@
     "express": "^4.13.3",
     "extract-text-webpack-plugin": "^0.9.1",
     "file-loader": "^0.8.5",
-    "history": "^1.17.0",
     "json-loader": "^0.5.4",
     "less": "^2.5.3",
     "less-loader": "^2.2.1",
