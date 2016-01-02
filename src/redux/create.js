@@ -8,7 +8,7 @@ export default function createStore(customMiddleware, history, reducers, data) {
   const defaultMiddleware = [
     router
   ];
-  const middleware = defaultMiddleware.concat(customMiddleware);
+  const middleware = customMiddleware.concat(defaultMiddleware);
 
   if (__CLIENT__ && __LOGGER__) {
     middleware.push(createLogger({ collapsed: true }));
