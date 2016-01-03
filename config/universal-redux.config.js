@@ -1,4 +1,4 @@
-module.exports = (projectRoot, sourceRoot) => {
+module.exports = (projectRoot) => {
 
   const isProduction = process.env.NODE_ENV === 'production';
 

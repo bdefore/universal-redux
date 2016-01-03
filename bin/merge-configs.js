@@ -24,7 +24,7 @@ const root = userConfig.root ? userConfig.root[0] === '/' ? userConfig.root : pa
 const sourceDir = userConfig.sourceDir ? userConfig.sourceDir[0] === '/' ? userConfig.sourceDir : path.resolve(root, userConfig.sourceDir) : path.resolve(root, './src');
 
 // merge with base config
-const universalReduxConfig = lodash.merge(require('../config/universal-redux.config.js')(root, sourceDir), userConfig);
+const universalReduxConfig = lodash.merge(require('../config/universal-redux.config.js')(root), userConfig);
 
 // merge with base webpack config
 const baseConfig = isProduction ? baseProdConfig : baseDevConfig;

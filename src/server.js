@@ -156,8 +156,7 @@ export default class Renderer {
 
     // TODO: create helper for deriving root, also in merge-configs.js
     const root = userConfig.root ? userConfig.root[0] === '/' ? userConfig.root : path.resolve(__dirname, '../..', userConfig.root) : path.resolve(__dirname, '../../..');
-    const sourceDir = userConfig.sourceDir ? userConfig.sourceDir[0] === '/' ? userConfig.sourceDir : path.resolve(root, userConfig.sourceDir) : path.resolve(root, './src');
-    const baseConfig = require('../config/universal-redux.config.js')(root, sourceDir);
+    const baseConfig = require('../config/universal-redux.config.js')(root);
 
     config = merge(baseConfig, userConfig);
 
