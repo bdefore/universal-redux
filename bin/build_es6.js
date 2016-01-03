@@ -1,7 +1,10 @@
 #!/usr/bin/env node
+
+process.env.NODE_ENV = 'production';
+
+const fs = require('fs');
 const webpack = require('webpack');
 const webpackConfig = require('./merge-configs');
-const fs = require('fs');
 const buildStats = false;
 const outputStatsPath = './webpack-stats.json';
 

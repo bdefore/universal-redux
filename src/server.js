@@ -51,10 +51,8 @@ function setupAssets() {
   if (config.server.favicon) {
     app.use(favicon(path.resolve(config.server.favicon)));
   }
-  if (config.server.staticPath) {
-    const maxAge = config.server.maxAge || 0;
-    app.use(Express.static(path.resolve(config.server.staticPath), { maxage: maxAge }));
-  }
+  const maxAge = config.server.maxAge || 0;
+  app.use(Express.static(path.resolve(config.server.staticPath), { maxage: maxAge }));
 }
 
 function setupRenderer() {
@@ -172,8 +170,8 @@ export default class Renderer {
     const errors = validateConfig();
 
     if (errors.length > 0) {
-      console.log('Configuration errors for universal-redux.');
       each(errors, (error) => { console.error(error); });
+      throw new Error('Configuration errors for universal-redux. Stopping.');
     } else {
       console.log('universal-redux configuration is valid.');
     }
