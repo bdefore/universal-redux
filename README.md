@@ -56,14 +56,14 @@ import config from '../config/universal-redux.config.js';
 
 const app = universal.app();
 
-// add some middleware
-// add some more middleware
+// app.use(someMiddleware);
+// app.use(someOtherMiddleware);
 
 universal.setup(config);
 universal.start();
 ```
 
-Alternatively, you may pass your own Express instance as a parameter when calling `universal.app()`.
+Alternatively, you may create your own Express instance, add middleware beforehand and pass that instance as parameter when calling `universal.app(app)`.
 
 #### Redux middleware
 
