@@ -20,7 +20,7 @@ import Html from './containers/HtmlShell/HtmlShell';
 let app;
 let hasSetup = false;
 let tools;
-let config = require('../config/universal-redux.config.js');
+let config;
 let toolsConfig = require('../config/webpack-isomorphic-tools-config');
 
 /**
@@ -158,7 +158,12 @@ export default class Renderer {
       Renderer.app();
     }
 
-    config = merge(config, userConfig);
+    // TODO: create helper for deriving root, also in merge-configs.js
+    const root = userConfig.root ? userConfig.root[0] === '/' ? userConfig.root : path.resolve(__dirname, '../..', userConfig.root) : path.resolve(__dirname, '../../..');
+    const sourceDir = userConfig.sourceDir ? userConfig.sourceDir[0] === '/' ? userConfig.sourceDir : path.resolve(root, userConfig.sourceDir) : path.resolve(root, './src');
+    const baseConfig = require('../config/universal-redux.config.js')(root, sourceDir);
+
+    config = merge(baseConfig, userConfig);
 
     // add user defined globals for serverside access
     each(userConfig.globals, (value, key) => { global[key] = JSON.stringify(value); });

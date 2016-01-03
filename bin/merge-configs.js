@@ -19,6 +19,7 @@ const userConfigPath = 'config/universal-redux.config.js';
 const userConfig = require(path.resolve(userConfigPath));
 
 // derive root and sourceDir, alowing for absolute, relative, or not provided
+// TODO: create helper for deriving root, also in src/server.js
 const root = userConfig.root ? userConfig.root[0] === '/' ? userConfig.root : path.resolve(__dirname, '../..', userConfig.root) : path.resolve(__dirname, '../../..');
 const sourceDir = userConfig.sourceDir ? userConfig.sourceDir[0] === '/' ? userConfig.sourceDir : path.resolve(root, userConfig.sourceDir) : path.resolve(root, './src');
 
