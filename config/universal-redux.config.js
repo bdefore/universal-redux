@@ -143,21 +143,12 @@ module.exports = (projectRoot, sourceRoot) => {
     */
     // htmlShell: 'src/containers/HtmlShell/HtmlShell.js',
 
+    /*
+    // Customizations for Webpack configuration. Optional.
+    //
+    // Expects: Object
+    */
     webpack: {
-
-      /*
-      // Whether to merge into the default webpack configuration using
-      // webpack-config-merger.
-      //
-      // If the `merge` parameter is `true`, properties with the same name
-      // will be overwritten. Arrays will be concatenated. Objects will
-      // be merged.
-      //
-      // If the `merge` parameter is `false`, default webpack settings
-      // will not be used and the config specified here will need to
-      // be the complete settings required for building.
-      */
-      merge: true,
 
       /*
       // A list of libraries that do not change frequently between deploys
@@ -170,7 +161,9 @@ module.exports = (projectRoot, sourceRoot) => {
       /*
       // Webpack configuration cusomtizations. There are more parameters
       // available than specified here. For the full list, see
-      // https://webpack.github.io/docs/configuration.html.
+      // https://webpack.github.io/docs/configuration.html. Optional.
+      //
+      // Expects: Object
       */
       config: {
 
@@ -178,21 +171,7 @@ module.exports = (projectRoot, sourceRoot) => {
         // The Webpack devtool configuration. May affect build times.
         // See https://webpack.github.io/docs/configuration.html#devtool
         */
-        devtool: isProduction ? 'source-map' : 'inline-eval-cheap-source-map',
-
-        /*
-        // Not recommended to change.
-        */
-        context: projectRoot,
-
-        resolve: {
-
-          /*
-          // Ensure this maps to the source root of your project, not that of
-          // Universal Redux
-          */
-          root: sourceRoot
-        }
+        devtool: isProduction ? 'source-map' : 'inline-eval-cheap-source-map'
       }
     }
   };

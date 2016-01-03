@@ -28,7 +28,9 @@ const universalReduxConfig = lodash.merge(require('../config/universal-redux.con
 
 // merge with base webpack config
 const baseConfig = isProduction ? baseProdConfig : baseDevConfig;
-const combinedWebpackConfig = universalReduxConfig.webpack.merge ? mergeWebpack(baseConfig, userConfig.webpack.config) : universalReduxConfig.webpack.config;
+const combinedWebpackConfig = mergeWebpack(baseConfig, universalReduxConfig.webpack.config);
+combinedWebpackConfig.context = root;
+combinedWebpackConfig.resolve.root = sourceDir;
 
 // derive webpack output destination from staticPath
 combinedWebpackConfig.output.path = universalReduxConfig.server.staticPath + '/dist';

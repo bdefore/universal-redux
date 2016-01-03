@@ -34,12 +34,8 @@ global.__DEVELOPMENT__ = process.env.NODE_ENV !== 'production';
 function setupTools() {
   toolsConfig.webpack_assets_file_path = 'node_modules/universal-redux/webpack-assets.json';
 
-  let rootDir;
-  if (config.webpack.config.context) {
-    rootDir = path.resolve(config.webpack.config.context);
-  } else {
-    rootDir = path.resolve(__dirname, '..');
-  }
+  // TODO: create helper for deriving root, also in merge-configs.js
+  const rootDir = config.root ? config.root[0] === '/' ? config.root : path.resolve(__dirname, '../..', config.root) : path.resolve(__dirname, '../../..');
 
   tools = new WebpackIsomorphicTools(toolsConfig);
   tools
