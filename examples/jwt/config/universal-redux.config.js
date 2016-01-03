@@ -23,6 +23,32 @@ module.exports = {
      // Expects: Number
      */
     port: process.env.PORT || 3000
+
+    /*
+    // The path at which static assets are served from. If omitted, Express will
+    // serve any static assets from your project root 'static' directory.
+    // Optional.
+    //
+    // Expects: String
+    */
+    // staticPath: projectRoot + '/static',
+
+    /*
+    // The path at which a favicon image will be served from using the `serve-favicon`
+    // library. If omitted, Express will not serve a favicon. Optional.
+    //
+    // Expects: String
+    */
+    // favicon: projectRoot + '/static/favicon.ico',
+
+    /*
+    // The maximum age, in milliseconds, for which a static asset will be
+    // considered fresh, per the Cache-Control max-age property. If
+    // ommitted, defaults to 0. Optional.
+    //
+    // Expects: Number
+    */
+    // maxAge: 0
   },
 
   /*
@@ -148,18 +174,6 @@ module.exports = {
        // Not recommended to change.
        */
       context: projectRoot,
-
-      /*
-       // Not recommended to change.
-       */
-      output: {
-
-        /*
-         // Not recommended to change.
-         */
-        path: projectRoot + '/static/dist'
-
-      },
 
       resolve: {
 
