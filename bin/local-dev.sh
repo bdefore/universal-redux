@@ -25,8 +25,8 @@ compile() {
   echo Source: $ROOT_DIR
   echo Destination: $PROJECT_PATH/node_modules/universal-redux
   echo
-  cp $ROOT_DIR/bin/* $PROJECT_PATH/node_modules/universal-redux/bin/ > /dev/null
-  cp $ROOT_DIR/config/* $PROJECT_PATH/node_modules/universal-redux/config/ > /dev/null
+  cp -a $ROOT_DIR/bin/* $PROJECT_PATH/node_modules/universal-redux/bin/ > /dev/null
+  cp -a $ROOT_DIR/config/* $PROJECT_PATH/node_modules/universal-redux/config/ > /dev/null
   cp $ROOT_DIR/.babelrc $PROJECT_PATH/node_modules/universal-redux
   cp $ROOT_DIR/.eslintrc $PROJECT_PATH/node_modules/universal-redux
   babel $ROOT_DIR/src/ --presets es2015,stage-0,react --plugins transform-runtime --out-dir $PROJECT_PATH/node_modules/universal-redux/lib > /dev/null

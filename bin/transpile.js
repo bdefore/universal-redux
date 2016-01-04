@@ -1,5 +1,6 @@
 //  enable runtime transpilation to use ES6/7 in node
 
+/* eslint-disable */
 var fs = require('fs');
 var path = require('path');
 
@@ -12,5 +13,6 @@ try {
   console.error('==>     ERROR: Error parsing your babelrc');
   console.error(err);
 }
+/* eslint-enable */
 
 require('babel-core/register')(config);

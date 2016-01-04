@@ -1,29 +1,25 @@
 // require('babel/polyfill');
 
 // begin shared setup
-var path = require('path');
-var webpack = require('webpack');
-var relativeAssetsPath = '../static/dist';
-var assetsPath = path.join(__dirname, relativeAssetsPath);
+const path = require('path');
+const webpack = require('webpack');
 
 // begin dev setup
-var host = (process.env.HOST || 'localhost');
-var port = parseInt(process.env.PORT) + 1 || 3001;
+const host = (process.env.HOST || 'localhost');
+const port = parseInt(process.env.PORT, 10) + 1 || 3001;
 
 // begin prod setup
-var CleanPlugin = require('clean-webpack-plugin');
-var ExtractTextPlugin = require('extract-text-webpack-plugin');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
-var vendor = [
+const vendor = [
   'lodash',
   'react',
   'react-dom',
   'react-router',
   'react-redux',
   'redux',
-  'redux-form',
   'redux-logger',
-  'redux-simple-router'
+  // 'redux-simple-router' // waiting for redux-simple-router to release react-router 2.0 build
 ];
 
 module.exports = {
@@ -34,18 +30,15 @@ module.exports = {
         path.resolve(__dirname, '..', 'lib/client.js')
       ]
     },
-    output: {
-      path: assetsPath,
-    },
     module: {
       loaders: [
         // { test: /\.jsx?$/, exclude: /node_modules/, loaders: jsLoaders }, // now prepended in merge-configs and merge-babel-config
         { test: /\.json$/, loader: 'json-loader' },
-        { test: /\.woff(\?v=\d+\.\d+\.\d+)?$/, loader: "url?limit=10000&mimetype=application/font-woff" },
-        { test: /\.woff2(\?v=\d+\.\d+\.\d+)?$/, loader: "url?limit=10000&mimetype=application/font-woff" },
-        { test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/, loader: "url?limit=10000&mimetype=application/octet-stream" },
-        { test: /\.eot(\?v=\d+\.\d+\.\d+)?$/, loader: "file" },
-        { test: /\.svg(\?v=\d+\.\d+\.\d+)?$/, loader: "url?limit=10000&mimetype=image/svg+xml" }
+        { test: /\.woff(\?v=\d+\.\d+\.\d+)?$/, loader: 'url?limit=10000&mimetype=application/font-woff' },
+        { test: /\.woff2(\?v=\d+\.\d+\.\d+)?$/, loader: 'url?limit=10000&mimetype=application/font-woff' },
+        { test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/, loader: 'url?limit=10000&mimetype=application/octet-stream' },
+        { test: /\.eot(\?v=\d+\.\d+\.\d+)?$/, loader: 'file' },
+        { test: /\.svg(\?v=\d+\.\d+\.\d+)?$/, loader: 'url?limit=10000&mimetype=image/svg+xml' }
       ]
     },
     progress: true,
@@ -53,6 +46,7 @@ module.exports = {
       modulesDirectories: [
         'src',
         'node_modules',
+        'node_modules/universal-redux/src',
         'node_modules/universal-redux/node_modules'
       ],
       extensions: ['', '.json', '.js', '.jsx']
@@ -61,6 +55,7 @@ module.exports = {
       modulesDirectories: [
         'src',
         'node_modules',
+        'node_modules/universal-redux/src',
         'node_modules/universal-redux/node_modules'
       ]
     }
@@ -79,7 +74,7 @@ module.exports = {
     },
     module: {
       loaders: [
-        { test: /\.css$/, loader: "style!css" },
+        { test: /\.css$/, loader: 'style!css' },
         { test: /\.less$/, loader: 'style!css?modules&importLoaders=2&sourceMap&localIdentName=[local]___[hash:base64:5]!autoprefixer?browsers=last 2 version!less?outputStyle=expanded&sourceMap' },
         { test: /\.scss$/, loader: 'style!css?modules&importLoaders=2&sourceMap&localIdentName=[local]___[hash:base64:5]!autoprefixer?browsers=last 2 version!sass?outputStyle=expanded&sourceMap' }
       ]
@@ -112,8 +107,6 @@ module.exports = {
       ]
     },
     plugins: [
-      new CleanPlugin([relativeAssetsPath]),
-
       // css files from the extract-text-plugin loader
       new ExtractTextPlugin('[name]-[chunkhash].css', {allChunks: true}),
       new webpack.DefinePlugin({
@@ -121,7 +114,7 @@ module.exports = {
         __SERVER__: false
       }),
 
-      // set global vars
+      // set global consts
       new webpack.DefinePlugin({
         'process.env': {
           // Useful to reduce the size of client-side libraries, e.g. react
@@ -143,4 +136,4 @@ module.exports = {
       })
     ]
   }
-}
+};

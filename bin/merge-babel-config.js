@@ -1,65 +1,43 @@
-var fs = require('fs');
-var strip = require('strip-loader');
-var path = require('path');
-var util = require('util');
+const fs = require('fs');
+const strip = require('strip-loader');
+const path = require('path');
+const util = require('util');
+const isProduction = process.env.NODE_ENV !== 'production';
 
-module.exports = function(userBabelConfig, verbose) {
+function loadAndParse(filePath) {
+  const file = fs.readFileSync(filePath);
+  return JSON.parse(file);
+}
 
-  var babelrc = fs.readFileSync(path.resolve(__dirname, '..', './.babelrc'));
-  var babelConfig = {};
-  var jsLoaders;
+module.exports = (userBabelConfig, verbose) => {
 
-  try {
-    babelConfig = JSON.parse(babelrc);
-  } catch (err) {
-    console.error('==>     ERROR: Error parsing your .babelrc.');
-    console.error(err);
-  }
+  const baseBabelConfig = loadAndParse(path.resolve(__dirname, '..', './.babelrc'));
+  const babelConfig = userBabelConfig ? Object.assign(baseBabelConfig, loadAndParse(path.resolve(userBabelConfig))) : baseBabelConfig;
 
-  if(userBabelConfig) {
-    console.log('Merging universal-redux Babel defaults with project Babel configuration');
-
-    var userBabelConfigFile = fs.readFileSync(path.resolve(userBabelConfig));
-    var userBabelConfig = {};
-
-    try {
-      userBabelConfig = JSON.parse(userBabelConfigFile);
-    } catch (err) {
-      console.error('==>     ERROR: Error parsing your project-level Babel configuration.');
-      console.error(err);
-    }
-
-    babelConfig = Object.assign(babelConfig, userBabelConfig);
-  }
-
-  if (process.env.NODE_ENV !== 'production') {
-
-    var hmrConfig = [
-        "react-transform", {
-          "transforms": [
-            {
-              "transform": "react-transform-hmr",
-              "imports": ["react"],
-              "locals": ["module"]
-            },
-            {
-              "transform": "react-transform-catch-errors",
-              "imports": ["react", "redbox-react"]
-            }
-          ]
+  const hmrConfig = [
+    'react-transform', {
+      'transforms': [
+        {
+          'transform': 'react-transform-hmr',
+          'imports': ['react'],
+          'locals': ['module']
+        },
+        {
+          'transform': 'react-transform-catch-errors',
+          'imports': ['react', 'redbox-react']
         }
       ]
+    }
+  ];
 
-    babelConfig.env.development.plugins.unshift(hmrConfig);
+  babelConfig.env.development.plugins.unshift(hmrConfig);
 
-    jsLoaders = ['babel-loader?' + JSON.stringify(babelConfig)];
-  } else {
-    jsLoaders = [strip.loader('debug'), 'babel-loader?' + JSON.stringify(babelConfig)];
-  }
+  const babelLoader = 'babel-loader?' + JSON.stringify(babelConfig);
+  const jsLoaders = isProduction ? [strip.loader('debug'), babelLoader] : [babelLoader];
 
   // output configuration files if user wants verbosity
-  if(verbose) {
-    var utilOptions = {
+  if (verbose) {
+    const utilOptions = {
       depth: 10,
       colors: true
     };
@@ -69,4 +47,4 @@ module.exports = function(userBabelConfig, verbose) {
   }
 
   return jsLoaders;
-}
+};

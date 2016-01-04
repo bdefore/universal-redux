@@ -1,11 +1,14 @@
 import createLogger from 'redux-logger';
+import { syncHistory } from '../redux-simple-router';
+import { createStore as _createStore, applyMiddleware, compose } from 'redux';
 // import path from 'path';
 
-import { createStore as _createStore, applyMiddleware, compose } from 'redux';
-
-export default function createStore(customMiddleware, reducers, data) {
-  const defaultMiddleware = [];
-  const middleware = defaultMiddleware.concat(customMiddleware);
+export default function createStore(customMiddleware, history, reducers, data) {
+  const router = syncHistory(history);
+  const defaultMiddleware = [
+    router
+  ];
+  const middleware = customMiddleware.concat(defaultMiddleware);
 
   if (__CLIENT__ && __LOGGER__) {
     middleware.push(createLogger({ collapsed: true }));
@@ -25,6 +28,9 @@ export default function createStore(customMiddleware, reducers, data) {
   }
 
   const store = finalCreateStore(reducers, data);
+
+  // only necessary for devtools https://github.com/rackt/redux-simple-router/pull/141#issuecomment-167587581
+  // router.syncHistoryToStore(store);
 
   // if (__DEVELOPMENT__ && module.hot) {
   //   module.hot.accept(__REDUCER_INDEX__, () => {
