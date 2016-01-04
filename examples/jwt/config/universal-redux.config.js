@@ -23,6 +23,32 @@ module.exports = {
      // Expects: Number
      */
     port: process.env.PORT || 3000
+
+    /*
+    // The path at which static assets are served from. If omitted, Express will
+    // serve any static assets from your project root 'static' directory.
+    // Optional.
+    //
+    // Expects: String
+    */
+    // staticPath: projectRoot + '/static',
+
+    /*
+    // The path at which a favicon image will be served from using the `serve-favicon`
+    // library. If omitted, Express will not serve a favicon. Optional.
+    //
+    // Expects: String
+    */
+    // favicon: projectRoot + '/static/favicon.ico',
+
+    /*
+    // The maximum age, in milliseconds, for which a static asset will be
+    // considered fresh, per the Cache-Control max-age property. If
+    // ommitted, defaults to 0. Optional.
+    //
+    // Expects: Number
+    */
+    // maxAge: 0
   },
 
   /*
@@ -115,21 +141,19 @@ module.exports = {
    */
   htmlShell: sourceRoot + '/containers/HtmlShell/HtmlShell.js',
 
+  /*
+  // Customizations for Webpack configuration. Optional.
+  //
+  // Expects: Object
+  */
   webpack: {
-
     /*
-     // Whether to merge into the default webpack configuration using
-     // webpack-config-merger.
-     //
-     // If the `merge` parameter is `true`, properties with the same name
-     // will be overwritten. Arrays will be concatenated. Objects will
-     // be merged.
-     //
-     // If the `merge` parameter is `false`, default webpack settings
-     // will not be used and the config specified here will need to
-     // be the complete settings required for building.
-     */
-    merge: true,
+    // A list of libraries that do not change frequently between deploys
+    // and are best served in the vendor bundle. Optional.
+    //
+    // Expects: Array
+    */
+    // vendorLibraries: [],
 
     /*
      // Webpack configuration cusomtizations. There are more parameters
@@ -142,31 +166,9 @@ module.exports = {
        // The Webpack devtool configuration. May affect build times.
        // See https://webpack.github.io/docs/configuration.html#devtool
        */
-      devtool: isProduction ? 'source-map' : 'inline-eval-cheap-source-map',
-
-      /*
-       // Not recommended to change.
-       */
-      context: projectRoot,
-
-      /*
-       // Not recommended to change.
-       */
-      output: {
-
-        /*
-         // Not recommended to change.
-         */
-        path: projectRoot + '/static/dist'
-
-      },
+      // devtool: isProduction ? 'source-map' : 'inline-eval-cheap-source-map',
 
       resolve: {
-
-        /*
-         // Not recommended to change.
-         */
-        root: sourceRoot,
 
         extensions: [ '.scss' ] // use of import style from './style' in react-toolbox requires having it be a valid extension
       }

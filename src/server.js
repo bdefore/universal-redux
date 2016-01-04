@@ -1,10 +1,10 @@
 // node modules dependencies
+import path from 'path';
 import Express from 'express';
 import React from 'react';
 import ReactDOM from 'react-dom/server';
 import favicon from 'serve-favicon';
 import compression from 'compression';
-import path from 'path';
 import PrettyError from 'pretty-error';
 import { each, merge } from 'lodash';
 import { RoutingContext, match } from 'react-router';
@@ -19,7 +19,7 @@ import getStatusFromRoutes from './helpers/getStatusFromRoutes';
 let app;
 let hasSetup = false;
 let tools;
-let config = require('../config/universal-redux.config.js');
+let config;
 let toolsConfig = require('../config/webpack-isomorphic-tools-config');
 
 /**
@@ -33,12 +33,8 @@ global.__DEVELOPMENT__ = process.env.NODE_ENV !== 'production';
 function setupTools() {
   toolsConfig.webpack_assets_file_path = 'node_modules/universal-redux/webpack-assets.json';
 
-  let rootDir;
-  if (config.webpack.config.context) {
-    rootDir = path.resolve(config.webpack.config.context);
-  } else {
-    rootDir = path.resolve(__dirname, '..');
-  }
+  // TODO: create helper for deriving root, also in merge-configs.js
+  const rootDir = config.root ? config.root[0] === '/' ? config.root : path.resolve(__dirname, '../..', config.root) : path.resolve(__dirname, '../../..');
 
   tools = new WebpackIsomorphicTools(toolsConfig);
   tools
@@ -50,10 +46,8 @@ function setupAssets() {
   if (config.server.favicon) {
     app.use(favicon(path.resolve(config.server.favicon)));
   }
-  if (config.server.staticPath) {
-    const maxAge = config.server.maxAge || 0;
-    app.use(Express.static(path.resolve(config.server.staticPath), { maxage: maxAge }));
-  }
+  const maxAge = config.server.maxAge || 0;
+  app.use(Express.static(path.resolve(config.server.staticPath), { maxage: maxAge }));
 }
 
 function setupRenderer() {
@@ -99,7 +93,7 @@ function setupRenderer() {
       return;
     }
 
-    match({ routes: getRoutes(store),
+    match({ routes: getRoutes(),
             location: req.originalUrl }, (error, redirectLocation, renderProps) => {
       if (redirectLocation) {
         res.redirect(redirectLocation.pathname + redirectLocation.search);
@@ -159,7 +153,11 @@ export default class Renderer {
       Renderer.app();
     }
 
-    config = merge(config, userConfig);
+    // TODO: create helper for deriving root, also in merge-configs.js
+    const root = userConfig.root ? userConfig.root[0] === '/' ? userConfig.root : path.resolve(__dirname, '../..', userConfig.root) : path.resolve(__dirname, '../../..');
+    const baseConfig = require('../config/universal-redux.config.js')(root);
+
+    config = merge(baseConfig, userConfig);
 
     // add user defined globals for serverside access
     each(userConfig.globals, (value, key) => { global[key] = JSON.stringify(value); });
@@ -171,8 +169,8 @@ export default class Renderer {
     const errors = validateConfig();
 
     if (errors.length > 0) {
-      console.log('Configuration errors for universal-redux.');
       each(errors, (error) => { console.error(error); });
+      throw new Error('Configuration errors for universal-redux. Stopping.');
     } else {
       console.log('universal-redux configuration is valid.');
     }

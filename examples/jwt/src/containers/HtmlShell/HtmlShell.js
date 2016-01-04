@@ -15,6 +15,7 @@ export default class Html extends Component {
   static propTypes = {
     assets: PropTypes.object,
     component: PropTypes.node,
+    headers: PropTypes.object,
     store: PropTypes.object
   }
 
@@ -25,7 +26,6 @@ export default class Html extends Component {
     return (
       <html lang="en-us">
         <head>
-          <link rel="shortcut icon" href="/favicon.ico" />
           <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet" />
           <meta name="logged_in" content={headers['logged-in']} />
           <meta name="viewport" content="width=device-width, initial-scale=1" />

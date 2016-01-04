@@ -25,38 +25,22 @@ Node.JS >= 4.1.1 and npm >= 3 are strongly recommended. If you are using npm 2, 
 npm install --save universal-redux
 ```
 
-#### Configure
+#### Getting Started
 
-Add a configuration file in your project at `config/universal-redux.config.js` that defines what properties you want to customize. You can start by copying the [annotated example](https://github.com/bdefore/universal-redux/blob/master/config/universal-redux.config.js).
+The quickest way to get started is to clone the [starter project](https://github.com/bdefore/universal-redux-starter). This gives you a base project that is set up with default configurations of Webpack and Express.
 
-#### Specify your build steps
+### Other Examples
 
-The following npm bin aliases have been defined:
-
-```
-universal-redux-dev
-universal-redux-watch
-universal-redux-server
-universal-redux-build
-```
-
-You'll generally call these from the corresponding section of your project's scripts. See [`package.json`](https://github.com/bdefore/react-redux-universal-hot-example/blob/example-project/package.json) in the example project.
-
-#### Create a routes file
-
-Generally kept in `src/routes.js`, this is where you define what routes map to what views. See [`routes.js`](https://github.com/bdefore/react-redux-universal-hot-example/blob/example-project/src/routes.js) in the example project.
-
-#### Make some code!
-
-### Examples
-
-- [A minimal example to get started](https://github.com/bartolkaruza/universal-redux-simple-example)
 - [An example with JWT authentication](https://github.com/bdefore/universal-redux/tree/0.x/examples/jwt) ([Heroku demo](https://universal-redux-jwt-example.herokuapp.com))
 - [A refactor of react-redux-universal-hot-example with universal-redux and redux-simple-router](https://github.com/bdefore/react-redux-universal-hot-example/tree/babel6) ([Heroku demo](https://universal-redux.herokuapp.com))
 
 ### Customization
 
-The npm module also exposes a few ways of integrating your code with that of the module.
+The configuration file in your project at `config/universal-redux.config.js` defines what properties you want to customize. You can start by copying the [annotated example](https://github.com/bdefore/universal-redux/blob/master/config/universal-redux.config.js).
+
+#### Routes
+
+Generally kept in `src/routes.js`, this is where you define what routes map to what views. See [`routes.js`](https://github.com/bdefore/react-redux-universal-hot-example/blob/example-project/src/routes.js) in the example project.
 
 #### Webpack configuration
 
@@ -72,14 +56,14 @@ import config from '../config/universal-redux.config.js';
 
 const app = universal.app();
 
-// add some middleware
-// add some more middleware
+// app.use(someMiddleware);
+// app.use(someOtherMiddleware);
 
 universal.setup(config);
 universal.start();
 ```
 
-Alternatively, you may pass your own Express instance as a parameter when calling `universal.app()`.
+Alternatively, you may create your own Express instance, add middleware beforehand and pass that instance as parameter when calling `universal.app(app)`.
 
 #### Redux middleware
 
@@ -92,6 +76,18 @@ You can specify `htmlShell: '/path/to/your/Html.js'` in your configuration and t
 #### Webpack Isomorphic Tools configuration
 
 You can add or override the default [webpack-isomorphic-tools](https://github.com/halt-hammerzeit/webpack-isomorphic-tools) configuration, by providing a `toolsConfigPath` value to your `config.js`.
+
+#### Scripts
+
+The following npm bin aliases have been defined:
+
+```
+universal-redux-watch
+universal-redux-server
+universal-redux-build
+```
+
+You'll generally call these from the corresponding section of your project's scripts. See [`package.json`](https://github.com/bdefore/react-redux-universal-hot-example/blob/example-project/package.json) in the example project.
 
 ### What version to use
 
@@ -119,7 +115,7 @@ Peer dependencies for each version:
 "redux-simple-router": "^1.0.1"
 ```
 
-#### 2.x (Beta - dependencies may change)
+#### 2.x
 
 [Babel](https://github.com/babel/babel) 6, [Redux Simple Router](https://github.com/rackt/redux-simple-router)
 
@@ -130,7 +126,17 @@ Peer dependencies for each version:
 "redux-simple-router": "^1.0.1"
 ```
 
-Still being discussed [here](https://github.com/bdefore/universal-redux/issues/10).
+#### 3.x (Beta - dependencies may change)
+
+[Babel](https://github.com/babel/babel) 6, React Router 2, [Redux Simple Router](https://github.com/rackt/redux-simple-router)
+
+```
+"react": "^0.14.3",
+"react-dom": "^0.14.3",
+"react-router": "^2.0.0-rc4",
+```
+
+redux-simple-router will be added once they cut a release for react-router
 
 ### Local development
 

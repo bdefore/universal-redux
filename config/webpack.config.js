@@ -3,15 +3,12 @@
 // begin shared setup
 const path = require('path');
 const webpack = require('webpack');
-const relativeAssetsPath = '../static/dist';
-const assetsPath = path.join(__dirname, relativeAssetsPath);
 
 // begin dev setup
 const host = (process.env.HOST || 'localhost');
 const port = parseInt(process.env.PORT, 10) + 1 || 3001;
 
 // begin prod setup
-const CleanPlugin = require('clean-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 const vendor = [
@@ -32,9 +29,6 @@ module.exports = {
       'main': [
         path.resolve(__dirname, '..', 'lib/client.js')
       ]
-    },
-    output: {
-      path: assetsPath,
     },
     module: {
       loaders: [
@@ -113,8 +107,6 @@ module.exports = {
       ]
     },
     plugins: [
-      new CleanPlugin([relativeAssetsPath]),
-
       // css files from the extract-text-plugin loader
       new ExtractTextPlugin('[name]-[chunkhash].css', {allChunks: true}),
       new webpack.DefinePlugin({
