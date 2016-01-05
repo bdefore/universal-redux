@@ -1,7 +1,7 @@
 import React, {Component, PropTypes} from 'react';
 import ReactDOM from 'react-dom/server';
-import serialize from 'serialize-javascript';
 import DocumentMeta from 'react-document-meta';
+import { toJSON, fromJSON } from 'transit-immutable-js';
 
 /**
  * Wrapper component containing HTML metadata and boilerplate tags.
@@ -22,6 +22,7 @@ export default class Html extends Component {
   render() {
     const {assets, component, store} = this.props;
     const content = component ? ReactDOM.renderToString(component) : '';
+    const data = toJSON(store.getState());
 
     return (
       <html lang="en-us">
@@ -36,7 +37,7 @@ export default class Html extends Component {
         </head>
         <body>
           <div id="content" dangerouslySetInnerHTML={{__html: content}}/>
-          <script dangerouslySetInnerHTML={{__html: `window.__data=${serialize(store.getState())};`}} charSet="UTF-8"/>
+          <script dangerouslySetInnerHTML={{__html: `window.__data=${fromJSON(data)};`}} charSet="UTF-8"/>
           {Object.keys(assets.javascript).map((jsAsset, key) =>
             <script src={assets.javascript[jsAsset]} key={key} charSet="UTF-8"/>
           )}
