@@ -8,6 +8,7 @@ import ReactDOM from 'react-dom';
 import createStore from './redux/create';
 import { Provider } from 'react-redux';
 import { Router, browserHistory } from 'react-router';
+import { fromJSON } from 'transit-immutable-js';
 
 // TODO: get useScroll working again with react-router 2
 // import useScroll from 'scroll-behavior/lib/useStandardScroll';
@@ -28,7 +29,8 @@ each(customMiddleware, (customMiddlewareToAdd) => {
 });
 
 const dest = document.getElementById('content');
-const store = createStore(middleware, browserHistory, reducers, window.__data);
+const data = fromJSON(window.__data);
+const store = createStore(middleware, browserHistory, reducers, data);
 
 
 const component = (
