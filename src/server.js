@@ -101,10 +101,7 @@ function setupRenderer() {
         console.error('ROUTER ERROR:', pretty.render(error));
         res.status(500);
         hydrateOnClient();
-      } else if (!renderProps) {
-        res.status(500);
-        hydrateOnClient();
-      } else {
+      } else if (renderProps) {
         const component = (
           <Provider store={store} key="provider">
             <RoutingContext />
@@ -116,6 +113,8 @@ function setupRenderer() {
           res.status(status);
         }
         res.send('<!doctype html>\n' + ReactDOM.renderToString(<CustomHtml assets={tools.assets()} component={component} store={store} headers={res._headers} />));
+      } else {
+        res.status(404).send('Not found');
       }
     });
   });
