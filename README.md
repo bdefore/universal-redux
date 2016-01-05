@@ -11,6 +11,15 @@
 
 Universal Redux is an npm package that when used as a dependency in your project provides a universal (isomorphic) rendering server. You can either use its defaults and begin coding your project, or configure it to your liking with custom Webpack options and Express or Redux middleware. It's intended as both an easy starting point for developers new to React and Redux, as well as an extensible base by which advanced developers can augment with their own middleware and keep up to date with the fast-moving React ecosystem.
 
+### Getting Started
+
+The quickest way to get started is to clone the [starter project](https://github.com/bdefore/universal-redux-starter). This gives you a base project that is set up with default configurations of Webpack and Express.
+
+#### Other Examples
+
+- [An example with JWT authentication](https://github.com/bdefore/universal-redux/tree/0.x/examples/jwt) ([Heroku demo](https://universal-redux-jwt-example.herokuapp.com))
+- [A refactor of react-redux-universal-hot-example with universal-redux and redux-simple-router](https://github.com/bdefore/react-redux-universal-hot-example/tree/babel6) ([Heroku demo](https://universal-redux.herokuapp.com))
+
 ### Usage
 
 Your project must define a set of routes as specified by a [React Router](https://github.com/rackt/react-router) configuration, but other than that, your folder structure and development path is up to you. Depending on your other dependencies, you may want to use a version of Universal Redux that is not the latest, using the [section below](https://github.com/bdefore/universal-redux#what-version-to-use) to decide.
@@ -25,18 +34,9 @@ Node.JS >= 4.1.1 and npm >= 3 are strongly recommended. If you are using npm 2, 
 npm install --save universal-redux
 ```
 
-#### Getting Started
-
-The quickest way to get started is to clone the [starter project](https://github.com/bdefore/universal-redux-starter). This gives you a base project that is set up with default configurations of Webpack and Express.
-
-### Other Examples
-
-- [An example with JWT authentication](https://github.com/bdefore/universal-redux/tree/0.x/examples/jwt) ([Heroku demo](https://universal-redux-jwt-example.herokuapp.com))
-- [A refactor of react-redux-universal-hot-example with universal-redux and redux-simple-router](https://github.com/bdefore/react-redux-universal-hot-example/tree/babel6) ([Heroku demo](https://universal-redux.herokuapp.com))
-
 ### Customization
 
-The configuration file in your project at `config/universal-redux.config.js` defines what properties you want to customize. You can start by copying the [annotated example](https://github.com/bdefore/universal-redux/blob/master/config/universal-redux.config.js).
+The configuration file in your project at `config/universal-redux.config.js` defines what properties you want to customize. You can start by copying the [annotated example](https://github.com/bdefore/universal-redux/blob/master/config/universal-redux.config.js). The configuration file is optional and is only necessary if you wish to modify default behavior.
 
 #### Routes
 
