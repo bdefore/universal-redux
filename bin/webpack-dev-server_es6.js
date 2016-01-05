@@ -1,5 +1,4 @@
 #!/usr/bin/env node
-const path = require('path');
 const Express = require('express');
 const webpack = require('webpack');
 const userConfig = require('./user-config');

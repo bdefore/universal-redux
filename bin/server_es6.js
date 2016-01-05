@@ -1,5 +1,4 @@
 #!/usr/bin/env node
-const path = require('path');
 const renderer = require('../lib/server').default;
 const userConfig = require('./user-config');
 
