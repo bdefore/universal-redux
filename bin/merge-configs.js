@@ -1,5 +1,4 @@
 #!/usr/bin/env node
-const fs = require('fs');
 const path = require('path');
 const util = require('util');
 
@@ -116,4 +115,4 @@ module.exports = (userConfig) => {
   universalReduxConfig.webpack.config = combinedWebpackConfig;
 
   return universalReduxConfig;
-}
+};

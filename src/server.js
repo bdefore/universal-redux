@@ -6,7 +6,7 @@ import ReactDOM from 'react-dom/server';
 import favicon from 'serve-favicon';
 import compression from 'compression';
 import PrettyError from 'pretty-error';
-import { each, merge } from 'lodash';
+import { each } from 'lodash';
 import { RoutingContext, match } from 'react-router';
 import { Provider } from 'react-redux';
 import WebpackIsomorphicTools from 'webpack-isomorphic-tools';

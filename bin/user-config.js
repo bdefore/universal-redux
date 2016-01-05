@@ -1,7 +1,9 @@
 const path = require('path');
 
+let config;
+
 try {
-  const config = require(path.resolve('config/universal-redux.config.js'));
+  config = require(path.resolve('config/universal-redux.config.js'));
 } catch (err) {
   console.error('No configuration file provided, using defaults.');
   return {};
