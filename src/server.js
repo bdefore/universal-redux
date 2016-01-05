@@ -15,6 +15,7 @@ import WebpackIsomorphicTools from 'webpack-isomorphic-tools';
 import createStore from './redux/create';
 import Html from './containers/HtmlShell/HtmlShell';
 import getStatusFromRoutes from './helpers/getStatusFromRoutes';
+import mergeConfigs from '../bin/merge-configs';
 
 let app;
 let hasSetup = false;
@@ -33,8 +34,7 @@ global.__DEVELOPMENT__ = process.env.NODE_ENV !== 'production';
 function setupTools() {
   toolsConfig.webpack_assets_file_path = 'node_modules/universal-redux/webpack-assets.json';
 
-  // TODO: create helper for deriving root, also in merge-configs.js
-  const rootDir = config.root ? config.root[0] === '/' ? config.root : path.resolve(__dirname, '../..', config.root) : path.resolve(__dirname, '../../..');
+  const rootDir = config.webpack.config.context;
 
   tools = new WebpackIsomorphicTools(toolsConfig);
   tools
@@ -148,20 +148,19 @@ function validateConfig() {
 
 export default class Renderer {
 
-  static configure(userConfig, userToolsConfig) {
+  static configure(providedConfig, userToolsConfig) {
     if (!hasSetup) {
       Renderer.app();
     }
 
-    // TODO: create helper for deriving root, also in merge-configs.js
-    const root = userConfig.root ? userConfig.root[0] === '/' ? userConfig.root : path.resolve(__dirname, '../..', userConfig.root) : path.resolve(__dirname, '../../..');
-    const baseConfig = require('../config/universal-redux.config.js')(root);
+    // since typically the dev server is logging this out too
+    providedConfig.verbose = false;
 
-    config = merge(baseConfig, userConfig);
+    config = mergeConfigs(providedConfig);
 
     // add user defined globals for serverside access
-    each(userConfig.globals, (value, key) => { global[key] = JSON.stringify(value); });
-    global.__REDUCER_INDEX__ = userConfig.redux.reducers;
+    each(config.globals, (value, key) => { global[key] = JSON.stringify(value); });
+    global.__REDUCER_INDEX__ = config.redux.reducers;
 
     if (userToolsConfig) {
       toolsConfig = userToolsConfig;
@@ -187,9 +186,9 @@ export default class Renderer {
     return app;
   }
 
-  static setup(userConfig, userToolsConfig) {
-    if (userConfig) {
-      const errors = Renderer.configure(userConfig, userToolsConfig);
+  static setup(providedConfig, userToolsConfig) {
+    if (providedConfig) {
+      const errors = Renderer.configure(providedConfig, userToolsConfig);
       if (errors.length > 0) {
         return;
       }

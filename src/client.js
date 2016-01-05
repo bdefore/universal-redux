@@ -32,16 +32,8 @@ const history = useScroll(createHistory)();
 
 syncReduxAndRouter(history, store);
 
-function createElement(Component, propz) {
-  if (Component.fetchData) {
-    Component.fetchData(store.getState, store.dispatch,
-                        propz.location, propz.params);
-  }
-  return React.createElement(Component, propz);
-}
-
 const component = (
-  <Router createElement={createElement} history={history}>
+  <Router history={history}>
     {getRoutes(store)}
   </Router>
 );

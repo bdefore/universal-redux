@@ -1,4 +1,4 @@
-module.exports = (projectRoot) => {
+module.exports = (projectRoot, sourceRoot) => {
 
   const isProduction = process.env.NODE_ENV === 'production';
 
@@ -114,7 +114,7 @@ module.exports = (projectRoot) => {
     /*
     // The react-router Routes file. Required. Will be added to Webpack aliases.
     */
-    routes: 'src/routes.js',
+    routes: sourceRoot + '/routes.js',
 
     redux: {
       /*
@@ -123,7 +123,7 @@ module.exports = (projectRoot) => {
       //
       // Expects: String
       */
-      reducers: 'src/redux/modules/index.js',
+      reducers: sourceRoot + '/redux/modules/index.js',
 
       /*
       // A path to an index of middleware functions. On the serverside, these will
@@ -131,7 +131,7 @@ module.exports = (projectRoot) => {
       //
       // Expects: String
       */
-      // middleware: 'src/redux/middleware/index.js',
+      // middleware: sourceRoot + '/redux/middleware/index.js',
     },
 
     /*
@@ -141,7 +141,7 @@ module.exports = (projectRoot) => {
     //
     // Expects: String
     */
-    // htmlShell: 'src/containers/HtmlShell/HtmlShell.js',
+    // htmlShell: sourceRoot + '/containers/HtmlShell/HtmlShell.js',
 
     /*
     // Customizations for Webpack configuration. Optional.
