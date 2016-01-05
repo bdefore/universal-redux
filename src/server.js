@@ -115,7 +115,7 @@ function setupRenderer() {
         // }
         res.send('<!doctype html>\n' + ReactDOM.renderToString(<CustomHtml assets={tools.assets()} component={component} store={store} headers={res._headers} />));
       } else {
-        res.status(404).send('Not found')
+        res.status(404).send('Not found');
       }
     });
   });
