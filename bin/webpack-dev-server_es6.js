@@ -2,13 +2,15 @@
 const path = require('path');
 const Express = require('express');
 const webpack = require('webpack');
-const webpackConfig = require('./merge-configs');
-const userConfig = require(path.resolve('config/universal-redux.config.js'));
+const userConfig = require('./user-config');
 
+const config = require('./merge-configs')(userConfig);
+
+const webpackConfig = config.webpack.config;
 const compiler = webpack(webpackConfig);
 
-const host = userConfig.server.host || 'localhost';
-const port = parseInt(userConfig.server.port, 10) + 1 || 3001;
+const host = config.server.host || 'localhost';
+const port = parseInt(config.server.port, 10) + 1 || 3001;
 const serverOptions = {
   contentBase: 'http://' + host + ':' + port,
   quiet: true,

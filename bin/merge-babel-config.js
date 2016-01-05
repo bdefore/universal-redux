@@ -42,7 +42,7 @@ module.exports = (userBabelConfig, verbose) => {
       colors: true
     };
 
-    console.log('Babel config:');
+    console.log('\nBabel config:');
     console.log(util.inspect(babelConfig, utilOptions));
   }
 

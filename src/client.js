@@ -30,13 +30,6 @@ each(customMiddleware, (customMiddlewareToAdd) => {
 const dest = document.getElementById('content');
 const store = createStore(middleware, browserHistory, reducers, window.__data);
 
-// function createElement(Component, propz) {
-//   if (Component.fetchData) {
-//     Component.fetchData(store.getState, store.dispatch,
-//                         propz.location, propz.params);
-//   }
-//   return React.createElement(Component, propz);
-// }
 
 const component = (
   <Router history={browserHistory}>

@@ -4,9 +4,11 @@ process.env.NODE_ENV = 'production';
 
 const fs = require('fs');
 const webpack = require('webpack');
-const webpackConfig = require('./merge-configs');
+const userConfig = require('./user-config');
+const config = require('./merge-configs')(userConfig);
 const buildStats = false;
 const outputStatsPath = './webpack-stats.json';
+const webpackConfig = config.webpack.config;
 
 console.log('\nBuilding webpack bundle...');
 webpack(webpackConfig, (err, stats) => {

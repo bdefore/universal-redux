@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+const fs = require('fs');
 const path = require('path');
 const util = require('util');
 
@@ -14,100 +15,105 @@ const WebpackErrorNotificationPlugin = require('webpack-error-notification');
 
 const isProduction = process.env.NODE_ENV === 'production';
 
-// gather user config
-const userConfigPath = 'config/universal-redux.config.js';
-const userConfig = require(path.resolve(userConfigPath));
-
-// derive root and sourceDir, alowing for absolute, relative, or not provided
-// TODO: create helper for deriving root, also in src/server.js
-const root = userConfig.root ? userConfig.root[0] === '/' ? userConfig.root : path.resolve(__dirname, '../..', userConfig.root) : path.resolve(__dirname, '../../..');
-const sourceDir = userConfig.sourceDir ? userConfig.sourceDir[0] === '/' ? userConfig.sourceDir : path.resolve(root, userConfig.sourceDir) : path.resolve(root, './src');
-
-// merge with base config
-const universalReduxConfig = lodash.merge(require('../config/universal-redux.config.js')(root), userConfig);
-
-// merge with base webpack config
-const baseConfig = isProduction ? baseProdConfig : baseDevConfig;
-const combinedWebpackConfig = mergeWebpack(baseConfig, universalReduxConfig.webpack.config);
-combinedWebpackConfig.context = root;
-combinedWebpackConfig.resolve.root = sourceDir;
-
-// derive webpack output destination from staticPath
-combinedWebpackConfig.output.path = universalReduxConfig.server.staticPath + '/dist';
-
-// add babel for js transpiling
-const babelConfig = mergeBabel(universalReduxConfig.babelConfig, universalReduxConfig.verbose);
-combinedWebpackConfig.module.loaders.unshift({ test: /\.jsx?$/, exclude: /node_modules/, loaders: babelConfig });
-
-// gather tools config
-const combinedToolsConfig = baseToolsConfig;
-if (universalReduxConfig.toolsConfigPath) {
-  const userToolsConfig = require(path.resolve(universalReduxConfig.toolsConfigPath));
-  combinedToolsConfig = lodash.merge(baseToolsConfig, userToolsConfig);
-}
-combinedToolsConfig.webpack_assets_file_path = 'node_modules/universal-redux/webpack-assets.json';
-
-// add tools settings to combined weback config
-const WebpackIsomorphicToolsPlugin = require('webpack-isomorphic-tools/plugin');
-const toolsPlugin = new WebpackIsomorphicToolsPlugin(combinedToolsConfig);
-
-combinedWebpackConfig.module.loaders.push({ test: toolsPlugin.regular_expression('images'), loader: 'url-loader?limit=10240' });
-combinedWebpackConfig.plugins.push(isProduction ? toolsPlugin : toolsPlugin.development());
-
-// turn on linting per webpack build, unless directed not to
-if (universalReduxConfig.lint && universalReduxConfig.lint.enabled !== false && !isProduction) {
-  combinedWebpackConfig.module.loaders[0].loaders.push('eslint-loader');
-  const lintConfigPath = universalReduxConfig.lint.config || path.resolve(__dirname, '../.eslintrc');
-  combinedWebpackConfig.eslint = {
-    configFile: lintConfigPath
-  };
-}
-
-// turn on desktop notifications if user elects to
-if (universalReduxConfig.notifications === true && !isProduction) {
-  combinedWebpackConfig.plugins.push(new WebpackErrorNotificationPlugin());
-}
-
-// add default settings that are used by server via process.env
-const definitions = {
-  __LOGGER__: false,
-  __DEVTOOLS__: !isProduction,
-  __DEVELOPMENT__: !isProduction,
-  __REDUCER_INDEX__: universalReduxConfig.redux.reducers // only used for hot reloader in src/redux/create.js. may be able to remove?
-};
-
-// override with user settings
-lodash.each(universalReduxConfig.globals, (value, key) => { definitions[key] = JSON.stringify(value); });
-combinedWebpackConfig.plugins.push(new webpack.DefinePlugin(definitions));
-
-// add routes and reducer aliases so that client has access to them
-combinedWebpackConfig.resolve.alias = combinedWebpackConfig.resolve.alias || {};
-combinedWebpackConfig.resolve.alias.routes = universalReduxConfig.routes;
-combinedWebpackConfig.resolve.alias.reducers = universalReduxConfig.redux.reducers;
-if (universalReduxConfig.redux.middleware) {
-  combinedWebpackConfig.resolve.alias.middleware = universalReduxConfig.redux.middleware;
-} else {
-  combinedWebpackConfig.resolve.alias.middleware = path.resolve(__dirname, '../lib/redux/middleware/index.js');
-}
-
-// add project level vendor libs
-if (universalReduxConfig.webpack && universalReduxConfig.webpack.vendorLibraries && isProduction) {
-  lodash.each(universalReduxConfig.webpack.vendorLibraries, (lib) => {
-    combinedWebpackConfig.entry.vendor.push(lib);
-  });
-}
-
-// output configuration files if user wants verbosity
-if (universalReduxConfig.verbose) {
+function inspect(obj) {
   const utilOptions = {
-    depth: 6,
+    depth: 12,
     colors: true
   };
 
-  console.log('Webpack config:');
-  console.log(util.inspect(combinedWebpackConfig, utilOptions));
-  console.log('\nIsomorphic tools config:');
-  console.log(util.inspect(combinedToolsConfig, utilOptions));
+  console.log(util.inspect(obj, utilOptions));
 }
 
-module.exports = combinedWebpackConfig;
+module.exports = (userConfig) => {
+
+  // derive root and sourceDir, alowing for absolute, relative, or not provided
+  // TODO: create helper for deriving root, also in src/server.js
+  const root = userConfig.root ? userConfig.root[0] === '/' ? userConfig.root : path.resolve(__dirname, '../..', userConfig.root) : path.resolve(__dirname, '../../..');
+  const sourceDir = userConfig.sourceDir ? userConfig.sourceDir[0] === '/' ? userConfig.sourceDir : path.resolve(root, userConfig.sourceDir) : path.resolve(root, './src');
+
+  // merge with base config
+  const universalReduxConfig = lodash.merge(require('../config/universal-redux.config.js')(root, sourceDir), userConfig);
+
+  // merge with base webpack config
+  const baseConfig = isProduction ? baseProdConfig : baseDevConfig;
+  const combinedWebpackConfig = mergeWebpack(baseConfig, universalReduxConfig.webpack.config);
+  combinedWebpackConfig.context = root;
+  combinedWebpackConfig.resolve.root = sourceDir;
+
+  // derive webpack output destination from staticPath
+  combinedWebpackConfig.output.path = universalReduxConfig.server.staticPath + '/dist';
+
+  // add babel for js transpiling
+  const babelConfig = mergeBabel(universalReduxConfig.babelConfig, universalReduxConfig.verbose);
+  combinedWebpackConfig.module.loaders.unshift({ test: /\.jsx?$/, exclude: /node_modules/, loaders: babelConfig });
+
+  // gather tools config
+  const combinedToolsConfig = baseToolsConfig;
+  if (universalReduxConfig.toolsConfigPath) {
+    const userToolsConfig = require(path.resolve(universalReduxConfig.toolsConfigPath));
+    combinedToolsConfig = lodash.merge(baseToolsConfig, userToolsConfig);
+  }
+  combinedToolsConfig.webpack_assets_file_path = 'node_modules/universal-redux/webpack-assets.json';
+
+  // add tools settings to combined weback config
+  const WebpackIsomorphicToolsPlugin = require('webpack-isomorphic-tools/plugin');
+  const toolsPlugin = new WebpackIsomorphicToolsPlugin(combinedToolsConfig);
+
+  combinedWebpackConfig.module.loaders.push({ test: toolsPlugin.regular_expression('images'), loader: 'url-loader?limit=10240' });
+  combinedWebpackConfig.plugins.push(isProduction ? toolsPlugin : toolsPlugin.development());
+
+  // turn on linting per webpack build, unless directed not to
+  if (universalReduxConfig.lint && universalReduxConfig.lint.enabled !== false && !isProduction) {
+    combinedWebpackConfig.module.loaders[0].loaders.push('eslint-loader');
+    const lintConfigPath = universalReduxConfig.lint.config || path.resolve(__dirname, '../.eslintrc');
+    combinedWebpackConfig.eslint = {
+      configFile: lintConfigPath
+    };
+  }
+
+  // turn on desktop notifications if user elects to
+  if (universalReduxConfig.notifications === true && !isProduction) {
+    combinedWebpackConfig.plugins.push(new WebpackErrorNotificationPlugin());
+  }
+
+  // add default settings that are used by server via process.env
+  const definitions = {
+    __LOGGER__: false,
+    __DEVTOOLS__: !isProduction,
+    __DEVELOPMENT__: !isProduction,
+    __REDUCER_INDEX__: universalReduxConfig.redux.reducers // only used for hot reloader in src/redux/create.js. may be able to remove?
+  };
+
+  // override with user settings
+  lodash.each(universalReduxConfig.globals, (value, key) => { definitions[key] = JSON.stringify(value); });
+  combinedWebpackConfig.plugins.push(new webpack.DefinePlugin(definitions));
+
+  // add routes and reducer aliases so that client has access to them
+  combinedWebpackConfig.resolve.alias = combinedWebpackConfig.resolve.alias || {};
+  combinedWebpackConfig.resolve.alias.routes = universalReduxConfig.routes;
+  combinedWebpackConfig.resolve.alias.reducers = universalReduxConfig.redux.reducers;
+  if (universalReduxConfig.redux.middleware) {
+    combinedWebpackConfig.resolve.alias.middleware = universalReduxConfig.redux.middleware;
+  } else {
+    combinedWebpackConfig.resolve.alias.middleware = path.resolve(__dirname, '../lib/redux/middleware/index.js');
+  }
+
+  // add project level vendor libs
+  if (universalReduxConfig.webpack.vendorLibraries && isProduction) {
+    lodash.each(universalReduxConfig.webpack.vendorLibraries, (lib) => {
+      combinedWebpackConfig.entry.vendor.push(lib);
+    });
+  }
+
+  // output configuration files if user wants verbosity
+  if (universalReduxConfig.verbose) {
+    console.log('\nWebpack config:');
+    inspect(combinedWebpackConfig);
+    console.log('\nIsomorphic tools config:');
+    inspect(combinedToolsConfig);
+  }
+
+  universalReduxConfig.webpack.config = combinedWebpackConfig;
+
+  return universalReduxConfig;
+}
