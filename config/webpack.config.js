@@ -46,8 +46,7 @@ module.exports = {
       modulesDirectories: [
         'src',
         'node_modules',
-        'node_modules/universal-redux/src',
-        'node_modules/universal-redux/node_modules'
+        'node_modules/universal-redux/src'
       ],
       extensions: ['', '.json', '.js', '.jsx']
     },
@@ -55,8 +54,7 @@ module.exports = {
       modulesDirectories: [
         'src',
         'node_modules',
-        'node_modules/universal-redux/src',
-        'node_modules/universal-redux/node_modules'
+        'node_modules/universal-redux/src'
       ]
     }
   },
