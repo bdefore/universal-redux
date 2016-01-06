@@ -19,7 +19,7 @@ const vendor = [
   'react-redux',
   'redux',
   'redux-logger',
-  // 'redux-simple-router' // waiting for redux-simple-router to release react-router 2.0 build
+  'redux-simple-router'
 ];
 
 module.exports = {

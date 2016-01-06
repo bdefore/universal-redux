@@ -128,15 +128,14 @@ Peer dependencies for each version:
 
 #### 3.x (Beta - dependencies may change)
 
-[Babel](https://github.com/babel/babel) 6, React Router 2, [Redux Simple Router](https://github.com/rackt/redux-simple-router)
+[Babel](https://github.com/babel/babel) 6, React Router 2, [Redux Simple Router](https://github.com/rackt/redux-simple-router) 2
 
 ```
 "react": "^0.14.3",
 "react-dom": "^0.14.3",
 "react-router": "^2.0.0-rc4",
+"redux-simple-router": "^2.0.0"
 ```
-
-redux-simple-router will be added once they cut a release for react-router
 
 ### Local development
 
