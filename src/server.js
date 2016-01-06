@@ -104,7 +104,7 @@ function setupRenderer() {
       } else if (renderProps) {
         const component = (
           <Provider store={store} key="provider">
-            <RoutingContext />
+            <RoutingContext {...renderProps} />
           </Provider>
         );
 
