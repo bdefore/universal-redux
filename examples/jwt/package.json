@@ -86,13 +86,13 @@
     "concurrently": "1.0.0",
     "jsonwebtoken": "^5.4.1",
     "superagent": "^1.6.1",
-    "universal-redux": "3.0.0-beta5"
+    "universal-redux": "3.0.0-beta6"
   },
   "devDependencies": {
     "better-npm-run": "0.0.5",
     "classnames": "^2.2.0",
     "eslint-config-airbnb": "0.1.0",
-    "express-jwt-proxy": "^0.5.2",
+    "express-jwt-proxy": "^0.5.3",
     "flexboxgrid": "^6.3.0",
     "normalize.css": "^3.0.3",
     "react": "^0.14.3",
@@ -101,6 +101,6 @@
     "react-redux": "4.0.0",
     "react-router": "^2.0.0-rc4",
     "react-toolbox": "^0.13.4",
-    "url-loader": "^0.5.7"
+    "redux-simple-router": "^2.0.1"
   }
 }

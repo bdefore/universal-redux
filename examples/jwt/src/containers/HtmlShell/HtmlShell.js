@@ -15,6 +15,7 @@ export default class Html extends Component {
   static propTypes = {
     assets: PropTypes.object,
     component: PropTypes.node,
+    headers: PropTypes.object,
     store: PropTypes.object
   }
 

@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux';
-import { routeReducer } from 'universal-redux/lib/redux-simple-router';
+import { routeReducer } from 'redux-simple-router';
 import auth from './auth';
 import api from './api';
 
