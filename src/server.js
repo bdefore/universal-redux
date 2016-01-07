@@ -15,7 +15,6 @@ import WebpackIsomorphicTools from 'webpack-isomorphic-tools';
 // dependencies of serverside render
 import createStore from './redux/create';
 import Html from './containers/HtmlShell/HtmlShell';
-// import getStatusFromRoutes from './helpers/getStatusFromRoutes';
 import mergeConfigs from '../bin/merge-configs';
 
 let app;
@@ -109,10 +108,7 @@ function setupRenderer() {
           </Provider>
         );
 
-        // const status = getStatusFromRoutes(renderProps.router);
-        // if (status) {
         res.status(200);
-        // }
         res.send('<!doctype html>\n' + ReactDOM.renderToString(<CustomHtml assets={tools.assets()} component={component} store={store} headers={res._headers} />));
       } else {
         res.status(404).send('Not found');
