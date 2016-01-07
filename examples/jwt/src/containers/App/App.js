@@ -33,13 +33,13 @@ export default class App extends Component {
     loggingIn: PropTypes.bool.isRequired,
     loginFailed: PropTypes.bool.isRequired,
     makeAuthenticatedRequest: PropTypes.func.isRequired
-  }
+  };
 
   state = {
     email: 'dummy@user.com',
     password: 'somepassword',
     snackbarActive: false
-  }
+  };
 
   onInputChange(name, value) {
     this.setState({...this.state, [name]: value});
