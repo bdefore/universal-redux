@@ -66,7 +66,14 @@ module.exports = (projectRoot, sourceRoot) => {
       //
       // Expects: Boolean
       */
-      __DEVTOOLS__: !isProduction
+      __DEVTOOLS__: !isProduction,
+
+      /*
+      // Whether or not to show redux-devtools when page loads.
+      //
+      // Expects: Boolean
+      */
+      __DEVTOOLS_IS_VISIBLE__: true
     },
 
     /*

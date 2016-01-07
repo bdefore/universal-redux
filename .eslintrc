@@ -39,6 +39,7 @@
     "__LOGGER__": false,
     "__DISABLE_SSR__": true,
     "__DEVTOOLS__": true,
+    "__DEVTOOLS_IS_VISIBLE__": true,
     "webpackIsomorphicTools": true
   }
 }
