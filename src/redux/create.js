@@ -30,7 +30,7 @@ export default function createStore(customMiddleware, history, reducers, data) {
   const store = finalCreateStore(reducers, data);
 
   // only necessary for devtools https://github.com/rackt/redux-simple-router/pull/141#issuecomment-167587581
-  // router.syncHistoryToStore(store);
+  router.syncHistoryToStore(store);
 
   // if (__DEVELOPMENT__ && module.hot) {
   //   module.hot.accept(__REDUCER_INDEX__, () => {
