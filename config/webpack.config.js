@@ -45,18 +45,14 @@ module.exports = {
     resolve: {
       modulesDirectories: [
         'src',
-        'node_modules',
-        'node_modules/universal-redux/src',
-        'node_modules/universal-redux/node_modules'
+        'node_modules'
       ],
       extensions: ['', '.json', '.js', '.jsx']
     },
     resolveLoader: {
       modulesDirectories: [
         'src',
-        'node_modules',
-        'node_modules/universal-redux/src',
-        'node_modules/universal-redux/node_modules'
+        'node_modules'
       ]
     }
   },
