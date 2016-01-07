@@ -28,7 +28,7 @@
     "compile": "babel --presets es2015,stage-0,react --plugins transform-runtime src/ --out-dir lib/",
     "dev": "./bin/local-dev.sh",
     "lint": "eslint -c .eslintrc src bin config",
-    "test": "karma start",
+    "test": "karma start --single-run",
     "prepublish": "npm run compile"
   },
   "dependencies": {
