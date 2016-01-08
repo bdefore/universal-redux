@@ -2,26 +2,18 @@ import path from 'path';
 import Express from 'express';
 import favicon from 'serve-favicon';
 import compression from 'compression';
-import { each } from 'lodash';
 import WebpackIsomorphicTools from 'webpack-isomorphic-tools';
 
 import renderer from './server/renderer';
-import mergeConfigs from '../bin/merge-configs';
+import configure from './configure';
 
-let app;
-let hasSetup = false;
-let config;
-let toolsConfig = require('../config/webpack-isomorphic-tools-config');
+function setupTools(config, projectToolsConfig) {
+  const toolsConfig = projectToolsConfig || require('../config/webpack-isomorphic-tools-config');
 
-/**
- * Define isomorphic constants.
- */
-global.__CLIENT__ = false;
-global.__SERVER__ = true;
-global.__DISABLE_SSR__ = false;  // <----- DISABLES SERVER SIDE RENDERING FOR ERROR DEBUGGING
-global.__DEVELOPMENT__ = process.env.NODE_ENV !== 'production';
+  // bury it here rather than pollute the project directory
+  toolsConfig.webpack_assets_file_path = 'node_modules/universal-redux/webpack-assets.json';
 
-function setupTools(rootDir) {
+  const rootDir = config.webpack.config.context;
   const tools = new WebpackIsomorphicTools(toolsConfig);
   tools
     .development(__DEVELOPMENT__)
@@ -30,99 +22,35 @@ function setupTools(rootDir) {
   return tools;
 }
 
-function setupAssets() {
+function setupAssets(server, config) {
   if (config.server.favicon) {
-    app.use(favicon(path.resolve(config.server.favicon)));
+    server.use(favicon(path.resolve(config.server.favicon)));
   }
   const maxAge = config.server.maxAge || 0;
-  app.use(Express.static(path.resolve(config.server.staticPath), { maxage: maxAge }));
-}
-
-function validateConfig() {
-  const errors = [];
-  if (!config) {
-    errors.push('==>     ERROR: No configuration supplied.');
-  }
-  if (config.server) {
-    if (!config.server.host) {
-      errors.push('==>     ERROR: No host parameter supplied.');
-    }
-    if (!config.server.port) {
-      errors.push('==>     ERROR: No port parameter supplied.');
-    }
-  }
-  if (!config.routes) {
-    errors.push('==>     ERROR: Must supply routes.');
-  }
-  if (!config.redux.reducers) {
-    errors.push('==>     ERROR: Must supply redux configuration.');
-  } else if (!config.redux.reducers) {
-    errors.push('==>     ERROR: Must supply reducers.');
-  }
-  // TODO: check for more
-  return errors;
+  server.use(Express.static(path.resolve(config.server.staticPath), { maxage: maxAge }));
 }
 
 export default class UniversalServer {
 
-  static configure(projectConfig, projectToolsConfig) {
-    if (!hasSetup) {
-      UniversalServer.app();
-    }
-
-    // since typically the dev server is logging this out too
-    projectConfig.verbose = false;
-
-    config = mergeConfigs(projectConfig);
-
-    // add user defined globals for serverside access
-    each(config.globals, (value, key) => { global[key] = JSON.stringify(value); });
-    global.__REDUCER_INDEX__ = config.redux.reducers;
-
-    if (projectToolsConfig) {
-      toolsConfig = projectToolsConfig;
-    }
-    toolsConfig.webpack_assets_file_path = 'node_modules/universal-redux/webpack-assets.json';
-
-    const errors = validateConfig();
-
-    if (errors.length > 0) {
-      each(errors, (error) => { console.error(error); });
-    } else {
-      console.log('universal-redux configuration is valid.');
-    }
-
-    return errors;
-  }
-
   static app(userSuppliedApp) {
-    app = userSuppliedApp || new Express();
-    app.use(compression());
+    const server = userSuppliedApp || new Express();
+    server.use(compression());
 
-    hasSetup = true;
-
-    return app;
+    return server;
   }
 
-  static setup(projectConfig, projectToolsConfig) {
-    if (projectConfig) {
-      const errors = UniversalServer.configure(projectConfig, projectToolsConfig);
-      if (errors.length > 0) {
-        throw new Error('Configuration errors for universal-redux. Stopping.');
-      }
-    }
+  static setup(server, projectConfig, projectToolsConfig) {
+    const config = configure(projectConfig);
+    const tools = setupTools(config, projectToolsConfig);
 
-    const tools = setupTools(config.webpack.config.context);
-    setupAssets();
-    app.use(renderer(config, tools));
+    setupAssets(server, config);
+    server.use(renderer(config, tools));
+    return config;
   }
 
-  static start() {
-    if (!hasSetup) {
-      UniversalServer.app();
-    }
-
-    app.listen(config.server.port, (err) => {
+  static start(server, projectConfig, projectToolsConfig) {
+    const config = UniversalServer.setup(server, projectConfig, projectToolsConfig);
+    server.listen(config.server.port, (err) => {
       if (err) {
         console.error(err);
       }

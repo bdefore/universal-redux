@@ -10,6 +10,11 @@ import { Provider } from 'react-redux';
 import createStore from '../shared/create';
 import Html from '../containers/HtmlShell/HtmlShell';
 
+global.__CLIENT__ = false;
+global.__SERVER__ = true;
+global.__DISABLE_SSR__ = false;  // <----- DISABLES SERVER SIDE RENDERING FOR ERROR DEBUGGING
+global.__DEVELOPMENT__ = process.env.NODE_ENV !== 'production';
+
 export default (config, tools) => {
 
   const getRoutes = require(path.resolve(config.routes)).default;
