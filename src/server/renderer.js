@@ -9,14 +9,15 @@ import { Provider } from 'react-redux';
 
 import createStore from '../shared/create';
 import Html from '../containers/HtmlShell/HtmlShell';
+import configure from '../configure';
 
 global.__CLIENT__ = false;
 global.__SERVER__ = true;
 global.__DISABLE_SSR__ = false;  // <----- DISABLES SERVER SIDE RENDERING FOR ERROR DEBUGGING
 global.__DEVELOPMENT__ = process.env.NODE_ENV !== 'production';
 
-export default (config, tools) => {
-
+export default (projectConfig, tools) => {
+  const config = configure(projectConfig);
   const getRoutes = require(path.resolve(config.routes)).default;
   const reducers = require(path.resolve(config.redux.reducers)).default;
   const pretty = new PrettyError();

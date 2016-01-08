@@ -3,7 +3,8 @@ import WebpackIsomorphicTools from 'webpack-isomorphic-tools';
 import renderer from './server/renderer';
 import configure from './configure';
 
-function setupTools(config, projectToolsConfig) {
+function setupTools(projectConfig, projectToolsConfig) {
+  const config = configure(projectConfig);
   const toolsConfig = projectToolsConfig || require('../config/webpack-isomorphic-tools-config');
 
   // bury it here rather than pollute the project directory
@@ -20,9 +21,9 @@ function setupTools(config, projectToolsConfig) {
 
 export default (server, projectConfig, projectToolsConfig) => {
   const config = configure(projectConfig);
-  const tools = setupTools(config, projectToolsConfig);
+  const tools = setupTools(projectConfig, projectToolsConfig);
 
-  server.use(renderer(config, tools));
+  server.use(renderer(projectConfig, tools));
 
   server.listen(config.server.port, (err) => {
     if (err) {
