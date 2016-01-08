@@ -104,11 +104,9 @@ function setupRenderer() {
         hydrateOnClient();
       } else if (renderProps) {
 
-        syncReduxAndRouter(renderProps.history, store);
-
         const component = (
           <Provider store={store} key="provider">
-            <RoutingContext {...renderProps} />
+            <RoutingContext />
           </Provider>
         );
 
