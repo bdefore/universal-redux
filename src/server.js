@@ -8,7 +8,6 @@ import compression from 'compression';
 import PrettyError from 'pretty-error';
 import { each } from 'lodash';
 import { RoutingContext, match } from 'react-router';
-import { syncReduxAndRouter } from 'redux-simple-router';
 import { Provider } from 'react-redux';
 import WebpackIsomorphicTools from 'webpack-isomorphic-tools';
 
