@@ -50,7 +50,8 @@ export default (projectConfig, projectToolsConfig) => {
       });
     }
 
-    const store = createStore(middleware, createMemoryHistory(), reducers);
+    const history = createMemoryHistory();
+    const store = createStore(middleware, history, reducers);
 
     function hydrateOnClient() {
       res.status(200).send('<!doctype html>\n' + ReactDOM.renderToString(<CustomHtml assets={tools.assets()} store={store} headers={res._headers} />));
@@ -61,8 +62,7 @@ export default (projectConfig, projectToolsConfig) => {
       return;
     }
 
-    match({ routes: getRoutes(),
-            location: req.originalUrl }, (error, redirectLocation, renderProps) => {
+    match({ history: history, routes: getRoutes(), location: req.originalUrl }, (error, redirectLocation, renderProps) => {
       if (redirectLocation) {
         res.redirect(redirectLocation.pathname + redirectLocation.search);
       } else if (error) {
