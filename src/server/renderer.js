@@ -6,33 +6,15 @@ import { RouterContext, match } from 'react-router';
 import PrettyError from 'pretty-error';
 import createMemoryHistory from 'react-router/lib/createMemoryHistory';
 import { Provider } from 'react-redux';
-import WebpackIsomorphicTools from 'webpack-isomorphic-tools';
 
 import createStore from '../shared/create';
 import Html from '../containers/HtmlShell/HtmlShell';
-import inspect from '../helpers/inspect';
 
-function setupTools(rootDir, toolsConfig) {
-  console.log('rootDir toolsConfig', rootDir, toolsConfig);
-  const tools = new WebpackIsomorphicTools(toolsConfig);
-  tools
-    .development(__DEVELOPMENT__)
-    .server(rootDir);
+export default (config, tools) => {
 
-  return tools;
-}
-
-export default (config, toolsConfig) => {
-
-  console.log('renderer received config');
-  inspect(config);
-  console.log('loading routes', config.routes);
   const getRoutes = require(path.resolve(config.routes)).default;
-  console.log('loading reducers');
   const reducers = require(path.resolve(config.redux.reducers)).default;
   const pretty = new PrettyError();
-  console.log('setting up tools');
-  const tools = setupTools(config.webpack.config.context, toolsConfig);
 
   let CustomHtml;
   if (config.htmlShell) {
@@ -42,8 +24,6 @@ export default (config, toolsConfig) => {
   }
 
   return (req, res) => {
-
-    console.log('processing request');
 
     if (__DEVELOPMENT__) {
       // Do not cache webpack stats: the script file would change since

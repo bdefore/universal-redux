@@ -3,6 +3,7 @@ import Express from 'express';
 import favicon from 'serve-favicon';
 import compression from 'compression';
 import { each } from 'lodash';
+import WebpackIsomorphicTools from 'webpack-isomorphic-tools';
 
 import renderer from './server/renderer';
 import mergeConfigs from '../bin/merge-configs';
@@ -19,6 +20,15 @@ global.__CLIENT__ = false;
 global.__SERVER__ = true;
 global.__DISABLE_SSR__ = false;  // <----- DISABLES SERVER SIDE RENDERING FOR ERROR DEBUGGING
 global.__DEVELOPMENT__ = process.env.NODE_ENV !== 'production';
+
+function setupTools(rootDir) {
+  const tools = new WebpackIsomorphicTools(toolsConfig);
+  tools
+    .development(__DEVELOPMENT__)
+    .server(rootDir);
+
+  return tools;
+}
 
 function setupAssets() {
   if (config.server.favicon) {
@@ -102,9 +112,9 @@ export default class UniversalServer {
       }
     }
 
+    const tools = setupTools(config.webpack.config.context);
     setupAssets();
-    console.log('has config?', config);
-    app.use(renderer(config, toolsConfig));
+    app.use(renderer(config, tools));
   }
 
   static start() {
