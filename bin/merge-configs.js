@@ -1,6 +1,5 @@
 #!/usr/bin/env node
 const path = require('path');
-const util = require('util');
 
 const lodash = require('lodash');
 const webpack = require('webpack');
@@ -11,17 +10,9 @@ const baseDevConfig = mergeWebpack(baseWebpackConfig.common, baseWebpackConfig.d
 const baseProdConfig = mergeWebpack(baseWebpackConfig.common, baseWebpackConfig.production);
 const baseToolsConfig = require('../config/webpack-isomorphic-tools-config');
 const WebpackErrorNotificationPlugin = require('webpack-error-notification');
+const inspect = require('../lib/helpers/inspect');
 
 const isProduction = process.env.NODE_ENV === 'production';
-
-function inspect(obj) {
-  const utilOptions = {
-    depth: 12,
-    colors: true
-  };
-
-  console.log(util.inspect(obj, utilOptions));
-}
 
 module.exports = (userConfig) => {
 
@@ -80,7 +71,7 @@ module.exports = (userConfig) => {
     __LOGGER__: false,
     __DEVTOOLS__: !isProduction,
     __DEVELOPMENT__: !isProduction,
-    __REDUCER_INDEX__: universalReduxConfig.redux.reducers // only used for hot reloader in src/redux/create.js. may be able to remove?
+    __REDUCER_INDEX__: universalReduxConfig.redux.reducers // only used for hot reloader in src/shared/create.js. may be able to remove?
   };
 
   // override with user settings

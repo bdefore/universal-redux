@@ -6,7 +6,7 @@ import React from 'react';
 import { each } from 'lodash';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import createStore from './redux/create';
+import createStore from './shared/create';
 import { Router, browserHistory } from 'react-router';
 
 // dependencies of external source. these resolve via webpack aliases
