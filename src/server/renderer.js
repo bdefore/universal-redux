@@ -53,7 +53,7 @@ export default (projectConfig, projectToolsConfig) => {
     const store = createStore(middleware, createMemoryHistory(), reducers);
 
     function hydrateOnClient() {
-      res.send('<!doctype html>\n' + ReactDOM.renderToString(<CustomHtml assets={tools.assets()} store={store} headers={res._headers} />));
+      res.status(200).send('<!doctype html>\n' + ReactDOM.renderToString(<CustomHtml assets={tools.assets()} store={store} headers={res._headers} />));
     }
 
     if (__DISABLE_SSR__) {
@@ -76,8 +76,7 @@ export default (projectConfig, projectToolsConfig) => {
           </Provider>
         );
 
-        res.status(200);
-        res.send('<!doctype html>\n' + ReactDOM.renderToString(<CustomHtml assets={tools.assets()} component={component} store={store} headers={res._headers} />));
+        res.status(200).send('<!doctype html>\n' + ReactDOM.renderToString(<CustomHtml assets={tools.assets()} component={component} store={store} headers={res._headers} />));
       } else {
         res.status(404).send('Not found');
       }
