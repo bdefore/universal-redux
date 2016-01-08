@@ -89,7 +89,7 @@
     "webpack-dev-middleware": "^1.4.0",
     "webpack-error-notification": "^0.1.4",
     "webpack-hot-middleware": "^2.5.0",
-    "webpack-isomorphic-tools": "^2.2.18"
+    "webpack-isomorphic-tools": "^2.2.24"
   },
   "devDependencies": {
     "chai": "^3.3.0",
