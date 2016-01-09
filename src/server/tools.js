@@ -3,7 +3,7 @@ import configure from '../configure';
 
 export default (projectConfig, projectToolsConfig) => {
   const config = configure(projectConfig);
-  const toolsConfig = projectToolsConfig || require('../../config/webpack-isomorphic-tools-config');
+  const toolsConfig = projectToolsConfig || require('../../config/webpack-isomorphic-tools.config.js');
 
   // bury it here rather than pollute the project directory
   toolsConfig.webpack_assets_file_path = 'node_modules/universal-redux/webpack-assets.json';

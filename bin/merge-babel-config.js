@@ -15,15 +15,15 @@ module.exports = (userBabelConfig, verbose) => {
 
   const hmrConfig = [
     'react-transform', {
-      'transforms': [
+      transforms: [
         {
-          'transform': 'react-transform-hmr',
-          'imports': ['react'],
-          'locals': ['module']
+          transform: 'react-transform-hmr',
+          imports: ['react'],
+          locals: ['module']
         },
         {
-          'transform': 'react-transform-catch-errors',
-          'imports': ['react', 'redbox-react']
+          transform: 'react-transform-catch-errors',
+          imports: ['react', 'redbox-react']
         }
       ]
     }

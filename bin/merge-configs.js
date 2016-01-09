@@ -9,7 +9,7 @@ const mergeWebpack = require('webpack-config-merger');
 const baseWebpackConfig = require('../config/webpack.config.js');
 const baseDevConfig = mergeWebpack(baseWebpackConfig.common, baseWebpackConfig.development);
 const baseProdConfig = mergeWebpack(baseWebpackConfig.common, baseWebpackConfig.production);
-const baseToolsConfig = require('../config/webpack-isomorphic-tools-config');
+const baseToolsConfig = require('../config/webpack-isomorphic-tools.config.js');
 const WebpackErrorNotificationPlugin = require('webpack-error-notification');
 
 const isProduction = process.env.NODE_ENV === 'production';
@@ -25,7 +25,6 @@ function inspect(obj) {
 
 module.exports = (userConfig) => {
   // derive root and sourceDir, alowing for absolute, relative, or not provided
-  // TODO: create helper for deriving root, also in src/server.js
   const root = userConfig.root ? userConfig.root[0] === '/' ? userConfig.root : path.resolve(__dirname, '../..', userConfig.root) : path.resolve(__dirname, '../../..');
   const sourceDir = userConfig.sourceDir ? userConfig.sourceDir[0] === '/' ? userConfig.sourceDir : path.resolve(root, userConfig.sourceDir) : path.resolve(root, './src');
 
@@ -46,11 +45,8 @@ module.exports = (userConfig) => {
   combinedWebpackConfig.module.loaders.unshift({ test: /\.jsx?$/, exclude: /node_modules/, loaders: babelConfig });
 
   // gather tools config
-  const combinedToolsConfig = baseToolsConfig;
-  if (universalReduxConfig.toolsConfigPath) {
-    const userToolsConfig = require(path.resolve(universalReduxConfig.toolsConfigPath));
-    combinedToolsConfig = lodash.merge(baseToolsConfig, userToolsConfig);
-  }
+  const userToolsConfig = require(path.resolve(universalReduxConfig.toolsConfigPath));
+  const combinedToolsConfig = lodash.merge(baseToolsConfig, userToolsConfig);
   combinedToolsConfig.webpack_assets_file_path = 'node_modules/universal-redux/webpack-assets.json';
 
   // add tools settings to combined weback config
@@ -61,7 +57,7 @@ module.exports = (userConfig) => {
   combinedWebpackConfig.plugins.push(isProduction ? toolsPlugin : toolsPlugin.development());
 
   // turn on linting per webpack build, unless directed not to
-  if (universalReduxConfig.lint && universalReduxConfig.lint.enabled !== false && !isProduction) {
+  if (universalReduxConfig.lint.enabled !== false && !isProduction) {
     combinedWebpackConfig.module.loaders[0].loaders.push('eslint-loader');
     const lintConfigPath = universalReduxConfig.lint.config || path.resolve(__dirname, '../.eslintrc');
     combinedWebpackConfig.eslint = {
@@ -93,7 +89,7 @@ module.exports = (userConfig) => {
   if (universalReduxConfig.redux.middleware) {
     combinedWebpackConfig.resolve.alias.middleware = universalReduxConfig.redux.middleware;
   } else {
-    combinedWebpackConfig.resolve.alias.middleware = path.resolve(__dirname, '../lib/redux/middleware/index.js');
+    combinedWebpackConfig.resolve.alias.middleware = path.resolve(__dirname, '../lib/helpers/empty.js');
   }
 
   // add project level vendor libs

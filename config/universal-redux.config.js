@@ -107,7 +107,7 @@ module.exports = (projectRoot, sourceRoot) => {
     //
     // Expects: String
     */
-    // toolsConfigPath: __dirname + '/webpack-isomorphic-tools.config.js',
+    toolsConfigPath: __dirname + '/webpack-isomorphic-tools.config.js',
 
     /*
     // When eneabled, will output Webpack and Webpack Isomorphic
