@@ -4,13 +4,14 @@
   "description": "JWT example with Universal Redux",
   "main": "index.js",
   "scripts": {
-    "start": "concurrent --kill-others \"better-npm-run api\" \"better-npm-run auth\" \"better-npm-run server\"",
-    "build": "better-npm-run build",
-    "postinstall": "./bin/build_for_heroku.sh",
-    "dev-server": "better-npm-run dev-server",
     "api-server": "better-npm-run api-server",
     "auth-server": "better-npm-run auth-server",
+    "build": "better-npm-run build",
     "dev": "concurrent --kill-others \"npm run watch-client\" \"npm run api-server\" \"npm run auth-server\" \"npm run dev-server\"",
+    "dev-server": "better-npm-run dev-server",
+    "lint": "eslint -c .eslintrc src",
+    "postinstall": "./bin/build_for_heroku.sh",
+    "start": "concurrent --kill-others \"better-npm-run api\" \"better-npm-run auth\" \"better-npm-run server\"",
     "test": "echo \"Error: no test specified\" && exit 1",
     "watch-client": "better-npm-run watch-client"
   },

@@ -18,7 +18,8 @@ require('flexboxgrid/dist/flexboxgrid.css');
     authMessage: state.auth.message,
     loggedIn: state.auth.loggedIn,
     loggingIn: state.auth.loggingIn,
-    loginFailed: state.auth.loginFailed
+    loginFailed: state.auth.loginFailed,
+    path: state.routing.path
   }),
   dispatch => bindActionCreators({login, logout, makeAuthenticatedRequest}, dispatch)
 )
@@ -32,7 +33,8 @@ export default class App extends Component {
     loggedIn: PropTypes.bool,
     loggingIn: PropTypes.bool.isRequired,
     loginFailed: PropTypes.bool.isRequired,
-    makeAuthenticatedRequest: PropTypes.func.isRequired
+    makeAuthenticatedRequest: PropTypes.func.isRequired,
+    path: PropTypes.object.isRequired
   };
 
   state = {

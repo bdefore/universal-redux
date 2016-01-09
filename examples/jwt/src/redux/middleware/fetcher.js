@@ -34,7 +34,6 @@ class ApiFetcher {
             resolve(res);
           }
         });
-
       }));
   }
 }
