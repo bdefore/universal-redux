@@ -61,7 +61,7 @@ export default (projectConfig, projectToolsConfig) => {
       return;
     }
 
-    match({ history, routes: getRoutes(), location: req.originalUrl }, (error, redirectLocation, renderProps) => {
+    match({ history, routes: getRoutes(store), location: req.originalUrl }, (error, redirectLocation, renderProps) => {
       if (redirectLocation) {
         res.redirect(redirectLocation.pathname + redirectLocation.search);
       } else if (error) {

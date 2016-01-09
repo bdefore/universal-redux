@@ -1,7 +1,3 @@
-/**
- * THIS IS THE ENTRY POINT FOR THE CLIENT, JUST LIKE server.js IS THE ENTRY POINT FOR THE SERVER.
- */
-// node modules dependencies
 import React from 'react';
 import { each } from 'lodash';
 import ReactDOM from 'react-dom';
@@ -28,7 +24,7 @@ const store = createStore(middleware, browserHistory, reducers, window.__data);
 
 const component = (
   <Router history={browserHistory}>
-    {getRoutes()}
+    {getRoutes(store)}
   </Router>
 );
 
