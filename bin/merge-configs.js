@@ -24,7 +24,6 @@ function inspect(obj) {
 }
 
 module.exports = (userConfig) => {
-
   // derive root and sourceDir, alowing for absolute, relative, or not provided
   // TODO: create helper for deriving root, also in src/server.js
   const root = userConfig.root ? userConfig.root[0] === '/' ? userConfig.root : path.resolve(__dirname, '../..', userConfig.root) : path.resolve(__dirname, '../../..');

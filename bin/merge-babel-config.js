@@ -10,7 +10,6 @@ function loadAndParse(filePath) {
 }
 
 module.exports = (userBabelConfig, verbose) => {
-
   const baseBabelConfig = loadAndParse(path.resolve(__dirname, '..', './.babelrc'));
   const babelConfig = userBabelConfig ? Object.assign(baseBabelConfig, loadAndParse(path.resolve(userBabelConfig))) : baseBabelConfig;
 
