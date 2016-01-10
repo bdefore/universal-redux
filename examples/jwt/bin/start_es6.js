@@ -5,8 +5,9 @@ import authConfig from '../config/express-jwt-proxy.config.js';
 import jwtProxy from 'express-jwt-proxy';
 
 const app = express(universalConfig);
-app.use(renderer(universalConfig));
 
 jwtProxy(app, authConfig);
+
+app.use(renderer(universalConfig));
 
 start(app, universalConfig);
