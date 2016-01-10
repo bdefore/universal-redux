@@ -74,8 +74,7 @@ module.exports = (userConfig) => {
   const definitions = {
     __LOGGER__: false,
     __DEVTOOLS__: !isProduction,
-    __DEVELOPMENT__: !isProduction,
-    __REDUCER_INDEX__: universalReduxConfig.redux.reducers // only used for hot reloader in src/redux/create.js. may be able to remove?
+    __DEVELOPMENT__: !isProduction
   };
 
   // override with user settings

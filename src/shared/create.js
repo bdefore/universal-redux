@@ -1,7 +1,6 @@
 import createLogger from 'redux-logger';
 import { syncHistory } from 'redux-simple-router';
 import { createStore as _createStore, applyMiddleware, compose } from 'redux';
-// import path from 'path';
 
 export default function createStore(customMiddleware, history, reducers, data) {
   const router = syncHistory(history);
@@ -31,10 +30,12 @@ export default function createStore(customMiddleware, history, reducers, data) {
   router.syncHistoryToStore(store);
 
   // if (__DEVELOPMENT__ && module.hot) {
-  //   module.hot.accept(__REDUCER_INDEX__, () => {
-  //   module.hot.accept('../../../../src/redux/modules/index', () => {
-  //     store.replaceReducer(require(path.resolve(__REDUCER_INDEX__)));
-  //     store.replaceReducer(require('../../../../src/redux/modules/index'));
+  //   console.log('assigning module.hot.accept');
+  //   module.hot.accept('../../../../src/redux/modules', (updatedDependencies) => {
+  //   // module.hot.accept('redux/modules', (updatedDependencies) => {
+  //     console.log('accept', updatedDependencies);
+  //     const nextRootReducer = require('../../../../src/redux/modules/index').default;
+  //     store.replaceReducer(nextRootReducer);
   //   });
   // }
 
