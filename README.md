@@ -17,7 +17,7 @@ The quickest way to get started is to clone the [starter project](https://github
 
 #### Other Examples
 
-- [An example with JWT authentication](https://github.com/bdefore/universal-redux/tree/0.x/examples/jwt) ([Heroku demo](https://universal-redux-jwt-example.herokuapp.com))
+- [An example with JWT authentication](https://github.com/bdefore/universal-redux/tree/master/examples/jwt) ([Heroku demo](https://universal-redux-jwt-example.herokuapp.com))
 - [A refactor of react-redux-universal-hot-example with universal-redux and redux-simple-router](https://github.com/bdefore/react-redux-universal-hot-example/tree/babel6) ([Heroku demo](https://universal-redux.herokuapp.com))
 
 ### Usage
