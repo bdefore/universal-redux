@@ -1,5 +1,4 @@
 import path from 'path';
-import { each } from 'lodash';
 import React from 'react';
 import ReactDOM from 'react-dom/server';
 import { RouterContext, match } from 'react-router';
