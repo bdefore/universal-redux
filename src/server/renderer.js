@@ -38,17 +38,7 @@ export default (projectConfig, projectToolsConfig) => {
       tools.refresh();
     }
 
-    // assemble custom middleware, pass req, res
-    const middleware = [];
-    if (config.redux.middleware) {
-      const customMiddleware = require(path.resolve(config.redux.middleware)).default;
-      each(customMiddleware, (customMiddlewareToAdd) => {
-        if (typeof customMiddlewareToAdd === 'function') {
-          middleware.push(customMiddlewareToAdd(req, res));
-        }
-      });
-    }
-
+    const middleware = config.redux.middleware ? require(path.resolve(config.redux.middleware)).default : [];
     const history = createMemoryHistory();
     const store = createStore(middleware, history, reducers);
 

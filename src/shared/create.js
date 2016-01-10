@@ -5,9 +5,7 @@ import { createStore as _createStore, applyMiddleware, compose } from 'redux';
 
 export default function createStore(customMiddleware, history, reducers, data) {
   const router = syncHistory(history);
-  const defaultMiddleware = [
-    router
-  ];
+  const defaultMiddleware = [ router ];
   const middleware = customMiddleware.concat(defaultMiddleware);
 
   if (__CLIENT__ && __LOGGER__) {
