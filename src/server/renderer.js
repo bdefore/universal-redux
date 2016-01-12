@@ -1,5 +1,4 @@
 import path from 'path';
-import { each } from 'lodash';
 import React from 'react';
 import ReactDOM from 'react-dom/server';
 import { RouterContext, match } from 'react-router';
@@ -21,7 +20,6 @@ export default (projectConfig, projectToolsConfig) => {
   const tools = getTools(projectConfig, projectToolsConfig);
   const config = configure(projectConfig);
   const getRoutes = require(path.resolve(config.routes)).default;
-  const reducers = require(path.resolve(config.redux.reducers)).default;
   const pretty = new PrettyError();
 
   let CustomHtml;
@@ -38,19 +36,9 @@ export default (projectConfig, projectToolsConfig) => {
       tools.refresh();
     }
 
-    // assemble custom middleware, pass req, res
-    const middleware = [];
-    if (config.redux.middleware) {
-      const customMiddleware = require(path.resolve(config.redux.middleware)).default;
-      each(customMiddleware, (customMiddlewareToAdd) => {
-        if (typeof customMiddlewareToAdd === 'function') {
-          middleware.push(customMiddlewareToAdd(req, res));
-        }
-      });
-    }
-
+    const middleware = config.redux.middleware ? require(path.resolve(config.redux.middleware)).default : [];
     const history = createMemoryHistory();
-    const store = createStore(middleware, history, reducers);
+    const store = createStore(middleware, history);
 
     function hydrateOnClient() {
       res.status(200).send('<!doctype html>\n' + ReactDOM.renderToString(<CustomHtml assets={tools.assets()} store={store} headers={res._headers} />));

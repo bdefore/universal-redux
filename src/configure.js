@@ -34,7 +34,6 @@ export default (projectConfig) => {
 
   // add user defined globals for serverside access
   each(config.globals, (value, key) => { global[key] = JSON.stringify(value); });
-  global.__REDUCER_INDEX__ = config.redux.reducers;
 
   const errors = validateConfig(config);
 
