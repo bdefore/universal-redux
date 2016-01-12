@@ -20,7 +20,6 @@ export default (projectConfig, projectToolsConfig) => {
   const tools = getTools(projectConfig, projectToolsConfig);
   const config = configure(projectConfig);
   const getRoutes = require(path.resolve(config.routes)).default;
-  const reducers = require(path.resolve(config.redux.reducers)).default;
   const pretty = new PrettyError();
 
   let CustomHtml;
@@ -39,7 +38,7 @@ export default (projectConfig, projectToolsConfig) => {
 
     const middleware = config.redux.middleware ? require(path.resolve(config.redux.middleware)).default : [];
     const history = createMemoryHistory();
-    const store = createStore(middleware, history, reducers);
+    const store = createStore(middleware, history);
 
     function hydrateOnClient() {
       res.status(200).send('<!doctype html>\n' + ReactDOM.renderToString(<CustomHtml assets={tools.assets()} store={store} headers={res._headers} />));

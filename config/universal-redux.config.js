@@ -137,7 +137,7 @@ module.exports = (projectRoot, sourceRoot) => {
       //
       // Expects: String
       */
-      // middleware: sourceRoot + '/redux/middleware/index.js',
+      middleware: sourceRoot + '/redux/middleware/index.js',
     },
 
     /*

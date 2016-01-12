@@ -84,7 +84,6 @@ module.exports = (userConfig) => {
   // add routes and reducer aliases so that client has access to them
   combinedWebpackConfig.resolve.alias = combinedWebpackConfig.resolve.alias || {};
   combinedWebpackConfig.resolve.alias.routes = universalReduxConfig.routes;
-  combinedWebpackConfig.resolve.alias.reducers = universalReduxConfig.redux.reducers;
   if (universalReduxConfig.redux.middleware) {
     combinedWebpackConfig.resolve.alias.middleware = universalReduxConfig.redux.middleware;
   } else {

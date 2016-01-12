@@ -7,11 +7,10 @@ import { Router, browserHistory } from 'react-router';
 // dependencies of external source. these resolve via webpack aliases
 // as assigned in merge-configs.js
 import getRoutes from 'routes';
-import reducers from 'reducers';
 import middleware from 'middleware';
 
 const dest = document.getElementById('content');
-const store = createStore(middleware, browserHistory, reducers, window.__data);
+const store = createStore(middleware, browserHistory, window.__data);
 
 const component = (
   <Router history={browserHistory}>
