@@ -1,10 +1,11 @@
 import path from 'path';
 import React from 'react';
 import ReactDOM from 'react-dom/server';
-import { RouterContext, match } from 'react-router';
+import { match } from 'react-router';
 import PrettyError from 'pretty-error';
 import createMemoryHistory from 'react-router/lib/createMemoryHistory';
 import { Provider } from 'react-redux';
+import AsyncProps, { loadPropsOnServer } from 'async-props';
 
 import createStore from '../shared/create';
 import Html from '../containers/HtmlShell/HtmlShell';
@@ -57,13 +58,15 @@ export default (projectConfig, projectToolsConfig) => {
         res.status(500);
         hydrateOnClient();
       } else if (renderProps) {
-        const component = (
-          <Provider store={store} key="provider">
-            <RouterContext {...renderProps} />
-          </Provider>
-        );
+        loadPropsOnServer(renderProps, (err, asyncProps) => {
+          const component = (
+            <Provider store={store} key="provider">
+              <AsyncProps {...renderProps} {...asyncProps} />
+            </Provider>
+          );
 
-        res.status(200).send('<!doctype html>\n' + ReactDOM.renderToString(<CustomHtml assets={tools.assets()} component={component} store={store} headers={res._headers} />));
+          res.status(200).send('<!doctype html>\n' + ReactDOM.renderToString(<CustomHtml assets={tools.assets()} component={component} store={store} headers={res._headers} />));
+        });
       } else {
         res.status(404).send('Not found');
       }

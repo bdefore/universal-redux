@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import AsyncProps from 'async-props';
 import { Provider } from 'react-redux';
 import createStore from './shared/create';
 import { Router, browserHistory } from 'react-router';
@@ -13,7 +14,7 @@ const dest = document.getElementById('content');
 const store = createStore(middleware, browserHistory, window.__data);
 
 const component = (
-  <Router history={browserHistory}>
+  <Router render={(props) => <AsyncProps {...props} />} history={browserHistory}>
     {getRoutes(store)}
   </Router>
 );
