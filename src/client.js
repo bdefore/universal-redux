@@ -2,8 +2,9 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import AsyncProps from 'async-props';
 import { Provider } from 'react-redux';
-import createStore from './shared/create';
 import { Router, browserHistory } from 'react-router';
+import createStore from './shared/create';
+import { render as renderDevtools } from './client/devtools';
 
 // dependencies of external source. these resolve via webpack aliases
 // as assigned in merge-configs.js
@@ -34,15 +35,4 @@ if (process.env.NODE_ENV !== 'production') {
   }
 }
 
-if (__DEVTOOLS__ && !window.devToolsExtension) {
-  const DevTools = require('./containers/DevTools/DevTools').default;
-  ReactDOM.render(
-    <Provider store={store} key="provider">
-      <div>
-        {component}
-        <DevTools />
-      </div>
-    </Provider>,
-    dest
-  );
-}
+renderDevtools(component, store, dest);
