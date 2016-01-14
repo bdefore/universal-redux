@@ -22,7 +22,7 @@ export default function create(providedMiddleware, data) {
   // backward compatibility to 2.x api expecting object for middleware instead of array:
   // const customMiddleware = !providedMiddleware.concat ? map(providedMiddleware, (m) => { return m; }) : providedMiddleware;
 
-  const middleware = customMiddleware.concat(defaultMiddleware);
+  const middleware = providedMiddleware.concat(defaultMiddleware);
 
   if (__CLIENT__ && __LOGGER__) {
     middleware.push(createLogger({ collapsed: true }));
