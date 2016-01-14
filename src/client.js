@@ -15,7 +15,7 @@ import middleware from 'middleware';
 const dest = document.getElementById('content');
 const browserHistory = createHistory();
 
-const store = createStore(middleware, browserHistory, window.__data);
+const store = createStore(middleware, window.__data);
 
 syncReduxAndRouter(browserHistory, store);
 
