@@ -47,6 +47,8 @@ module.exports = (userConfig) => {
   // gather tools config
   const userToolsConfig = require(path.resolve(universalReduxConfig.toolsConfigPath));
   const combinedToolsConfig = lodash.merge(baseToolsConfig, userToolsConfig);
+
+  // bury it here rather than pollute the project directory
   combinedToolsConfig.webpack_assets_file_path = 'node_modules/universal-redux/webpack-assets.json';
 
   // add tools settings to combined weback config
