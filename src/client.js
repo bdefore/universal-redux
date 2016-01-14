@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import createHistory from 'history/lib/createBrowserHistory';
 import { Router } from 'react-router';
+import { syncReduxAndRouter } from 'redux-simple-router';
 import createStore from './shared/create';
 import { render as renderDevtools } from './client/devtools';
 
@@ -13,7 +14,10 @@ import middleware from 'middleware';
 
 const dest = document.getElementById('content');
 const browserHistory = createHistory();
+
 const store = createStore(middleware, browserHistory, window.__data);
+
+syncReduxAndRouter(browserHistory, store);
 
 const component = (
   <Router history={browserHistory}>
