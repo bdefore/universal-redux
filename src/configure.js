@@ -19,8 +19,6 @@ function validateConfig(config) {
   }
   if (!config.redux.reducers) {
     errors.push('==>     ERROR: Must supply redux configuration.');
-  } else if (!config.redux.reducers) {
-    errors.push('==>     ERROR: Must supply reducers.');
   }
   // TODO: check for more
   return errors;
