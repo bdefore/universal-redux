@@ -22,16 +22,14 @@ export default function create(providedMiddleware, data) {
   // backward compatibility to 2.x api expecting object for middleware instead of array:
   // const customMiddleware = !providedMiddleware.concat ? map(providedMiddleware, (m) => { return m; }) : providedMiddleware;
 
-  const middleware = providedMiddleware;//.concat(defaultMiddleware);
-
-  console.log('middleware', middleware);
+  const middleware = customMiddleware.concat(defaultMiddleware);
 
   if (__CLIENT__ && __LOGGER__) {
     middleware.push(createLogger({ collapsed: true }));
   }
 
-  // const useDevtools = __DEVELOPMENT__ && __CLIENT__ && __DEVTOOLS__;
-  const finalCreateStore = applyMiddleware(...middleware)(createStore);
+  const useDevtools = __DEVELOPMENT__ && __CLIENT__ && __DEVTOOLS__;
+  const finalCreateStore = useDevtools ? composeDevtools(middleware)(createStore) : applyMiddleware(...middleware)(createStore);
 
   const store = finalCreateStore(reducers, data);
 
