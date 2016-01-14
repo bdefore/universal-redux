@@ -10,21 +10,20 @@ function loadAndParse(filePath) {
 }
 
 module.exports = (userBabelConfig, verbose) => {
-
   const baseBabelConfig = loadAndParse(path.resolve(__dirname, '..', './.babelrc'));
   const babelConfig = userBabelConfig ? Object.assign(baseBabelConfig, loadAndParse(path.resolve(userBabelConfig))) : baseBabelConfig;
 
   const hmrConfig = [
     'react-transform', {
-      'transforms': [
+      transforms: [
         {
-          'transform': 'react-transform-hmr',
-          'imports': ['react'],
-          'locals': ['module']
+          transform: 'react-transform-hmr',
+          imports: ['react'],
+          locals: ['module']
         },
         {
-          'transform': 'react-transform-catch-errors',
-          'imports': ['react', 'redbox-react']
+          transform: 'react-transform-catch-errors',
+          imports: ['react', 'redbox-react']
         }
       ]
     }

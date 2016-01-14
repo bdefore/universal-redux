@@ -6,37 +6,38 @@
     "mocha": true
   },
   "rules": {
-    "react/no-multi-comp": 0,
+    "react/no-multi-comp": 2,
     "import/default": 0,
+    "import/named": 2,
+    "import/namespace": 2,
     "import/no-duplicates": 0,
-    "import/named": 0,
-    "import/namespace": 0,
     "import/no-unresolved": 0,
     "import/no-named-as-default": 2,
-    // Temporarirly disabled due to a possible bug in babel-eslint (todomvc example)
-    "block-scoped-var": 0,
-    // Temporarily disabled for test/* until babel/babel-eslint#33 is resolved
-    "padded-blocks": 0,
-    "comma-dangle": 0,  // not sure why airbnb turned this on. gross!
+    "comma-dangle": 0,
     "indent": [2, 2, {"SwitchCase": 1}],
     "no-console": 0,
-    "no-alert": 0
+    "no-alert": 0,
+    "no-nested-ternary": 0,
+    "max-len": 0
   },
   "plugins": [
-    "react", "import"
+    "react",
+    "import"
   ],
   "settings": {
     "import/parser": "babel-eslint",
     "import/resolve": {
-      moduleDirectory: ["node_modules", "node_modules/universal-redux/node_modules", "src"]
+      moduleDirectory: ["node_modules", "src"]
     }
   },
   "globals": {
     "__DEVELOPMENT__": true,
     "__CLIENT__": true,
     "__SERVER__": true,
+    "__LOGGER__": false,
     "__DISABLE_SSR__": true,
     "__DEVTOOLS__": true,
+    "__DEVTOOLS_IS_VISIBLE__": true,
     "__API_ENDPOINT__": '',
     "__API_HOST__": '',
     "__API_PORT__": '',

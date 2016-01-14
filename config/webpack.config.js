@@ -12,6 +12,7 @@ const port = parseInt(process.env.PORT, 10) + 1 || 3001;
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 const vendor = [
+  'async-props',
   'lodash',
   'react',
   'react-dom',
@@ -26,7 +27,7 @@ module.exports = {
   common: {
     context: path.resolve(__dirname, '..'),
     entry: {
-      'main': [
+      main: [
         path.resolve(__dirname, '..', 'lib/client.js')
       ]
     },
@@ -45,23 +46,21 @@ module.exports = {
     resolve: {
       modulesDirectories: [
         'src',
-        'node_modules',
-        'node_modules/universal-redux/src'
+        'node_modules'
       ],
       extensions: ['', '.json', '.js', '.jsx']
     },
     resolveLoader: {
       modulesDirectories: [
         'src',
-        'node_modules',
-        'node_modules/universal-redux/src'
+        'node_modules'
       ]
     }
   },
   development: {
     devtool: 'inline-source-map',
     entry: {
-      'main': [
+      main: [
         'webpack-hot-middleware/client?path=http://' + host + ':' + port + '/__webpack_hmr',
       ]
     },
@@ -99,14 +98,14 @@ module.exports = {
     },
     module: {
       loaders: [
-        { test: /\.css$/, loader: ExtractTextPlugin.extract('style', 'css')},
+        { test: /\.css$/, loader: ExtractTextPlugin.extract('style', 'css') },
         { test: /\.less$/, loader: ExtractTextPlugin.extract('style', 'css?modules&importLoaders=2&sourceMap!autoprefixer?browsers=last 2 version!less?outputStyle=expanded&sourceMap=true&sourceMapContents=true') },
         { test: /\.scss$/, loader: ExtractTextPlugin.extract('style', 'css?modules&importLoaders=2&sourceMap!autoprefixer?browsers=last 2 version!sass?outputStyle=expanded&sourceMap=true&sourceMapContents=true') }
       ]
     },
     plugins: [
       // css files from the extract-text-plugin loader
-      new ExtractTextPlugin('[name]-[chunkhash].css', {allChunks: true}),
+      new ExtractTextPlugin('[name]-[chunkhash].css', { allChunks: true }),
       new webpack.DefinePlugin({
         __CLIENT__: true,
         __SERVER__: false

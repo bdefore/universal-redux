@@ -1,13 +1,13 @@
 #!/usr/bin/env node
-import path from 'path';
-import universal from 'universal-redux';
+import { express, renderer, start } from 'universal-redux';
 import universalConfig from '../config/universal-redux.config.js';
 import authConfig from '../config/express-jwt-proxy.config.js';
-import JwtProxy from 'express-jwt-proxy';
+import jwtProxy from 'express-jwt-proxy';
 
-const app = universal.app();
+const app = express(universalConfig);
 
-JwtProxy(app, authConfig);
+jwtProxy(app, authConfig);
 
-universal.setup(universalConfig);
-universal.start();
+app.use(renderer(universalConfig));
+
+start(app, universalConfig);

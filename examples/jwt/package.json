@@ -4,13 +4,14 @@
   "description": "JWT example with Universal Redux",
   "main": "index.js",
   "scripts": {
-    "start": "concurrent --kill-others \"better-npm-run api\" \"better-npm-run auth\" \"better-npm-run server\"",
-    "build": "better-npm-run build",
-    "postinstall": "./bin/build_for_heroku.sh",
-    "dev-server": "better-npm-run dev-server",
     "api-server": "better-npm-run api-server",
     "auth-server": "better-npm-run auth-server",
+    "build": "better-npm-run build",
     "dev": "concurrent --kill-others \"npm run watch-client\" \"npm run api-server\" \"npm run auth-server\" \"npm run dev-server\"",
+    "dev-server": "better-npm-run dev-server",
+    "lint": "eslint -c .eslintrc src",
+    "postinstall": "./bin/build_for_heroku.sh",
+    "start": "concurrent --kill-others \"better-npm-run api\" \"better-npm-run auth\" \"better-npm-run server\"",
     "test": "echo \"Error: no test specified\" && exit 1",
     "watch-client": "better-npm-run watch-client"
   },
@@ -86,22 +87,21 @@
     "concurrently": "1.0.0",
     "jsonwebtoken": "^5.4.1",
     "superagent": "^1.6.1",
-    "universal-redux": "2.1.0"
+    "universal-redux": "3.0.0-rc6"
   },
   "devDependencies": {
     "better-npm-run": "0.0.5",
     "classnames": "^2.2.0",
     "eslint-config-airbnb": "0.1.0",
-    "express-jwt-proxy": "^0.5.2",
+    "express-jwt-proxy": "^0.5.4",
     "flexboxgrid": "^6.3.0",
     "normalize.css": "^3.0.3",
     "react": "^0.14.3",
     "react-addons-css-transition-group": "^0.14.3",
     "react-dom": "^0.14.3",
     "react-redux": "4.0.0",
-    "react-router": "1.0.2",
+    "react-router": "2.0.0-rc4",
     "react-toolbox": "^0.13.4",
-    "redux-simple-router": "1.0.2",
-    "url-loader": "^0.5.7"
+    "redux-simple-router": "2.0.1"
   }
 }

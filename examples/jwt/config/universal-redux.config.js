@@ -71,6 +71,13 @@ module.exports = {
      */
     __DEVTOOLS__: !isProduction,
 
+    /*
+    // Whether or not to show redux-devtools when page loads.
+    //
+    // Expects: Boolean
+    */
+    __DEVTOOLS_IS_VISIBLE__: true,
+
     __API_ENDPOINT__: '/api'
   },
 
@@ -81,7 +88,7 @@ module.exports = {
    // Expects: Boolean
    */
   lint: {
-    enabled: true,
+    enabled: false,
     config: projectRoot + '/.eslintrc'
   },
 

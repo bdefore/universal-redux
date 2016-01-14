@@ -1,5 +1,4 @@
 module.exports = (projectRoot, sourceRoot) => {
-
   const isProduction = process.env.NODE_ENV === 'production';
 
   return {
@@ -66,7 +65,14 @@ module.exports = (projectRoot, sourceRoot) => {
       //
       // Expects: Boolean
       */
-      __DEVTOOLS__: !isProduction
+      __DEVTOOLS__: !isProduction,
+
+      /*
+      // Whether or not to show redux-devtools when page loads.
+      //
+      // Expects: Boolean
+      */
+      __DEVTOOLS_IS_VISIBLE__: true
     },
 
     /*
@@ -76,7 +82,7 @@ module.exports = (projectRoot, sourceRoot) => {
     // Expects: Boolean
     */
     lint: {
-      enabled: true
+      enabled: false
       // config: projectRoot + '/.eslintrc'
     },
 
@@ -101,7 +107,7 @@ module.exports = (projectRoot, sourceRoot) => {
     //
     // Expects: String
     */
-    // toolsConfigPath: __dirname + '/webpack-isomorphic-tools.config.js',
+    toolsConfigPath: __dirname + '/webpack-isomorphic-tools.config.js',
 
     /*
     // When eneabled, will output Webpack and Webpack Isomorphic
@@ -118,20 +124,11 @@ module.exports = (projectRoot, sourceRoot) => {
 
     redux: {
       /*
-      // The path to the index of your Redux reducers. Required. Will be added
-      // to Webpack aliases.
+      // A path to an index of middleware functions. Optional.
       //
       // Expects: String
       */
-      reducers: sourceRoot + '/redux/modules/index.js',
-
-      /*
-      // A path to an index of middleware functions. On the serverside, these will
-      // be called with the Express request and response. Optional.
-      //
-      // Expects: String
-      */
-      // middleware: sourceRoot + '/redux/middleware/index.js',
+      middleware: sourceRoot + '/redux/middleware/index.js',
     },
 
     /*
