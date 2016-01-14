@@ -20,7 +20,7 @@ export default function create(providedMiddleware, data) {
   const defaultMiddleware = [];
 
   // backward compatibility to 2.x api expecting object for middleware instead of array:
-  // const customMiddleware = !providedMiddleware.concat ? map(providedMiddleware, (m) => { return m; }) : providedMiddleware;
+  const customMiddleware = !providedMiddleware.concat ? map(providedMiddleware, (m) => { return m; }) : providedMiddleware;
 
   const middleware = providedMiddleware.concat(defaultMiddleware);
 
