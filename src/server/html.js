@@ -1,17 +1,12 @@
 import path from 'path';
 import React from 'react';
 import ReactDOM from 'react-dom/server';
-import Html from '../containers/HtmlShell/HtmlShell';
+import DefaultHtml from '../containers/HtmlShell/HtmlShell';
 
-export default (config, assets, store, headers, component) => {
-  let CustomHtml;
-  if (config.htmlShell) {
-    CustomHtml = require(path.resolve(config.htmlShell)).default;
-  } else {
-    CustomHtml = Html;
-  }
+export default (htmlShell, assets, store, headers, component) => {
+  const Html = htmlShell ? require(path.resolve(htmlShell)).default : DefaultHtml;
 
   return '<!doctype html>\n' + ReactDOM.renderToString(
-    <CustomHtml assets={assets} store={store} component={component} headers={headers} />
+    <Html assets={assets} store={store} component={component} headers={headers} />
   );
 };

@@ -34,7 +34,7 @@ export default (projectConfig, projectToolsConfig) => {
     const store = createStore(middleware, history);
 
     if (__DISABLE_SSR__) {
-      const content = html(config, tools.assets(), store, res._headers);
+      const content = html(config.htmlShell, tools.assets(), store, res._headers);
       res.status(200).send(content);
     } else {
       match({ history, routes: getRoutes(store), location: req.originalUrl }, (error, redirectLocation, renderProps) => {
@@ -51,7 +51,7 @@ export default (projectConfig, projectToolsConfig) => {
               </Provider>
             );
 
-            const content = html(config, tools.assets(), store, res._headers, component);
+            const content = html(config.htmlShell, tools.assets(), store, res._headers, component);
             res.status(200).send(content);
           });
         } else {
