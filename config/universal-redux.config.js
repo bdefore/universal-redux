@@ -82,7 +82,7 @@ module.exports = (projectRoot, sourceRoot) => {
     // Expects: Boolean
     */
     lint: {
-      enabled: true
+      enabled: false
       // config: projectRoot + '/.eslintrc'
     },
 
