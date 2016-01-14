@@ -17,9 +17,6 @@ function validateConfig(config) {
   if (!config.routes) {
     errors.push('==>     ERROR: Must supply routes.');
   }
-  if (!config.redux.reducers) {
-    errors.push('==>     ERROR: Must supply redux configuration.');
-  }
   // TODO: check for more
   return errors;
 }
