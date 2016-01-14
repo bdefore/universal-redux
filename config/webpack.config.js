@@ -12,6 +12,7 @@ const port = parseInt(process.env.PORT, 10) + 1 || 3001;
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 const vendor = [
+  'async-props',
   'lodash',
   'react',
   'react-dom',
