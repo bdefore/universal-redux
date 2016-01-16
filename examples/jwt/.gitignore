@@ -1,7 +1,0 @@
-.env
-.idea/
-node_modules/
-dist/
-*.iml
-*.log
-.DS_Store
