@@ -4,8 +4,8 @@ import { match } from 'react-router';
 import PrettyError from 'pretty-error';
 import createMemoryHistory from 'react-router/lib/createMemoryHistory';
 import { Provider } from 'react-redux';
-import AsyncProps, { loadPropsOnServer } from 'async-props';
 
+import AsyncProps, { loadPropsOnServer } from '../helpers/asyncProps';
 import createStore from '../shared/create';
 import configure from '../configure';
 import html from './html';

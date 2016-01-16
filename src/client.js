@@ -1,8 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import AsyncProps from 'async-props';
 import { Provider } from 'react-redux';
 import { Router, browserHistory } from 'react-router';
+
+import AsyncProps from './helpers/asyncProps';
 import createStore from './shared/create';
 import { render as renderDevtools } from './client/devtools';
 

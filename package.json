@@ -32,7 +32,6 @@
     "prepublish": "npm run compile"
   },
   "dependencies": {
-    "async-props": "bdefore/async-props#babel6-support",
     "autoprefixer-loader": "^3.1.0",
     "babel-cli": "6.4.0",
     "babel-core": "~6.4.0",
