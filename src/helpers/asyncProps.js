@@ -1,4 +1,9 @@
-// https://github.com/bdefore/async-props/tree/babel6-support
+// This lives here until latest async-props package is published,
+// so as not to require downstream projects have a Babel dependency
+//
+// See https://github.com/bdefore/universal-redux/issues/47
+// Also https://github.com/bdefore/async-props/tree/babel6-support
+
 /* eslint-disable */
 
 /*global __ASYNC_PROPS__*/
