@@ -51,7 +51,7 @@ export default (projectConfig, projectToolsConfig) => {
               </Provider>
             );
 
-            const content = html(config.htmlShell, tools.assets(), store, res._headers, component);
+            const content = html(config.htmlShell, tools.assets(), store, res._headers, component, asyncProps);
             res.status(200).send(content);
           });
         } else {
