@@ -69,11 +69,11 @@ Alternatively, you may create your own Express instance, add middleware beforeha
 
 You can activate your own Redux middleware by specifying the `middleware` property in the configuration file. This must be a path to a file which exports each middleware as a function. On serverside renders, those functions will be called with two parameters: the Express request and response objects. On clientside renders, they will be called with none. All properties specified in `globals` will be available to the middleware.
 
-#### Adding your own items to <head>
+#### Adding your own items to HTML head
 
 The `html.head` configuration allows you to define your own `<head>` that will be merged with the necessary items for serverside rendering. You can see an example of this in the JWT project [here](https://github.com/bdefore/universal-redux-jwt/blob/master/src/containers/Head/Head.js).
 
-Alternatively, you can specify `head.root` in your configuration and this will be used instead of the default one. If you do take that approach, you'll want to be sure to include the items from `src/server/head.js` and `src/server/body.js`.
+Alternatively, you can specify `html.root` in your configuration and this will be used instead of the default one. If you do take that approach, you'll want to be sure to include the items from `src/server/head.js` and `src/server/body.js`.
 
 #### Webpack Isomorphic Tools configuration
 
