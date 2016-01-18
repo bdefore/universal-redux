@@ -2,7 +2,7 @@ import { map } from 'lodash';
 import createLogger from 'redux-logger';
 import { syncHistory } from 'redux-simple-router';
 
-import { compose as composeDevtools } from '../client/devtools';
+import { compose as composeDevtools, listenToRouter as linkDevtoolsToRouter} from '../client/devtools';
 import { applyMiddleware, createStore } from 'redux';
 
 // explicit path required for HMR to function. see #7
@@ -35,8 +35,7 @@ export default function create(providedMiddleware, history, data) {
 
   const store = finalCreateStore(reducers, data);
 
-  // only necessary for devtools https://github.com/rackt/redux-simple-router/pull/141#issuecomment-167587581
-  router.syncHistoryToStore(store);
+  linkDevtoolsToRouter(router, store);
 
   hmr(store);
 
