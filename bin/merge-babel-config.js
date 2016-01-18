@@ -1,8 +1,6 @@
 const fs = require('fs');
-const strip = require('strip-loader');
 const path = require('path');
 const util = require('util');
-const isProduction = process.env.NODE_ENV !== 'production';
 
 function loadAndParse(filePath) {
   const file = fs.readFileSync(filePath);
@@ -32,7 +30,7 @@ module.exports = (userBabelConfig, verbose) => {
   babelConfig.env.development.plugins.unshift(hmrConfig);
 
   const babelLoader = 'babel-loader?' + JSON.stringify(babelConfig);
-  const jsLoaders = isProduction ? [strip.loader('debug'), babelLoader] : [babelLoader];
+  const jsLoaders = [babelLoader];
 
   // output configuration files if user wants verbosity
   if (verbose) {
