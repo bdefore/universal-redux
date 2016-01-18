@@ -83,7 +83,7 @@
     "style-loader": "^0.13.0",
     "url-loader": "^0.5.7",
     "webpack": "^1.12.9",
-    "webpack-config-merger": "0.0.3",
+    "webpack-config-merger": "0.0.4",
     "webpack-dev-middleware": "^1.4.0",
     "webpack-error-notification": "^0.1.4",
     "webpack-hot-middleware": "^2.5.0",
