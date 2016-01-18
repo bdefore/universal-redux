@@ -26,7 +26,8 @@ Your project must define a set of routes as specified by a [React Router](https:
 
 #### Requirements
 
-Node.JS >= 4.1.1 and npm >= 3 are strongly recommended. If you are using npm 2, note that you may need to add additional dependencies yourself.
+Node.JS >= 4.1.1
+npm >= 3.3.12 (install via `npm install -g npm@3` if you are on Node 4)
 
 #### Install
 
