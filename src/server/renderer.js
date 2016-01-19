@@ -5,7 +5,7 @@ import PrettyError from 'pretty-error';
 import createMemoryHistory from 'react-router/lib/createMemoryHistory';
 import { Provider } from 'react-redux';
 
-import AsyncProps, { loadPropsOnServer } from '../helpers/asyncProps';
+import { ReduxAsyncConnect, loadOnServer } from 'redux-async-connect';
 import createStore from '../shared/create';
 import configure from '../configure';
 import html from './html';
@@ -44,14 +44,14 @@ export default (projectConfig, projectToolsConfig) => {
           console.error('ROUTER ERROR:', pretty.render(error));
           res.status(500);
         } else if (renderProps) {
-          loadPropsOnServer(renderProps, (err, asyncProps) => {
+          loadOnServer(renderProps, store).then(() => {
             const component = (
               <Provider store={store} key="provider">
-                <AsyncProps {...renderProps} {...asyncProps} />
+                <ReduxAsyncConnect {...renderProps} />
               </Provider>
             );
 
-            const content = html(config, tools.assets(), store, res._headers, component, asyncProps);
+            const content = html(config, tools.assets(), store, res._headers, component);
             res.status(200).send(content);
           });
         } else {

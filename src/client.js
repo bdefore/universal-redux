@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { Router, browserHistory } from 'react-router';
 
-import AsyncProps from './helpers/asyncProps';
+import { ReduxAsyncConnect } from 'redux-async-connect';
 import createStore from './shared/create';
 import { render as renderDevtools } from './client/devtools';
 
@@ -16,7 +16,7 @@ const dest = document.getElementById('content');
 const store = createStore(middleware, browserHistory, window.__data);
 
 const component = (
-  <Router render={(props) => <AsyncProps {...props} />} history={browserHistory}>
+  <Router render={(props) => <ReduxAsyncConnect {...props}/>} history={browserHistory}>
     {getRoutes(store)}
   </Router>
 );
