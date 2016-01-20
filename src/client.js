@@ -17,7 +17,7 @@ const browserHistory = createHistory();
 
 const store = createStore(middleware, window.__data);
 
-syncReduxAndRouter(browserHistory, store);
+syncReduxAndRouter(browserHistory, store, (state) => state.get('routing'));
 
 const component = (
   <Router history={browserHistory}>
