@@ -17,9 +17,9 @@ const store = createStore(middleware, history, window.__data);
 const routes = getRoutes(store);
 const devComponent = renderDevtools();
 
-//There is probably no need to be asynchronous here
+// There is probably no need to be asynchronous here
 createRootComponentForClient(store, {routes, history})
-  .then(({root, component}) => {
+  .then(({root}) => {
     ReactDOM.render(root, dest);
 
     if (process.env.NODE_ENV !== 'production') {
@@ -32,7 +32,7 @@ createRootComponentForClient(store, {routes, history})
     return devComponent ? createRootComponentForClient(store, {routes, history, devComponent}) : {};
   })
   .then(({root}) => {
-    if(root) ReactDOM.render(root, dest);
+    if (root) ReactDOM.render(root, dest);
   })
   .catch((err) => {
     console.error(err, err.stack);
