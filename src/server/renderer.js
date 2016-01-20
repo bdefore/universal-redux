@@ -44,16 +44,20 @@ export default (projectConfig, projectToolsConfig) => {
           console.error('ROUTER ERROR:', pretty.render(error));
           res.status(500);
         } else if (renderProps) {
-          loadOnServer(renderProps, store).then(() => {
-            const component = (
-              <Provider store={store} key="provider">
-                <ReduxAsyncConnect {...renderProps} />
-              </Provider>
-            );
+          loadOnServer(renderProps, store)
+            .then(() => {
+              const component = (
+                <Provider store={store} key="provider">
+                  <ReduxAsyncConnect {...renderProps} />
+                </Provider>
+              );
 
-            const content = html(config, tools.assets(), store, res._headers, component);
-            res.status(200).send(content);
-          });
+              const content = html(config, tools.assets(), store, res._headers, component);
+              res.status(200).send(content);
+            })
+            .catch((err) => {
+              res.status(500).send(err);
+            });
         } else {
           res.status(404).send('Not found');
         }
