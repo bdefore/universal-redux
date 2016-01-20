@@ -34,17 +34,9 @@ export function listenToRouter(routerMiddleware, store) {
   routerMiddleware.listenForReplays(store);
 }
 
-export function render(component, store, dest) {
+export function render() {
   if (__DEVTOOLS__ && !window.devToolsExtension) {
     const Tools = __DEVTOOLS_IS_VISIBLE__ ? DevTools : InvisibleDevTools;
-    ReactDOM.render(
-      <Provider store={store} key="provider">
-        <div>
-          {component}
-          <Tools />
-        </div>
-      </Provider>,
-      dest
-    );
+    return <Tools />
   }
 }

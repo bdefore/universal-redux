@@ -3,9 +3,7 @@ import React from 'react';
 import { match } from 'react-router';
 import PrettyError from 'pretty-error';
 import createMemoryHistory from 'react-router/lib/createMemoryHistory';
-import { Provider } from 'react-redux';
 
-import { ReduxAsyncConnect, loadOnServer } from 'redux-async-connect';
 import createStore from '../shared/create';
 import configure from '../configure';
 import html from './html';
@@ -20,6 +18,7 @@ export default (projectConfig, projectToolsConfig) => {
   const tools = getTools(projectConfig, projectToolsConfig);
   const config = configure(projectConfig);
   const getRoutes = require(path.resolve(config.routes)).default;
+  const rootComponent = require(config.rootComponent ? path.resolve(config.rootComponent) : '../helpers/rootComponent') ;
   const pretty = new PrettyError();
 
   return (req, res) => {
@@ -44,15 +43,9 @@ export default (projectConfig, projectToolsConfig) => {
           console.error('ROUTER ERROR:', pretty.render(error));
           res.status(500);
         } else if (renderProps) {
-          loadOnServer(renderProps, store)
-            .then(() => {
-              const component = (
-                <Provider store={store} key="provider">
-                  <ReduxAsyncConnect {...renderProps} />
-                </Provider>
-              );
-
-              const content = html(config, tools.assets(), store, res._headers, component);
+          rootComponent.createForServer(store, renderProps)
+            .then(({root}) => {
+              const content = html(config, tools.assets(), store, res._headers, root);
               res.status(200).send(content);
             })
             .catch((err) => {
