@@ -125,7 +125,7 @@ module.exports = (projectRoot, sourceRoot) => {
     /*
     // The root component factory file. Optional. Will be added to Webpack aliases.
     */
-    //rootComponent: sourceRoot + '/rootComponent.js',
+    // rootComponent: sourceRoot + '/rootComponent.js',
 
     html: {
       /*

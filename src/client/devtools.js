@@ -1,6 +1,4 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
-import { Provider } from 'react-redux';
 import { compose as _compose, applyMiddleware } from 'redux';
 import { createDevTools, persistState } from 'redux-devtools';
 
@@ -37,6 +35,6 @@ export function listenToRouter(routerMiddleware, store) {
 export function render() {
   if (__DEVTOOLS__ && !window.devToolsExtension) {
     const Tools = __DEVTOOLS_IS_VISIBLE__ ? DevTools : InvisibleDevTools;
-    return <Tools />
+    return <Tools />;
   }
 }

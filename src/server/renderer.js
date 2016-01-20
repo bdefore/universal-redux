@@ -1,5 +1,4 @@
 import path from 'path';
-import React from 'react';
 import { match } from 'react-router';
 import PrettyError from 'pretty-error';
 import createMemoryHistory from 'react-router/lib/createMemoryHistory';
@@ -18,7 +17,7 @@ export default (projectConfig, projectToolsConfig) => {
   const tools = getTools(projectConfig, projectToolsConfig);
   const config = configure(projectConfig);
   const getRoutes = require(path.resolve(config.routes)).default;
-  const rootComponent = require(config.rootComponent ? path.resolve(config.rootComponent) : '../helpers/rootComponent') ;
+  const rootComponent = require(config.rootComponent ? path.resolve(config.rootComponent) : '../helpers/rootComponent');
   const pretty = new PrettyError();
 
   return (req, res) => {

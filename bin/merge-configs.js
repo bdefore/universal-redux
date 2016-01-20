@@ -91,7 +91,7 @@ module.exports = (userConfig) => {
   } else {
     combinedWebpackConfig.resolve.alias.middleware = path.resolve(__dirname, '../lib/helpers/empty.js');
   }
-  if(universalReduxConfig.rootComponent){
+  if (universalReduxConfig.rootComponent) {
     combinedWebpackConfig.resolve.alias.rootComponent = universalReduxConfig.rootComponent;
   } else {
     combinedWebpackConfig.resolve.alias.rootComponent = path.resolve(__dirname, '../lib/helpers/rootComponent.js');
