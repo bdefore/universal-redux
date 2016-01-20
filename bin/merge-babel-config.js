@@ -28,6 +28,7 @@ module.exports = (userBabelConfig, verbose) => {
   ];
 
   babelConfig.env.development.plugins.unshift(hmrConfig);
+  babelConfig.cacheDirectory = true;
 
   const babelLoader = 'babel-loader?' + JSON.stringify(babelConfig);
   const jsLoaders = [babelLoader];
