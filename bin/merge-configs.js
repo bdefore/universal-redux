@@ -83,13 +83,18 @@ module.exports = (userConfig) => {
   lodash.each(universalReduxConfig.globals, (value, key) => { definitions[key] = JSON.stringify(value); });
   combinedWebpackConfig.plugins.push(new webpack.DefinePlugin(definitions));
 
-  // add routes and reducer aliases so that client has access to them
+  // add routes, reducer and rootComponent aliases so that client has access to them
   combinedWebpackConfig.resolve.alias = combinedWebpackConfig.resolve.alias || {};
   combinedWebpackConfig.resolve.alias.routes = universalReduxConfig.routes;
   if (universalReduxConfig.redux.middleware) {
     combinedWebpackConfig.resolve.alias.middleware = universalReduxConfig.redux.middleware;
   } else {
     combinedWebpackConfig.resolve.alias.middleware = path.resolve(__dirname, '../lib/helpers/empty.js');
+  }
+  if(universalReduxConfig.rootComponent){
+    combinedWebpackConfig.resolve.alias.rootComponent = universalReduxConfig.rootComponent;
+  } else {
+    combinedWebpackConfig.resolve.alias.rootComponent = path.resolve(__dirname, '../lib/helpers/rootComponent.js');
   }
 
   // add project level vendor libs
