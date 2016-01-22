@@ -2,7 +2,7 @@ import { includes } from 'lodash';
 import { createForClient as reduxAsyncConnectClient, createForServer as reduxAsyncConnectServer } from '../providers/redux-async-connect';
 import { createForClient as asyncPropsClient, createForServer as asyncPropsServer } from '../providers/async-props';
 
-export function createForClient(store, { routes, history, devComponent }, providers) {
+export function createForClient(store, { devComponent }, providers) {
   let client = reduxAsyncConnectClient;
   if (includes(providers, 'async-props')) {
     client = asyncPropsClient;
@@ -11,7 +11,7 @@ export function createForClient(store, { routes, history, devComponent }, provid
     client = reduxAsyncConnectClient;
   }
 
-  return client(store, { routes, history, devComponent });
+  return client(store, { devComponent });
 }
 
 export function createForServer(store, renderProps, providers) {

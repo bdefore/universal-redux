@@ -8,6 +8,7 @@ import { applyMiddleware, createStore } from 'redux';
 // explicit path required for HMR to function. see #7
 import reducers from '../../../../src/redux/modules';
 
+
 function hmr(store) {
   if (module.hot) {
     module.hot.accept('../../../../src/redux/modules', () => {
@@ -17,7 +18,7 @@ function hmr(store) {
   }
 }
 
-export default function create(providedMiddleware, history, data) {
+export default function create(providedMiddleware, data) {
   const router = syncHistory(history);
   const defaultMiddleware = [ router ];
 

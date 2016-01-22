@@ -1,20 +1,13 @@
 import React from 'react';
 import { Provider } from 'react-redux';
-import { Router } from 'react-router';
+import { createForClient as createRouterForClient } from './react-router';
 import { ReduxAsyncConnect, loadOnServer } from 'redux-async-connect';
 
-export function createForClient(store, { routes, history, devComponent }) {
-  const component = (
-    <Router render={(props) => <ReduxAsyncConnect {...props} />} history={history}>
-      {routes}
-    </Router>
-  );
+export function createForClient(store, { devComponent }) {
   const root = (
     <Provider store={store} key="provider">
-      <div>
-        {component}
-        {devComponent}
-      </div>
+      {createRouterForClient(store)}
+      {devComponent}
     </Provider>
   );
 
@@ -27,9 +20,7 @@ export function createForServer(store, renderProps) {
       .then(() => {
         const root = (
           <Provider store={store} key="provider">
-            <div>
-              <ReduxAsyncConnect {...renderProps} />
-            </div>
+            <ReduxAsyncConnect {...renderProps} />
           </Provider>
         );
         resolve({ root });
