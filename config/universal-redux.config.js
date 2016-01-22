@@ -76,13 +76,19 @@ module.exports = (projectRoot, sourceRoot) => {
     },
 
     /*
-    // The data loader to use for universal fetching. Valid
-    // options: 'async-props' or 'redux-async-connect'. Optional.
-    // If unspecified will use redux-async-connect.
+    // Providers for the root component to assemble. Built in options
+    // include 'react-router', 'redux-simple-router', 'redux-async-connect',
+    // 'async-props'. Custom root components may accept additional options.
+    // Optional. If unspecified will use react-router, redux-simple-router,
+    // and redux-async-connect.
     //
-    // Expects: String
+    // Expects: Array
     */
-    // dataLoader: 'redux-async-connect',
+    providers: [
+      'react-router',
+      'redux-simple-router',
+      'redux-async-connect'
+    ],
 
     lint: {
       /*

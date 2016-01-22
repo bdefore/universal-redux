@@ -34,7 +34,7 @@
   },
   "globals": {
     "__CLIENT__": true,
-    "__DATA_LOADER__": '',
+    "__PROVIDERS__": [],
     "__DEVELOPMENT__": true,
     "__DEVTOOLS__": true,
     "__DEVTOOLS_IS_VISIBLE__": true,

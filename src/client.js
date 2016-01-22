@@ -18,18 +18,18 @@ const routes = getRoutes(store);
 const devComponent = renderDevtools();
 
 // There is probably no need to be asynchronous here
-createRootComponentForClient(store, { routes, history }, __DATA_LOADER__)
+createRootComponentForClient(store, { routes, history }, __PROVIDERS__)
   .then(({ root }) => {
     ReactDOM.render(root, dest);
 
     if (process.env.NODE_ENV !== 'production') {
       window.React = React; // enable debugger
       if (!dest || !dest.firstChild || !dest.firstChild.attributes || !dest.firstChild.attributes['data-react-checksum']) {
-        throw new Error('Server-side React render was discarded. Make sure that your initial render does not contain any client-side code.');
+        console.warn('WARNING: Server-side React render was discarded. Make sure that your initial render does not contain any client-side code.');
       }
     }
 
-    return devComponent ? createRootComponentForClient(store, { routes, history, devComponent }, __DATA_LOADER__) : {};
+    return devComponent ? createRootComponentForClient(store, { routes, history, devComponent }, __PROVIDERS__) : {};
   })
   .then(({ root }) => {
     if (root) ReactDOM.render(root, dest);
