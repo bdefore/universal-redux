@@ -2,7 +2,7 @@ import { map } from 'lodash';
 import createLogger from 'redux-logger';
 import { syncHistory } from 'redux-simple-router';
 
-import { compose as composeDevtools, listenToRouter as linkDevtoolsToRouter} from '../client/devtools';
+import { compose as composeDevtools, listenToRouter as linkDevtoolsToRouter } from '../client/devtools';
 import { applyMiddleware, createStore } from 'redux';
 
 // explicit path required for HMR to function. see #7

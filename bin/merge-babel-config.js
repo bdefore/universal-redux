@@ -16,21 +16,22 @@ module.exports = (userBabelConfig, verbose) => {
       transforms: [
         {
           transform: 'react-transform-hmr',
-          imports: ['react'],
-          locals: ['module']
+          imports: [ 'react' ],
+          locals: [ 'module' ]
         },
         {
           transform: 'react-transform-catch-errors',
-          imports: ['react', 'redbox-react']
+          imports: [ 'react', 'redbox-react' ]
         }
       ]
     }
   ];
 
   babelConfig.env.development.plugins.unshift(hmrConfig);
+  babelConfig.cacheDirectory = true;
 
   const babelLoader = 'babel-loader?' + JSON.stringify(babelConfig);
-  const jsLoaders = [babelLoader];
+  const jsLoaders = [ babelLoader ];
 
   // output configuration files if user wants verbosity
   if (verbose) {

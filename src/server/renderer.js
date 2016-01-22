@@ -43,7 +43,7 @@ export default (projectConfig, projectToolsConfig) => {
           res.status(500);
         } else if (renderProps) {
           rootComponent.createForServer(store, renderProps)
-            .then(({root}) => {
+            .then(({ root }) => {
               const content = html(config, tools.assets(), store, res._headers, root);
               res.status(200).send(content);
             })

@@ -18,7 +18,9 @@
     "no-console": 0,
     "no-alert": 0,
     "no-nested-ternary": 0,
-    "max-len": 0
+    "max-len": 0,
+    "object-curly-spacing": [2, "always"],
+    "array-bracket-spacing": [2, "always"]
   },
   "plugins": [
     "react",

@@ -12,7 +12,6 @@ const port = parseInt(process.env.PORT, 10) + 1 || 3001;
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 const vendor = [
-  'async-props',
   'lodash',
   'react',
   'react-dom',
@@ -48,7 +47,7 @@ module.exports = {
         'src',
         'node_modules'
       ],
-      extensions: ['', '.json', '.js', '.jsx']
+      extensions: [ '', '.json', '.js', '.jsx' ]
     },
     resolveLoader: {
       modulesDirectories: [
@@ -128,7 +127,7 @@ module.exports = {
         }
       }),
       new webpack.optimize.CommonsChunkPlugin({
-        names: ['vendor'],
+        names: [ 'vendor' ],
         minChunks: Infinity
       })
     ]
