@@ -1,41 +1,15 @@
-import React from 'react';
-import { Provider } from 'react-redux';
-import { Router } from 'react-router';
-import { ReduxAsyncConnect, loadOnServer } from 'redux-async-connect';
+import { createForClient as reduxAsyncConnectClient, createForServer as reduxAsyncConnectServer } from '../providers/redux-async-connect';
 
-export function createForServer(store, renderProps) {
-  return new Promise((resolve, reject) => {
-    loadOnServer(renderProps, store)
-      .then(() => {
-        const root = (
-          <Provider store={store} key="provider">
-            <div>
-              <ReduxAsyncConnect {...renderProps} />
-            </div>
-          </Provider>
-        );
-        resolve({ root });
-      })
-      .catch((err) => {
-        reject(err);
-      });
-  });
+export function createForClient(dataLoader, store, { routes, history, devComponent }) {
+  switch (dataLoader) {
+    default:
+      return reduxAsyncConnectClient(store, { routes, history, devComponent });
+  }
 }
 
-export function createForClient(store, { routes, history, devComponent }) {
-  const component = (
-    <Router history={history}>
-      {routes}
-    </Router>
-  );
-  const root = (
-    <Provider store={store} key="provider">
-      <div>
-        {component}
-        {devComponent}
-      </div>
-    </Provider>
-  );
-
-  return Promise.resolve({ root });
+export function createForServer(dataLoader, store, renderProps) {
+  switch (dataLoader) {
+    default:
+      return reduxAsyncConnectServer(store, renderProps);
+  }
 }

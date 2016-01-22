@@ -18,7 +18,7 @@ const routes = getRoutes(store);
 const devComponent = renderDevtools();
 
 // There is probably no need to be asynchronous here
-createRootComponentForClient(store, { routes, history })
+createRootComponentForClient(__DATA_LOADER__, store, { routes, history })
   .then(({ root }) => {
     ReactDOM.render(root, dest);
 
@@ -29,7 +29,7 @@ createRootComponentForClient(store, { routes, history })
       }
     }
 
-    return devComponent ? createRootComponentForClient(store, { routes, history, devComponent }) : {};
+    return devComponent ? createRootComponentForClient(__DATA_LOADER__, store, { routes, history, devComponent }) : {};
   })
   .then(({ root }) => {
     if (root) ReactDOM.render(root, dest);

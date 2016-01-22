@@ -72,17 +72,6 @@ module.exports = (userConfig) => {
     combinedWebpackConfig.plugins.push(new WebpackErrorNotificationPlugin());
   }
 
-  // add default settings that are used by server via process.env
-  const definitions = {
-    __LOGGER__: false,
-    __DEVTOOLS__: !isProduction,
-    __DEVELOPMENT__: !isProduction
-  };
-
-  // override with user settings
-  lodash.each(universalReduxConfig.globals, (value, key) => { definitions[key] = JSON.stringify(value); });
-  combinedWebpackConfig.plugins.push(new webpack.DefinePlugin(definitions));
-
   // add routes, reducer and rootComponent aliases so that client has access to them
   combinedWebpackConfig.resolve.alias = combinedWebpackConfig.resolve.alias || {};
   combinedWebpackConfig.resolve.alias.routes = universalReduxConfig.routes;
@@ -103,6 +92,18 @@ module.exports = (userConfig) => {
       combinedWebpackConfig.entry.vendor.push(lib);
     });
   }
+
+  // add default settings that are used by server via process.env
+  const definitions = {
+    __DATA_LOADER__: combinedWebpackConfig.dataLoader,
+    __LOGGER__: false,
+    __DEVTOOLS__: !isProduction,
+    __DEVELOPMENT__: !isProduction
+  };
+
+  // override with user settings
+  lodash.each(universalReduxConfig.globals, (value, key) => { definitions[key] = JSON.stringify(value); });
+  combinedWebpackConfig.plugins.push(new webpack.DefinePlugin(definitions));
 
   // output configuration files if user wants verbosity
   if (universalReduxConfig.verbose) {
