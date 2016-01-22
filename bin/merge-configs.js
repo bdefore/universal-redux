@@ -95,7 +95,7 @@ module.exports = (userConfig) => {
 
   // add default settings that are used by server via process.env
   const definitions = {
-    __DATA_LOADER__: combinedWebpackConfig.dataLoader,
+    __DATA_LOADER__: JSON.stringify(universalReduxConfig.dataLoader),
     __LOGGER__: false,
     __DEVTOOLS__: !isProduction,
     __DEVELOPMENT__: !isProduction

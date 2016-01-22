@@ -76,12 +76,21 @@ module.exports = (projectRoot, sourceRoot) => {
     },
 
     /*
-    // Enable eslint checks per Webpack build. Will not be run
-    // on production.
+    // The data loader to use for universal fetching. Valid
+    // options: 'async-props' or 'redux-async-connect'. Optional.
+    // If unspecified will use redux-async-connect.
     //
-    // Expects: Boolean
+    // Expects: String
     */
+    // dataLoader: 'redux-async-connect',
+
     lint: {
+      /*
+      // Enable eslint checks per Webpack build. Will not be run
+      // on production.
+      //
+      // Expects: Boolean
+      */
       enabled: false
       // config: projectRoot + '/.eslintrc'
     },
