@@ -1,5 +1,5 @@
 import path from 'path';
-import React, {Component, PropTypes} from 'react';
+import React, { Component, PropTypes } from 'react';
 import DocumentMeta from 'react-document-meta';
 
 export default class Head extends Component {
@@ -19,7 +19,7 @@ export default class Head extends Component {
   }
 
   render() {
-    const {assets} = this.props;
+    const { assets } = this.props;
 
     return (
       <head>
