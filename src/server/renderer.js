@@ -1,3 +1,7 @@
+import React from 'react';
+import { Provider } from 'react-redux';
+import { RouterContext } from 'react-router';
+
 import path from 'path';
 import { match } from 'react-router';
 import PrettyError from 'pretty-error';
@@ -7,6 +11,7 @@ import createStore from '../shared/create';
 import configure from '../configure';
 import html from './html';
 import getTools from './tools';
+import { hooks, execute } from '../hooks';
 
 global.__CLIENT__ = false;
 global.__SERVER__ = true;
@@ -17,7 +22,6 @@ export default (projectConfig, projectToolsConfig) => {
   const tools = getTools(projectConfig, projectToolsConfig);
   const config = configure(projectConfig);
   const getRoutes = require(path.resolve(config.routes)).default;
-  const rootComponent = require(config.rootComponent ? path.resolve(config.rootComponent) : '../helpers/rootComponent');
   const pretty = new PrettyError();
 
   return (req, res) => {
@@ -42,14 +46,24 @@ export default (projectConfig, projectToolsConfig) => {
           console.error('ROUTER ERROR:', pretty.render(error));
           res.status(500);
         } else if (renderProps) {
-          rootComponent.createForServer(store, renderProps)
-            .then(({ root }) => {
-              const content = html(config, tools.assets(), store, res._headers, root);
-              res.status(200).send(content);
-            })
-            .catch((err) => {
-              res.status(500).send(err);
-            });
+          execute(hooks.client.GENERATE_ROOT_COMPONENT, { store, renderProps }, () => {
+            const root = (
+              <Provider store={store} key="provider">
+                <div>
+                  <RouterContext {...renderProps} />
+                </div>
+              </Provider>
+            );
+            return { root };
+          })
+          .then(({ root }) => {
+            const content = html(config, tools.assets(), store, res._headers, root);
+            res.status(200).send(content);
+          })
+          .catch((err) => {
+            console.error(err);
+            res.status(500).send(err);
+          });
         } else {
           res.status(404).send('Not found');
         }

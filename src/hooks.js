@@ -1,33 +1,38 @@
 // Define the available hooks
-const hooks = {
+export const hooks = {
   client: {
-    GENERATE_ROOT_COMPONENT: "client_generate_root_component"
+    GENERATE_ROOT_COMPONENT: 'client_generate_root_component'
   },
   server: {
-    GENERATE_ROOT_COMPONENT: "server_generate_root_component"
+    GENERATE_ROOT_COMPONENT: 'server_generate_root_component'
   }
 };
-export default hooks;
 
-//Cache for the custom hook executors
+// Cache for the custom hook executors
 const executors = new Map();
+const hookValues = Array.concat(
+  Object.keys(hooks.client).map((hook) => hooks.client[hook]),
+  Object.keys(hooks.server).map((hook) => hooks.server[hook])
+);
 
-//Register a hook by adding it to the executors map
-export function register(hook, executor){
-  if(!hooks.client[hook] && !hooks.server[hook]) {
+// Register a hook by adding it to the executors map
+export function register(hook, executor) {
+  if (!hookValues.includes(hook)) {
     console.warn(`Unknown hook '${hook}'`);
     return;
   }
-  if(typeof(executor) !== "function"){
+  if (typeof(executor) !== 'function') {
     console.warn(`The hook executor must be a function`);
   }
-  if(executors.has(hook)){
+  if (executors.has(hook)) {
     console.warn(`Overriding the hook executor for '${hook}'`);
   }
-  executors.put(hook, executor);
+  executors.set(hook, executor);
 }
 
-//Retrieve a registered hook or the default executor
-export function hook(hook, defaultExecutor){
-  return executors.get(hook) || defaultExecutor;
+// Execute registered hook or the default executor. It always returns a promise
+export function execute(hook, params, defaultExecutor) {
+  const executor = executors.get(hook) || defaultExecutor;
+  return Promise.resolve()
+    .then(() => executor(params));
 }

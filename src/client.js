@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { browserHistory as history } from 'react-router';
+import { Provider } from 'react-redux';
+import { browserHistory as history, Router } from 'react-router';
 
 import createStore from './shared/create';
 import { render as renderDevtools } from './client/devtools';
@@ -9,7 +10,7 @@ import { render as renderDevtools } from './client/devtools';
 // as assigned in merge-configs.js
 import getRoutes from 'routes';
 import middleware from 'middleware';
-import { createForClient as createRootComponentForClient } from 'rootComponent';
+import { hooks, execute } from './hooks';
 
 const dest = document.getElementById('content');
 
@@ -17,8 +18,25 @@ const store = createStore(middleware, history, window.__data);
 const routes = getRoutes(store);
 const devComponent = renderDevtools();
 
+function generateRootComponent() {
+  const component = (
+    <Router history={history}>
+      {routes}
+    </Router>
+  );
+  const root = (
+    <Provider store={store} key="provider">
+      <div>
+        {component}
+        {devComponent}
+      </div>
+    </Provider>
+  );
+  return { root };
+}
+
 // There is probably no need to be asynchronous here
-createRootComponentForClient(store, { routes, history })
+execute(hooks.client.GENERATE_ROOT_COMPONENT, { store, routes, history }, generateRootComponent)
   .then(({ root }) => {
     ReactDOM.render(root, dest);
 
@@ -28,8 +46,11 @@ createRootComponentForClient(store, { routes, history })
         throw new Error('Server-side React render was discarded. Make sure that your initial render does not contain any client-side code.');
       }
     }
-
-    return devComponent ? createRootComponentForClient(store, { routes, history, devComponent }) : {};
+    if (!devComponent) {
+      return {};
+    }
+    // Rerender the root component with the dev component (redux sidebar)
+    return execute(hooks.client.GENERATE_ROOT_COMPONENT, { store, routes, history, devComponent }, generateRootComponent);
   })
   .then(({ root }) => {
     if (root) ReactDOM.render(root, dest);
@@ -37,3 +58,4 @@ createRootComponentForClient(store, { routes, history })
   .catch((err) => {
     console.error(err, err.stack);
   });
+
