@@ -93,10 +93,10 @@ The plugin file should register the implementations of the functions it wants to
 ```js
 import { hooks, register } from 'universal-redux/lib/hooks';
 
-register(hooks.client.GENERATE_ROOT_COMPONENT, ( params ) => {
-  //Generate the component
-  const component = <MyComponent {...params} />
-  return { root: component};
+register(hooks.client.GENERATE_ROOT_COMPONENT, ( props ) => {
+  // Generate the component
+  const component = <MyComponent { ...props } />
+  return { root: component };
 });
 ```
 
