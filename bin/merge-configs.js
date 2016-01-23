@@ -103,7 +103,7 @@ module.exports = (userConfig) => {
           require(pp);
           return true;
         } catch (e) {
-          if(e.code === 'MODULE_NOT_FOUND') return false;
+          if (e.code === 'MODULE_NOT_FOUND') return false;
           throw e;
         }
       });
