@@ -46,7 +46,7 @@ export default (projectConfig, projectToolsConfig) => {
           console.error('ROUTER ERROR:', pretty.render(error));
           res.status(500);
         } else if (renderProps) {
-          execute(hooks.client.GENERATE_ROOT_COMPONENT, { store, renderProps }, () => {
+          execute(hooks.server.GENERATE_ROOT_COMPONENT, { store, renderProps }, () => {
             const root = (
               <Provider store={store} key="provider">
                 <div>

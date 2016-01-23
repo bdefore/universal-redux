@@ -96,14 +96,15 @@ module.exports = (userConfig) => {
     .map((plugin) => {
       const pluginPath = [
         `${sourceDir}/${plugin}`,
-        `${root}/node_modules/univerals-redux-plugin-${plugin}`,
-        `${root}/node_modules/${plugin}`
+        `universal-redux-plugin-${plugin}`,
+        `${plugin}`
       ].find((pp) => {
         try {
-          require.resolve(pp);
+          require(pp);
           return true;
         } catch (e) {
-          return false;
+          if(e.code === 'MODULE_NOT_FOUND') return false;
+          throw e;
         }
       });
       if (!pluginPath) {

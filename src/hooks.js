@@ -17,7 +17,7 @@ const hookValues = Array.concat(
 
 // Register a hook by adding it to the executors map
 export function register(hook, executor) {
-  if (!hookValues.includes(hook)) {
+  if (hookValues.indexOf(hook) === -1) {
     console.warn(`Unknown hook '${hook}'`);
     return;
   }
