@@ -93,13 +93,14 @@ The plugin file should register the implementations of the functions it wants to
 ```js
 import { hooks, register } from 'universal-redux/lib/hooks';
 
-register(hooks.client.GENERATE_ROOT_COMPONENT, () => {
+register(hooks.client.GENERATE_ROOT_COMPONENT, ( params ) => {
   //Generate the component
-  return { mycomponent };
+  const component = <MyComponent {...params} />
+  return { root: component};
 });
 ```
 
-> If multiple plugins register the same hook, the last plugin to register is takes precedence.
+> If multiple plugins register the same hook, the last plugin to register it takes precedence.
 
 #### client.GENERATE_ROOT_COMPONENT
 
@@ -111,11 +112,11 @@ The hook implementation is provided a single `params` object with the following 
  - **store** - The redux store
  - **routes** - The routes exported by your `routes.js` file
  - **history** - The `react-router` history
- - **devComponent** *(optional)* - A react component that renders the dev tools
+ - **devComponent** *(optional)* - A react element for optional dev tools.
 
 ##### Return
 
-The hook implementation should return a valid react component or a promise that resolves to a valid react component.
+The hook implementation should return an object (or promise that resolves to an object) with a `root` property that is a react element.
 
 #### server.GENERATE_ROOT_COMPONENT
 
@@ -129,7 +130,7 @@ The hook implementation is provided a single `params` object with the following 
 
 ##### Return
 
-The hook implementation should return a valid react component or a promise that resolves to a valid react component.
+The hook implementation should return an object (or promise that resolves to an object) with a `root` property that is a react element.
 
 ### Scripts
 
