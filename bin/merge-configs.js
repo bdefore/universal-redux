@@ -83,7 +83,7 @@ module.exports = (userConfig) => {
   lodash.each(universalReduxConfig.globals, (value, key) => { definitions[key] = JSON.stringify(value); });
   combinedWebpackConfig.plugins.push(new webpack.DefinePlugin(definitions));
 
-  // add routes, reducer and rootComponent aliases so that client has access to them
+  // add routes and reducer aliases so that client has access to them
   combinedWebpackConfig.resolve.alias = combinedWebpackConfig.resolve.alias || {};
   combinedWebpackConfig.resolve.alias.routes = universalReduxConfig.routes;
   if (universalReduxConfig.redux.middleware) {
@@ -91,11 +91,30 @@ module.exports = (userConfig) => {
   } else {
     combinedWebpackConfig.resolve.alias.middleware = path.resolve(__dirname, '../lib/helpers/empty.js');
   }
-  if (universalReduxConfig.rootComponent) {
-    combinedWebpackConfig.resolve.alias.rootComponent = universalReduxConfig.rootComponent;
-  } else {
-    combinedWebpackConfig.resolve.alias.rootComponent = path.resolve(__dirname, '../lib/helpers/rootComponent.js');
-  }
+  // Try to resolve the configured plugins
+  const plugins = universalReduxConfig.plugins
+    .map((plugin) => {
+      const pluginPath = [
+        `${sourceDir}/${plugin}`,
+        `universal-redux-plugin-${plugin}`,
+        `${plugin}`
+      ].find((pp) => {
+        try {
+          require(pp);
+          return true;
+        } catch (e) {
+          if(e.code === 'MODULE_NOT_FOUND') return false;
+          throw e;
+        }
+      });
+      if (!pluginPath) {
+        console.warn(`Could not resolve plugin ${plugin}`);
+      }
+      return pluginPath;
+    })
+    .filter((pp) => !!pp);
+
+  combinedWebpackConfig.entry.main.unshift(...plugins);
 
   // add project level vendor libs
   if (universalReduxConfig.webpack.vendorLibraries && isProduction) {

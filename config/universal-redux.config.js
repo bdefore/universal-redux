@@ -123,9 +123,10 @@ module.exports = (projectRoot, sourceRoot) => {
     routes: sourceRoot + '/routes.js',
 
     /*
-    // The root component factory file. Optional. Will be added to Webpack aliases.
+    // A list of plugins. They can either be a path or an npm module following
+    // the naming convention universal-redux-plugin-${name}
     */
-    // rootComponent: sourceRoot + '/rootComponent.js',
+    plugins: [],
 
     html: {
       /*
