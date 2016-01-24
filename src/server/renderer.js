@@ -33,10 +33,10 @@ export default (projectConfig, projectToolsConfig) => {
     const store = createStore(middleware, history);
 
     if (__DISABLE_SSR__) {
-      const content = html(config, tools.assets(), store, res._headers);
+      const content = html(config, tools.assets(), store, headers);
       send(200, content);
     } else {
-      match({ history, routes: getRoutes(store), location: originalUrl }, (error, redirectLocation, renderProps) => {
+      match({history, routes: getRoutes(store), location: originalUrl}, (error, redirectLocation, renderProps) => {
         if (redirectLocation) {
           redirect(redirectLocation.pathname + redirectLocation.search);
         } else if (error) {
@@ -59,22 +59,22 @@ export default (projectConfig, projectToolsConfig) => {
     }
   };
 
+  function *koaMiddleware() {
+    dynamicMiddleware(this.request.originalUrl,
+      this.request.headers,
+      (status, body) => {
+        this.body = body;
+        this.status = status;
+      },
+      (url) => this.response.redirect(url));
+  }
+
   switch (config.server.rendererWebFramework) {
-    case 'koa':
-    {
-      return function *() {
-        dynamicMiddleware(this.request.originalUrl,
-          this.request.headers,
-          (status, body) => {
-            this.body = body;
-            this.status = status
-          },
-          (url) => this.response.redirect(url))
-      }
+    case 'koa': {
+      return koaMiddleware;
     }
     default:
-    case 'express':
-    {
+    case 'express': {
       return (req, res) => {
         dynamicMiddleware(req.originalUrl,
           req._headers,
@@ -83,5 +83,4 @@ export default (projectConfig, projectToolsConfig) => {
       }
     }
   }
-
 };
