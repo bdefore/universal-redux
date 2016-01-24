@@ -58,7 +58,7 @@ export default (projectConfig, projectToolsConfig) => {
     }
   };
 
-  switch (config.server.webFramework) {
+  switch (config.server.rendererWebFramework) {
     case 'koa':
     {
       return function *() {

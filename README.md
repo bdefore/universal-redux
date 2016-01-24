@@ -66,6 +66,48 @@ start(app, config);
 
 Alternatively, you may create your own Express instance, add middleware beforehand and pass that instance as parameter when calling `universal.app(app)`.
 
+#### Koa middleware
+
+Instead of express the renderer can return koa compatible middleware. Unlike with express you have to create your own koa instance and handle static routing
+yourself.
+
+```javascript
+import koa from 'koa';
+import compress from 'koa-compress';
+import favicon from 'koa-favicon';
+import serve from 'koa-static';
+import path from 'path';
+
+/* Minimum config for koa example:
+ export default {
+  server: {
+    rendererWebFramework: 'koa'
+  }
+ }
+ */
+import userConfig from './../config/universal-redux.config.js';
+
+import { configure, renderer } from 'universal-redux';
+
+const config = configure(userConfig);
+const app = koa();
+
+app.use(compress());
+
+if (config.server.favicon) {
+  app.use(favicon(path.resolve(config.server.favicon)));
+}
+
+const maxAge = config.server.maxAge || 0;
+app.use(serve(path.resolve(config.server.staticPath), {maxage: maxAge}));
+
+app.use(renderer(config));
+
+app.listen(config.server.port);
+console.info('==> 💻  Open http://%s:%s in a browser to view the app.', config.server.host, config.server.port);
+
+```
+
 #### Redux middleware
 
 You can activate your own Redux middleware by specifying the `middleware` property in the configuration file. This must be a path to a file which exports each middleware as a function. On serverside renders, those functions will be called with two parameters: the Express request and response objects. On clientside renders, they will be called with none. All properties specified in `globals` will be available to the middleware.
