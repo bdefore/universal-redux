@@ -36,7 +36,7 @@ export default (projectConfig, projectToolsConfig) => {
       const content = html(config, tools.assets(), store, headers);
       send(200, content);
     } else {
-      match({history, routes: getRoutes(store), location: originalUrl}, (error, redirectLocation, renderProps) => {
+      match({ history, routes: getRoutes(store), location: originalUrl }, (error, redirectLocation, renderProps) => {
         if (redirectLocation) {
           redirect(redirectLocation.pathname + redirectLocation.search);
         } else if (error) {
@@ -80,7 +80,7 @@ export default (projectConfig, projectToolsConfig) => {
           req._headers,
           (status, body) => res.status(status).send(body),
           (url) => res.redirect(url));
-      }
+      };
     }
   }
 };
