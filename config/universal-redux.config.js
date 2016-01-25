@@ -51,29 +51,7 @@ module.exports = (projectRoot, sourceRoot) => {
     // Globals available to both serverside and clientside rendering.
     // You may also add your own here.
     */
-    globals: {
-
-      /*
-      // Whether or not to run redux-logger
-      //
-      // Expects: Boolean
-      */
-      __LOGGER__: !isProduction,
-
-      /*
-      // Whether or not to run redux-devtools
-      //
-      // Expects: Boolean
-      */
-      __DEVTOOLS__: !isProduction,
-
-      /*
-      // Whether or not to show redux-devtools when page loads.
-      //
-      // Expects: Boolean
-      */
-      __DEVTOOLS_IS_VISIBLE__: true
-    },
+    globals: { },
 
     /*
     // Enable eslint checks per Webpack build. Will not be run
@@ -123,9 +101,10 @@ module.exports = (projectRoot, sourceRoot) => {
     routes: sourceRoot + '/routes.js',
 
     /*
-    // The root component factory file. Optional. Will be added to Webpack aliases.
+    // A list of plugins. They can either be a path or an npm module following
+    // the naming convention universal-redux-plugin-${name}
     */
-    // rootComponent: sourceRoot + '/rootComponent.js',
+    plugins: [],
 
     html: {
       /*

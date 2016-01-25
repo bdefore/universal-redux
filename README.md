@@ -80,7 +80,59 @@ Alternatively, you can specify `html.root` in your configuration and this will b
 
 You can add or override the default [webpack-isomorphic-tools](https://github.com/halt-hammerzeit/webpack-isomorphic-tools) configuration, by providing a `toolsConfigPath` value to your `config.js`.
 
-#### Scripts
+### Plugins
+
+Hooks can be used in order to override the default implementation of certain functions. Files that define hooks are called plugins and must be listed in the `plugins` property of `config/universal-redux.config.js`. The plugin paths are resolved as follow:
+
+ - ${project-src}/{path}
+ - ${project-root}/node_modules/universal-redux-plugin-{path}
+ - ${project-root}/node_modules/{path}
+
+The plugin file should register the implementations of the functions it wants to override as follow:
+
+```js
+import { hooks, register } from 'universal-redux/lib/hooks';
+
+register(hooks.client.GENERATE_ROOT_COMPONENT, ( props ) => {
+  // Generate the component
+  const component = <MyComponent { ...props } />
+  return { root: component };
+});
+```
+
+> If multiple plugins register the same hook, the last plugin to register it takes precedence.
+
+#### client.GENERATE_ROOT_COMPONENT
+
+This hook can be used to override the default rendering of the root component on the client.
+
+##### Arguments
+
+The hook implementation is provided a single `params` object with the following properties
+ - **store** - The redux store
+ - **routes** - The routes exported by your `routes.js` file
+ - **history** - The `react-router` history
+ - **devComponent** *(optional)* - A react element for optional dev tools.
+
+##### Return
+
+The hook implementation should return an object (or promise that resolves to an object) with a `root` property that is a react element.
+
+#### server.GENERATE_ROOT_COMPONENT
+
+This hook can be used to override the default rendering of the root component on the server.
+
+##### Arguments
+
+The hook implementation is provided a single `params` object with the following properties
+ - **store** - The redux store
+ - **renderProps** - The `renderProps` object provided to the callback of the `react-router` match function. It contains all the property needed to render a `Router` component.
+
+##### Return
+
+The hook implementation should return an object (or promise that resolves to an object) with a `root` property that is a react element.
+
+### Scripts
 
 The following npm bin aliases have been defined:
 

@@ -1,8 +1,6 @@
 import WebpackIsomorphicTools from 'webpack-isomorphic-tools';
-import configure from '../configure';
 
-export default (projectConfig, projectToolsConfig) => {
-  const config = configure(projectConfig);
+export default (config, projectToolsConfig) => {
   const toolsConfig = projectToolsConfig || require('../../config/webpack-isomorphic-tools.config.js');
   const rootDir = config.webpack.config.context;
   const tools = new WebpackIsomorphicTools(toolsConfig);

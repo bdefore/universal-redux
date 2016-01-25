@@ -1,20 +1,8 @@
-import path from 'path';
-import Express from 'express';
-import favicon from 'serve-favicon';
-import compression from 'compression';
+import { hooks, execute } from './hooks';
+import createRenderer from './server/renderer';
 
-import configure from './configure';
-
-export default (projectConfig) => {
-  const config = configure(projectConfig);
-  const server = new Express();
-  server.use(compression());
-
-  if (config.server.favicon) {
-    server.use(favicon(path.resolve(config.server.favicon)));
-  }
-  const maxAge = config.server.maxAge || 0;
-  server.use(Express.static(path.resolve(config.server.staticPath), { maxage: maxAge }));
-
-  return server;
+export default (config) => {
+  return Promise.resolve()
+    .then(() => execute(hooks.CREATE_SERVER, { config: config.server, renderer: createRenderer(config) }))
+    .then(({ server }) => execute(hooks.START_SERVER, { config: config.server, server }));
 };
