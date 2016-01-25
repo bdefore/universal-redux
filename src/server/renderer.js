@@ -8,66 +8,77 @@ import PrettyError from 'pretty-error';
 import createMemoryHistory from 'react-router/lib/createMemoryHistory';
 
 import createStore from '../shared/create';
-import configure from '../configure';
 import html from './html';
 import getTools from './tools';
 import { hooks, execute } from '../hooks';
+
+const pretty = new PrettyError();
 
 global.__CLIENT__ = false;
 global.__SERVER__ = true;
 global.__DISABLE_SSR__ = false;  // <----- DISABLES SERVER SIDE RENDERING FOR ERROR DEBUGGING
 global.__DEVELOPMENT__ = process.env.NODE_ENV !== 'production';
 
-export default (projectConfig, projectToolsConfig) => {
-  const tools = getTools(projectConfig, projectToolsConfig);
-  const config = configure(projectConfig);
-  const getRoutes = require(path.resolve(config.routes)).default;
-  const pretty = new PrettyError();
+function createRootComponent({ store, renderProps }) {
+  const root = (
+    <Provider store={store} key="provider">
+      <div>
+        <RouterContext {...renderProps} />
+      </div>
+    </Provider>
+  );
+  return { root };
+}
 
-  return (req, res) => {
+function renderRootComponent({ config, assets, store, headers, root }) {
+  return {
+    status: 200,
+    body: html(config, assets, store, headers, root)
+  };
+}
+
+function renderer({ history, routes, store, assets, location, headers, config }) {
+  return new Promise((resolve, reject) => {
+    match({ history, routes, location }, (error, redirectLocation, renderProps) => {
+      if (error) {
+        reject(error);
+      } else if (redirectLocation) {
+        resolve({ redirect: redirectLocation.pathname + redirectLocation.search });
+      } else if (!renderProps) {
+        reject({ status: 400 });
+      } else {
+        execute(hooks.CREATE_ROOT_COMPONENT, { store, renderProps }, createRootComponent)
+          .then(({ root }) => execute(hooks.RENDER_ROOT_COMPONENT, { config, assets, store, headers, root }, renderRootComponent))
+          .then(resolve, reject);
+      }
+    });
+  })
+  .catch((err) => {
+    const error = pretty.render(err);
+    console.error(error);
+    return {
+      error: pretty.render(error),
+      status: 500
+    };
+  });
+}
+
+export default (config) => {
+  const tools = getTools(config);
+  const getRoutes = require(path.resolve(config.routes)).default;
+
+  const middleware = config.redux.middleware ? require(path.resolve(config.redux.middleware)).default : [];
+  const history = createMemoryHistory();
+  const store = createStore(middleware, history);
+
+  return ({ location, headers }) => {
     if (__DEVELOPMENT__) {
       // Do not cache webpack stats: the script file would change since
       // hot module replacement is enabled in the development env
       tools.refresh();
     }
-
-    const middleware = config.redux.middleware ? require(path.resolve(config.redux.middleware)).default : [];
-    const history = createMemoryHistory();
-    const store = createStore(middleware, history);
-
-    if (__DISABLE_SSR__) {
-      const content = html(config, tools.assets(), store, res._headers);
-      res.status(200).send(content);
-    } else {
-      match({ history, routes: getRoutes(store), location: req.originalUrl }, (error, redirectLocation, renderProps) => {
-        if (redirectLocation) {
-          res.redirect(redirectLocation.pathname + redirectLocation.search);
-        } else if (error) {
-          console.error('ROUTER ERROR:', pretty.render(error));
-          res.status(500);
-        } else if (renderProps) {
-          execute(hooks.server.GENERATE_ROOT_COMPONENT, { store, renderProps }, () => {
-            const root = (
-              <Provider store={store} key="provider">
-                <div>
-                  <RouterContext {...renderProps} />
-                </div>
-              </Provider>
-            );
-            return { root };
-          })
-          .then(({ root }) => {
-            const content = html(config, tools.assets(), store, res._headers, root);
-            res.status(200).send(content);
-          })
-          .catch((err) => {
-            console.error(err);
-            res.status(500).send(err);
-          });
-        } else {
-          res.status(404).send('Not found');
-        }
-      });
-    }
+    const assets = tools.assets();
+    const routes = getRoutes(store);
+    return renderer({ history, routes, store, assets, location, headers, config });
   };
 };

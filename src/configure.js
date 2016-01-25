@@ -1,5 +1,4 @@
 import { each } from 'lodash';
-import mergeConfigs from '../bin/merge-configs';
 
 function validateConfig(config) {
   const errors = [];
@@ -21,11 +20,9 @@ function validateConfig(config) {
   return errors;
 }
 
-export default (projectConfig) => {
+export default (config) => {
   // since typically the dev server is logging this out too
-  projectConfig.verbose = false;
-
-  const config = mergeConfigs(projectConfig);
+  config.verbose = false;
 
   // add user defined globals for serverside access
   each(config.globals, (value, key) => { global[key] = JSON.stringify(value); });

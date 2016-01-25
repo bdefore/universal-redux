@@ -1,12 +1,10 @@
-import { map } from 'lodash';
-import createLogger from 'redux-logger';
-import { syncHistory } from 'redux-simple-router';
+import { syncHistory, routeReducer } from 'redux-simple-router';
+import { applyMiddleware, createStore as reduxCreateStore, combineReducers } from 'redux';
 
-import { compose as composeDevtools, listenToRouter as linkDevtoolsToRouter } from '../client/devtools';
-import { applyMiddleware, createStore } from 'redux';
+import { hooks, execute } from '../hooks';
 
 // explicit path required for HMR to function. see #7
-import reducers from '../../../../src/redux/modules';
+import staticReducers from '../../../../src/redux/modules';
 
 function hmr(store) {
   if (module.hot) {
@@ -17,27 +15,30 @@ function hmr(store) {
   }
 }
 
-export default function create(providedMiddleware, history, data) {
+function createMiddlewareHook({ middleware }) {
+  return applyMiddleware(...middleware);
+}
+
+function createReducerHook({ reducers }) {
+  return combineReducers(reducers);
+}
+
+function createStoreHook({ createStore, reducer, data }) {
+  return createStore(reducer, data);
+}
+
+export default function create(staticMiddleware, history, data) {
   const router = syncHistory(history);
-  const defaultMiddleware = [ router ];
+  const middleware = staticMiddleware.concat([ router ]);
+  const reducers = { ...staticReducers, routing: routeReducer };
 
-  // backward compatibility to 2.x api expecting object for middleware instead of array:
-  const customMiddleware = !providedMiddleware.concat ? map(providedMiddleware, (m) => { return m; }) : providedMiddleware;
-
-  const middleware = customMiddleware.concat(defaultMiddleware);
-
-  if (__CLIENT__ && __LOGGER__) {
-    middleware.push(createLogger({ collapsed: true }));
-  }
-
-  const useDevtools = __DEVELOPMENT__ && __CLIENT__ && __DEVTOOLS__;
-  const finalCreateStore = useDevtools ? composeDevtools(middleware)(createStore) : applyMiddleware(...middleware)(createStore);
-
-  const store = finalCreateStore(reducers, data);
-
-  linkDevtoolsToRouter(router, store);
+  const store = execute(hooks.CREATE_REDUX_STORE, {
+    reducer: execute(hooks.CREATE_REDUX_REDUCER, { reducers }, createReducerHook),
+    createStore: execute(hooks.CREATE_REDUX_MIDDLEWARE, { middleware }, createMiddlewareHook)(reduxCreateStore),
+    router,
+    data
+  }, createStoreHook);
 
   hmr(store);
-
   return store;
 }

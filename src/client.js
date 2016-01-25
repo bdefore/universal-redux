@@ -4,7 +4,6 @@ import { Provider } from 'react-redux';
 import { browserHistory as history, Router } from 'react-router';
 
 import createStore from './shared/create';
-import { render as renderDevtools } from './client/devtools';
 
 // dependencies of external source. these resolve via webpack aliases
 // as assigned in merge-configs.js
@@ -16,9 +15,8 @@ const dest = document.getElementById('content');
 
 const store = createStore(middleware, history, window.__data);
 const routes = getRoutes(store);
-const devComponent = renderDevtools();
 
-function generateRootComponent() {
+function generateRootComponent({ additionalComponents }) {
   const component = (
     <Router history={history}>
       {routes}
@@ -28,7 +26,7 @@ function generateRootComponent() {
     <Provider store={store} key="provider">
       <div>
         {component}
-        {devComponent}
+        {additionalComponents}
       </div>
     </Provider>
   );
@@ -36,8 +34,8 @@ function generateRootComponent() {
 }
 
 // There is probably no need to be asynchronous here
-execute(hooks.client.GENERATE_ROOT_COMPONENT, { store, routes, history }, generateRootComponent)
-  .then(({ root }) => {
+execute(hooks.CREATE_ROOT_COMPONENT, { store, routes, history }, generateRootComponent)
+  .then(({ root, additionalComponents }) => {
     ReactDOM.render(root, dest);
 
     if (process.env.NODE_ENV !== 'production') {
@@ -46,11 +44,11 @@ execute(hooks.client.GENERATE_ROOT_COMPONENT, { store, routes, history }, genera
         throw new Error('Server-side React render was discarded. Make sure that your initial render does not contain any client-side code.');
       }
     }
-    if (!devComponent) {
+    if (!additionalComponents) {
       return {};
     }
     // Rerender the root component with the dev component (redux sidebar)
-    return execute(hooks.client.GENERATE_ROOT_COMPONENT, { store, routes, history, devComponent }, generateRootComponent);
+    return execute(hooks.UPDATE_ROOT_COMPONENT, { store, routes, history, additionalComponents: [] }, generateRootComponent);
   })
   .then(({ root }) => {
     if (root) ReactDOM.render(root, dest);
