@@ -63,8 +63,8 @@ export default (projectConfig, projectToolsConfig) => {
     dynamicMiddleware(this.request.originalUrl,
       this.request.headers,
       (status, body) => {
-        this.body = body;
         this.status = status;
+        this.body = body;
       },
       (url) => this.response.redirect(url));
   }
