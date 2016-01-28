@@ -72,7 +72,7 @@ module.exports = (userConfig) => {
     combinedWebpackConfig.plugins.push(new WebpackErrorNotificationPlugin());
   }
 
-  // add routes, reducer and rootComponent aliases so that client has access to them
+  // add routes, reducer and rootClientComponent aliases so that client has access to them
   combinedWebpackConfig.resolve.alias = combinedWebpackConfig.resolve.alias || {};
   combinedWebpackConfig.resolve.alias.routes = universalReduxConfig.routes;
   if (universalReduxConfig.redux.middleware) {
@@ -80,10 +80,10 @@ module.exports = (userConfig) => {
   } else {
     combinedWebpackConfig.resolve.alias.middleware = path.resolve(__dirname, '../lib/helpers/empty.js');
   }
-  if (universalReduxConfig.rootComponent) {
-    combinedWebpackConfig.resolve.alias.rootComponent = universalReduxConfig.rootComponent;
+  if (universalReduxConfig.rootClientComponent) {
+    combinedWebpackConfig.resolve.alias.rootClientComponent = universalReduxConfig.rootClientComponent;
   } else {
-    combinedWebpackConfig.resolve.alias.rootComponent = path.resolve(__dirname, '../lib/helpers/rootComponent.js');
+    combinedWebpackConfig.resolve.alias.rootClientComponent = path.resolve(__dirname, '../lib/client/root.js');
   }
 
   // add project level vendor libs

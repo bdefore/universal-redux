@@ -1,5 +1,5 @@
 import path from 'path';
-import { match } from '../providers/react-router';
+import { match } from './providers/react-router';
 import PrettyError from 'pretty-error';
 
 import createStore from '../shared/create';
@@ -15,7 +15,8 @@ global.__DEVELOPMENT__ = process.env.NODE_ENV !== 'production';
 export default (projectConfig, projectToolsConfig) => {
   const tools = getTools(projectConfig, projectToolsConfig);
   const config = configure(projectConfig);
-  const rootComponent = require(config.rootComponent ? path.resolve(config.rootComponent) : '../helpers/rootComponent');
+  const rootServerComponent = require(config.rootServerComponent ? path.resolve(config.rootServerComponent) : './root').default;
+  const getRoutes = require(path.resolve(config.routes)).default;
   const pretty = new PrettyError();
 
   return (req, res) => {
@@ -27,19 +28,20 @@ export default (projectConfig, projectToolsConfig) => {
 
     const middleware = config.redux.middleware ? require(path.resolve(config.redux.middleware)).default : [];
     const store = createStore(middleware);
+    const routes = getRoutes(store);
 
     if (__DISABLE_SSR__) {
       const content = html(config, tools.assets(), store, res._headers);
       res.status(200).send(content);
     } else {
-      match(config, req.originalUrl, store, (error, redirectLocation, renderProps) => {
+      match(routes, req.originalUrl, store, (error, redirectLocation, renderProps) => {
         if (redirectLocation) {
           res.redirect(redirectLocation.pathname + redirectLocation.search);
         } else if (error) {
           console.error('ROUTER ERROR:', pretty.render(error));
           res.status(500);
         } else if (renderProps) {
-          rootComponent.createForServer(store, renderProps, config.providers)
+          rootServerComponent(store, renderProps, config.providers)
             .then(({ root }) => {
               const content = html(config, tools.assets(), store, res._headers, root);
               res.status(200).send(content);
