@@ -1,6 +1,6 @@
 import { map } from 'lodash';
 import createLogger from 'redux-logger';
-import { syncHistory } from 'redux-simple-router';
+import { syncHistory } from 'react-router-redux';
 
 import { compose as composeDevtools, listenToRouter as linkDevtoolsToRouter } from '../client/devtools';
 import { applyMiddleware, createStore } from 'redux';

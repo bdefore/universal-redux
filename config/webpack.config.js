@@ -19,7 +19,7 @@ const vendor = [
   'react-redux',
   'redux',
   'redux-logger',
-  'redux-simple-router'
+  'react-router-redux'
 ];
 
 module.exports = {

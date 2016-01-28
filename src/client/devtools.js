@@ -26,8 +26,8 @@ export function compose(middleware) {
   );
 }
 
-// context: https://github.com/rackt/redux-simple-router/compare/1.0.2...2.0.2
-// context: https://github.com/rackt/redux-simple-router/pull/141#issuecomment-167587581
+// context: https://github.com/rackt/react-router-redux/compare/1.0.2...2.0.2
+// context: https://github.com/rackt/react-router-redux/pull/141#issuecomment-167587581
 export function listenToRouter(routerMiddleware, store) {
   routerMiddleware.listenForReplays(store);
 }

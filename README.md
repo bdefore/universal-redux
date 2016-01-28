@@ -18,7 +18,7 @@ The quickest way to get started is to clone the [starter project](https://github
 #### Other Examples
 
 - [An example with JWT authentication](https://github.com/bdefore/universal-redux-jwt) ([Heroku demo](https://universal-redux-jwt-example.herokuapp.com))
-- [A refactor of react-redux-universal-hot-example with universal-redux and redux-simple-router](https://github.com/bdefore/react-redux-universal-hot-example/tree/babel6) ([Heroku demo](https://universal-redux.herokuapp.com))
+- [A refactor of react-redux-universal-hot-example with universal-redux and react-router-redux](https://github.com/bdefore/react-redux-universal-hot-example/tree/babel6) ([Heroku demo](https://universal-redux.herokuapp.com))
 
 ### Usage
 
@@ -68,7 +68,7 @@ Alternatively, you may create your own Express instance, add middleware beforeha
 
 #### Redux middleware
 
-You can activate your own Redux middleware by specifying the `middleware` property in the configuration file. This must be a path to a file which exports each middleware as a function. On serverside renders, those functions will be called with two parameters: the Express request and response objects. On clientside renders, they will be called with none. All properties specified in `globals` will be available to the middleware.
+You can activate your own Redux middleware by specifying the `middleware` property in the configuration file. This must be a path to a file which exports each middleware as a function. All properties specified in `globals` will be available to the middleware.
 
 #### Adding your own items to HTML head
 
@@ -109,7 +109,7 @@ Peer dependencies for each version:
 
 #### 1.x
 
-[Babel](https://github.com/babel/babel) 5, [Redux Simple Router](https://github.com/rackt/redux-simple-router)
+[Babel](https://github.com/babel/babel) 5, [React Router Redux](https://github.com/rackt/react-router-redux)
 
 ```
 "react": "^0.14.3",
@@ -120,7 +120,7 @@ Peer dependencies for each version:
 
 #### 2.x
 
-[Babel](https://github.com/babel/babel) 6, [Redux Simple Router](https://github.com/rackt/redux-simple-router)
+[Babel](https://github.com/babel/babel) 6, [React Router Redux](https://github.com/rackt/react-router-redux)
 
 ```
 "react": "^0.14.3",
@@ -131,13 +131,13 @@ Peer dependencies for each version:
 
 #### 3.x (Beta - dependencies may change)
 
-[Babel](https://github.com/babel/babel) 6, React Router 2, [Redux Simple Router](https://github.com/rackt/redux-simple-router) 2
+[Babel](https://github.com/babel/babel) 6, React Router 2, [React Router Redux](https://github.com/rackt/react-router-redux) 2
 
 ```
 "react": "^0.14.3",
 "react-dom": "^0.14.3",
 "react-router": "^2.0.0-rc4",
-"redux-simple-router": "^2.0.0"
+"react-router-redux": "^2.1.0"
 ```
 
 ### Local development

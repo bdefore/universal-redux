@@ -5,6 +5,10 @@ node_js:
 
 sudo: false
 
+before_install:
+  # https://github.com/npm/npm/issues/11283
+  - npm set progress=false
+
 before_script:
   - export DISPLAY=:99.0
   - sh -e /etc/init.d/xvfb start

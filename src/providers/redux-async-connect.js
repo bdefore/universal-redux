@@ -5,7 +5,7 @@ import { ReduxAsyncConnect, loadOnServer } from 'redux-async-connect';
 
 export function createForClient(store, { routes, history, devComponent }) {
   const component = (
-    <Router history={history}>
+    <Router render={(props) => <ReduxAsyncConnect {...props} />} history={history}>
       {routes}
     </Router>
   );
