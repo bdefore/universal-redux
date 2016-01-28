@@ -2,16 +2,16 @@ import React from 'react';
 import { Router, match as reactRouterMatch } from 'react-router';
 import { browserHistory } from 'react-router';
 import createMemoryHistory from 'react-router/lib/createMemoryHistory';
+import { ReduxAsyncConnect } from 'redux-async-connect';
 
 export function createForClient(store) {
-
   // HERE LIES THE PROBLEM
   // resolves via webpack aliases as assigned in merge-configs.js
   import getRoutes from 'routes';
 
   const routes = getRoutes(store);
   const component = (
-    <Router history={this.history()}>
+    <Router render={(props) => <ReduxAsyncConnect {...props} />} history={this.history()}>
       {routes}
     </Router>
   );
@@ -23,7 +23,7 @@ export function createForServer(store) {
   const path = require('path');
   const getRoutes = require(path.resolve(config.routes)).default;
   const component = (
-    <Router render={(props) => <ReduxAsyncConnect {...props} />} history={history}>
+    <Router history={this.history()}>
       {getRoutes(store)}
     </Router>
   );
