@@ -23,6 +23,7 @@ function hmr(store) {
 }
 
 export default function create(providedMiddleware, data) {
+  // TODO: pull our react-router deps
   let router;
   if (__CLIENT__) {
     router = syncHistory(browserHistory);
