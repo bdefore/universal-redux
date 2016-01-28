@@ -48,6 +48,7 @@ export default (projectConfig, projectToolsConfig) => {
               res.status(200).send(content);
             })
             .catch((err) => {
+              console.log('ERROR GENERATING ROOT COMPONENT', err, err.stack);
               res.status(500).send(err);
             });
         } else {
