@@ -109,7 +109,7 @@ Peer dependencies for each version:
 
 #### 1.x
 
-[Babel](https://github.com/babel/babel) 5, [React Router Redux](https://github.com/rackt/react-router-redux)
+[Babel](https://github.com/babel/babel) 5, [Redux Simple Router](https://github.com/rackt/react-router-redux)
 
 ```
 "react": "^0.14.3",
@@ -120,7 +120,7 @@ Peer dependencies for each version:
 
 #### 2.x
 
-[Babel](https://github.com/babel/babel) 6, [React Router Redux](https://github.com/rackt/react-router-redux)
+[Babel](https://github.com/babel/babel) 6, [Redux Simple Router](https://github.com/rackt/react-router-redux)
 
 ```
 "react": "^0.14.3",
@@ -131,7 +131,7 @@ Peer dependencies for each version:
 
 #### 3.x (Beta - dependencies may change)
 
-[Babel](https://github.com/babel/babel) 6, React Router 2, [React Router Redux](https://github.com/rackt/react-router-redux) 2
+[Babel](https://github.com/babel/babel) 6, React Router 2, [React Router Redux (Redux Simple Router renamed)](https://github.com/rackt/react-router-redux) 2
 
 ```
 "react": "^0.14.3",
