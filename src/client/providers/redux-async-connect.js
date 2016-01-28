@@ -12,5 +12,5 @@ export default function(store, { devComponent }) {
     </Provider>
   );
 
-  return Promise.resolve({ root });
+  return Promise.resolve(root);
 }

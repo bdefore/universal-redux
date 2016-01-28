@@ -15,8 +15,8 @@ const store = createStore(middleware, window.__data);
 const devComponent = renderDevtools();
 
 // There is probably no need to be asynchronous here
-createRootClientComponent(store, __PROVIDERS__)
-  .then(({ root }) => {
+createRootClientComponent(store, __PROVIDERS__, { devComponent })
+  .then((root) => {
     ReactDOM.render(root, dest);
 
     if (process.env.NODE_ENV !== 'production') {
@@ -26,9 +26,9 @@ createRootClientComponent(store, __PROVIDERS__)
       }
     }
 
-    return devComponent ? createRootClientComponent(store, { devComponent }, __PROVIDERS__) : {};
+    return devComponent ? createRootClientComponent(store, __PROVIDERS__, { devComponent }) : {};
   })
-  .then(({ root }) => {
+  .then((root) => {
     if (root) ReactDOM.render(root, dest);
   })
   .catch((err) => {

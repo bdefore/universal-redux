@@ -5,12 +5,11 @@ import { ReduxAsyncConnect } from 'redux-async-connect';
 import getRoutes from 'routes';
 
 export default function(store) {
-  const routes = getRoutes(store);
   const component = (
     <Router render={(props) => <ReduxAsyncConnect {...props} />} history={browserHistory}>
-      {routes}
+      {getRoutes(store)}
     </Router>
   );
 
-  return Promise.resolve({ component });
+  return component;
 }
