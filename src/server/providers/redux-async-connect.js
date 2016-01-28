@@ -8,7 +8,9 @@ export default function(store, renderProps) {
       .then(() => {
         const root = (
           <Provider store={store} key="provider">
-            <ReduxAsyncConnect {...renderProps} />
+            <div>
+              <ReduxAsyncConnect {...renderProps} />
+            </div>
           </Provider>
         );
         resolve({ root });
