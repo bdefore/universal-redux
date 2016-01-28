@@ -48,6 +48,7 @@ export default (projectConfig, projectToolsConfig) => {
               res.status(200).send(content);
             })
             .catch((err) => {
+              console.error(err);
               res.status(500).send(err);
             });
         } else {
