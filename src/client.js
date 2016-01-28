@@ -28,9 +28,6 @@ createRootClientComponent(store, __PROVIDERS__, { devComponent })
 
     return devComponent ? createRootClientComponent(store, __PROVIDERS__, { devComponent }) : {};
   })
-  .then((root) => {
-    if (root) ReactDOM.render(root, dest);
-  })
   .catch((err) => {
     console.error(err, err.stack);
   });
