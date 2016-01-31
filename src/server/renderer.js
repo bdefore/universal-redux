@@ -68,7 +68,7 @@ export default (projectConfig, projectToolsConfig) => {
       (url) => this.response.redirect(url));
   }
 
-  switch (config.server.rendererWebFramework) {
+  switch (config.server.webFramework) {
     case 'koa': {
       return koaMiddleware;
     }

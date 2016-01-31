@@ -52,7 +52,7 @@ module.exports = (projectRoot, sourceRoot) => {
       // Expects: String
       // options: 'express' || 'koa'
        */
-      rendererWebFramework: 'express'
+      webFramework: 'express'
     },
 
     /*
