@@ -19,6 +19,7 @@ The quickest way to get started is to clone the [starter project](https://github
 
 - [An example with JWT authentication](https://github.com/bdefore/universal-redux-jwt) ([Heroku demo](https://universal-redux-jwt-example.herokuapp.com))
 - [A refactor of react-redux-universal-hot-example with universal-redux and react-router-redux](https://github.com/bdefore/react-redux-universal-hot-example/tree/babel6) ([Heroku demo](https://universal-redux.herokuapp.com))
+- [An example using Koa instead of Express](https://github.com/bartolkaruza/universal-redux-koa)
 
 ### Usage
 
@@ -65,48 +66,6 @@ start(app, config);
 ```
 
 Alternatively, you may create your own Express instance, add middleware beforehand and pass that instance as parameter when calling `universal.app(app)`.
-
-#### Koa middleware
-
-Instead of express the renderer can return koa compatible middleware. Unlike with express you have to create your own koa instance and handle static routing
-yourself.
-
-```javascript
-import koa from 'koa';
-import compress from 'koa-compress';
-import favicon from 'koa-favicon';
-import serve from 'koa-static';
-import path from 'path';
-
-/* Minimum config for koa example:
- export default {
-  server: {
-    rendererWebFramework: 'koa'
-  }
- }
- */
-import userConfig from './../config/universal-redux.config.js';
-
-import { configure, renderer } from 'universal-redux';
-
-const config = configure(userConfig);
-const app = koa();
-
-app.use(compress());
-
-if (config.server.favicon) {
-  app.use(favicon(path.resolve(config.server.favicon)));
-}
-
-const maxAge = config.server.maxAge || 0;
-app.use(serve(path.resolve(config.server.staticPath), {maxage: maxAge}));
-
-app.use(renderer(config));
-
-app.listen(config.server.port);
-console.info('==> 💻  Open http://%s:%s in a browser to view the app.', config.server.host, config.server.port);
-
-```
 
 #### Redux middleware
 
