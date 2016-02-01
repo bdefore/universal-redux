@@ -34,12 +34,12 @@
   },
   "globals": {
     "__CLIENT__": true,
-    "__PROVIDERS__": [],
     "__DEVELOPMENT__": true,
     "__DEVTOOLS__": true,
     "__DEVTOOLS_IS_VISIBLE__": true,
     "__DISABLE_SSR__": true,
     "__LOGGER__": false,
+    "__PROVIDERS__": [],
     "__SERVER__": true,
     "webpackIsomorphicTools": true
   }

@@ -15,7 +15,8 @@ global.__DEVELOPMENT__ = process.env.NODE_ENV !== 'production';
 export default (projectConfig, projectToolsConfig) => {
   const tools = getTools(projectConfig, projectToolsConfig);
   const config = configure(projectConfig);
-  const rootServerComponent = require(config.rootServerComponent ? path.resolve(config.rootServerComponent) : './root').default;
+  const rootComponentPath = config.rootServerComponent || config.rootComponent || './root';
+  const rootServerComponent = require(path.resolve(rootComponentPath)).default;
   const getRoutes = require(path.resolve(config.routes)).default;
   const pretty = new PrettyError();
 

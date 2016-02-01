@@ -75,16 +75,9 @@ module.exports = (userConfig) => {
   // add routes, reducer and rootClientComponent aliases so that client has access to them
   combinedWebpackConfig.resolve.alias = combinedWebpackConfig.resolve.alias || {};
   combinedWebpackConfig.resolve.alias.routes = universalReduxConfig.routes;
-  if (universalReduxConfig.redux.middleware) {
-    combinedWebpackConfig.resolve.alias.middleware = universalReduxConfig.redux.middleware;
-  } else {
-    combinedWebpackConfig.resolve.alias.middleware = path.resolve(__dirname, '../lib/helpers/empty.js');
-  }
-  if (universalReduxConfig.rootClientComponent) {
-    combinedWebpackConfig.resolve.alias.rootClientComponent = universalReduxConfig.rootClientComponent;
-  } else {
-    combinedWebpackConfig.resolve.alias.rootClientComponent = path.resolve(__dirname, '../lib/client/root.js');
-  }
+  combinedWebpackConfig.resolve.alias.middleware = universalReduxConfig.redux.middleware || path.resolve(__dirname, '../lib/helpers/empty.js');
+  const rootComponentPath = universalReduxConfig.rootClientComponent || universalReduxConfig.rootComponent || path.resolve(__dirname, '../lib/client/root.js');
+  combinedWebpackConfig.resolve.alias.rootClientComponent = rootComponentPath;
 
   // add project level vendor libs
   if (universalReduxConfig.webpack.vendorLibraries && isProduction) {
@@ -95,10 +88,10 @@ module.exports = (userConfig) => {
 
   // add default settings that are used by server via process.env
   const definitions = {
-    __PROVIDERS__: JSON.stringify(universalReduxConfig.providers),
-    __LOGGER__: false,
     __DEVTOOLS__: !isProduction,
-    __DEVELOPMENT__: !isProduction
+    __DEVELOPMENT__: !isProduction,
+    __LOGGER__: false,
+    __PROVIDERS__: JSON.stringify(universalReduxConfig.providers)
   };
 
   // override with user settings

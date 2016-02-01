@@ -147,6 +147,12 @@ module.exports = (projectRoot, sourceRoot) => {
     */
     // rootServerComponent: sourceRoot + '/rootServerComponent.js',
 
+    /*
+    // The root component factory file. Optional. Will be added to Webpack aliases.
+    // Is overridden by either rootClientComponent or rootServerComponent.
+    */
+    // rootComponent: sourceRoot + '/rootComponent.js',
+
     html: {
       /*
       // A path to a component that provides additional DOM items to be appended

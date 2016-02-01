@@ -1,7 +1,7 @@
 import { map } from 'lodash';
 import createLogger from 'redux-logger';
 
-// TODO: pull our react-router deps
+// TODO: parameterize react-router
 import { syncHistory } from 'react-router-redux';
 import { browserHistory } from 'react-router';
 import createMemoryHistory from 'react-router/lib/createMemoryHistory';
@@ -11,7 +11,6 @@ import { applyMiddleware, createStore } from 'redux';
 
 // explicit path required for HMR to function. see #7
 import reducers from '../../../../src/redux/modules';
-
 
 function hmr(store) {
   if (module.hot) {
@@ -23,7 +22,7 @@ function hmr(store) {
 }
 
 export default function create(providedMiddleware, data) {
-  // TODO: pull our react-router deps
+  // TODO: parameterize react-router
   let router;
   if (__CLIENT__) {
     router = syncHistory(browserHistory);
