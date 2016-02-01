@@ -13,7 +13,7 @@ export default function(store, renderProps) {
           <AsyncProps {...renderProps} {...asyncProps} />
         </Provider>
       );
-      resolve({ root });
+      resolve(root);
     });
   });
 }

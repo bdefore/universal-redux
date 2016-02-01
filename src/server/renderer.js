@@ -43,12 +43,12 @@ export default (projectConfig, projectToolsConfig) => {
           res.status(500);
         } else if (renderProps) {
           rootServerComponent(store, renderProps, config.providers)
-            .then(({ root }) => {
+            .then((root) => {
               const content = html(config, tools.assets(), store, res._headers, root);
               res.status(200).send(content);
             })
             .catch((err) => {
-              console.log('ERROR GENERATING ROOT COMPONENT', err, err.stack);
+              console.error('ERROR GENERATING ROOT COMPONENT:', pretty.render(err));
               res.status(500).send(err);
             });
         } else {

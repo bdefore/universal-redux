@@ -13,7 +13,7 @@ export default function(store, renderProps) {
             </div>
           </Provider>
         );
-        resolve({ root });
+        resolve(root);
       })
       .catch((err) => {
         reject(err);

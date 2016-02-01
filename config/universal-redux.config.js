@@ -80,7 +80,7 @@ module.exports = (projectRoot, sourceRoot) => {
     // include 'react-router', 'react-router-redux', 'redux-async-connect',
     // 'async-props'. Custom root components may accept additional options.
     // Optional. If unspecified will use react-router, react-router-redux,
-    // and redux-async-connect.
+    // and redux-async-connect. Experimental.
     //
     // Expects: Array
     */
