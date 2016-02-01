@@ -25,8 +25,6 @@ createRootClientComponent(store, __PROVIDERS__, { devComponent })
         console.warn('WARNING: Server-side React render was discarded. Make sure that your initial render does not contain any client-side code.');
       }
     }
-
-    return devComponent ? createRootClientComponent(store, __PROVIDERS__, { devComponent }) : {};
   })
   .catch((err) => {
     console.error(err, err.stack);
