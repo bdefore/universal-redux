@@ -15,7 +15,7 @@ const store = createStore(middleware, window.__data);
 const devComponent = renderDevtools();
 
 // There is probably no need to be asynchronous here
-createRootClientComponent(store, __PROVIDERS__, { devComponent })
+createRootClientComponent(store, __PROVIDERS__, devComponent)
   .then((root) => {
     ReactDOM.render(root, dest);
 

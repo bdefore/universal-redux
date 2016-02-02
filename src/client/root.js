@@ -2,7 +2,7 @@ import { includes } from 'lodash';
 import reduxAsyncConnectClient from './providers/redux-async-connect';
 import asyncPropsClient from './providers/async-props';
 
-export default function(store, providers, { devComponent }) {
+export default function(store, providers, devComponent) {
   let client = reduxAsyncConnectClient;
   if (includes(providers, 'async-props')) {
     client = asyncPropsClient;
@@ -11,5 +11,5 @@ export default function(store, providers, { devComponent }) {
     client = reduxAsyncConnectClient;
   }
 
-  return client(store, { devComponent });
+  return client(store, devComponent);
 }
