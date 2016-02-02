@@ -36,14 +36,14 @@ export default (projectConfig, projectToolsConfig) => {
       const content = html(config, tools.assets(), store, headers);
       send(200, content);
     } else {
-      match({ history, routes: getRoutes(store), location: originalUrl }, (error, redirectLocation, renderProps) => {
+      return match({ history, routes: getRoutes(store), location: originalUrl }, (error, redirectLocation, renderProps) => {
         if (redirectLocation) {
           redirect(redirectLocation.pathname + redirectLocation.search);
         } else if (error) {
           console.error('ROUTER ERROR:', pretty.render(error));
           send(500);
         } else if (renderProps) {
-          rootComponent.createForServer(store, renderProps)
+          return rootComponent.createForServer(store, renderProps)
             .then(({ root }) => {
               const content = html(config, tools.assets(), store, headers, root);
               send(200, content);
@@ -60,7 +60,7 @@ export default (projectConfig, projectToolsConfig) => {
   };
 
   function *koaMiddleware() {
-    dynamicMiddleware(this.request.originalUrl,
+    yield dynamicMiddleware(this.request.originalUrl,
       this.request.headers,
       (status, body) => {
         this.status = status;
@@ -77,7 +77,7 @@ export default (projectConfig, projectToolsConfig) => {
     case 'express': {
       return (req, res) => {
         dynamicMiddleware(req.originalUrl,
-          res._headers,
+          req._headers,
           (status, body) => res.status(status).send(body),
           (url) => res.redirect(url));
       };
