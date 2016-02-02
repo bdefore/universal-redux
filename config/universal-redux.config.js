@@ -151,7 +151,7 @@ module.exports = (projectRoot, sourceRoot) => {
     },
 
     /*
-    // Deprecated in favor of html.head and html.body (or html.root if
+    // Deprecated in favor of html.root (or html.root if
     // necessary)
     //
     // The path to your replacement for the default HTML shell. Optional.
