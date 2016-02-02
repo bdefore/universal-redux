@@ -38,7 +38,7 @@ export default (projectConfig, projectToolsConfig) => {
       });
     }
     return new Promise((resolve) => {
-      match({history, routes: getRoutes(store), location: originalUrl}, (error, redirectLocation, renderProps) => {
+      match({ history, routes: getRoutes(store), location: originalUrl }, (error, redirectLocation, renderProps) => {
         if (redirectLocation) {
           redirect(redirectLocation.pathname + redirectLocation.search, resolve);
         } else if (error) {
@@ -71,19 +71,17 @@ export default (projectConfig, projectToolsConfig) => {
         resolve();
       },
       (url, resolve) => {
-        this.response.redirect(url)
+        this.response.redirect(url);
         resolve();
       });
   }
 
   switch (config.server.webFramework) {
-    case 'koa':
-    {
+    case 'koa': {
       return koaMiddleware;
     }
     default:
-    case 'express':
-    {
+    case 'express': {
       return (req, res) => {
         dynamicMiddleware(req.originalUrl,
           req._headers,
