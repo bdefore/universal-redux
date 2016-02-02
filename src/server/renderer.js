@@ -34,50 +34,58 @@ export default (projectConfig, projectToolsConfig) => {
 
     if (__DISABLE_SSR__) {
       const content = html(config, tools.assets(), store, headers);
-      send(200, content);
+      return send(200, content, ()=> 0 /*noop*/);
     } else {
-      match({ history, routes: getRoutes(store), location: originalUrl }, (error, redirectLocation, renderProps) => {
-        if (redirectLocation) {
-          redirect(redirectLocation.pathname + redirectLocation.search);
-        } else if (error) {
-          console.error('ROUTER ERROR:', pretty.render(error));
-          send(500);
-        } else if (renderProps) {
-          rootComponent.createForServer(store, renderProps)
-            .then(({ root }) => {
-              const content = html(config, tools.assets(), store, headers, root);
-              send(200, content);
-            })
-            .catch((err) => {
-              console.log('ERROR GENERATING ROOT COMPONENT', err, err.stack);
-              send(500, err);
-            });
-        } else {
-          send(400, 'Not found');
-        }
+      return new Promise((resolve) => {
+        match({history, routes: getRoutes(store), location: originalUrl}, (error, redirectLocation, renderProps) => {
+          if (redirectLocation) {
+            redirect(redirectLocation.pathname + redirectLocation.search, resolve);
+          } else if (error) {
+            console.error('ROUTER ERROR:', pretty.render(error));
+            send(500, resolve);
+          } else if (renderProps) {
+            rootComponent.createForServer(store, renderProps)
+              .then(({ root }) => {
+                const content = html(config, tools.assets(), store, headers, root);
+                send(200, content, resolve);
+              })
+              .catch((err) => {
+                console.log('ERROR GENERATING ROOT COMPONENT', err, err.stack);
+                send(500, err, resolve);
+              });
+          } else {
+            send(404, 'Not found', resolve);
+          }
+        });
       });
     }
   };
 
   function *koaMiddleware() {
-    dynamicMiddleware(this.request.originalUrl,
+    yield dynamicMiddleware(this.request.originalUrl,
       this.request.headers,
-      (status, body) => {
+      (status, body, resolve) => {
         this.status = status;
         this.body = body;
+        resolve();
       },
-      (url) => this.response.redirect(url));
+      (url, resolve) => {
+        this.response.redirect(url)
+        resolve();
+      });
   }
 
   switch (config.server.webFramework) {
-    case 'koa': {
+    case 'koa':
+    {
       return koaMiddleware;
     }
     default:
-    case 'express': {
+    case 'express':
+    {
       return (req, res) => {
         dynamicMiddleware(req.originalUrl,
-          res._headers,
+          req._headers,
           (status, body) => res.status(status).send(body),
           (url) => res.redirect(url));
       };
