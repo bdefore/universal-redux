@@ -1,16 +1,16 @@
 #!/usr/bin/env node
 const path = require('path');
 const util = require('util');
-
 const lodash = require('lodash');
 const webpack = require('webpack');
-const mergeBabel = require('./merge-babel-config');
 const mergeWebpack = require('webpack-config-merger');
-const baseWebpackConfig = require('../config/webpack.config.js');
-const baseDevConfig = mergeWebpack(baseWebpackConfig.common, baseWebpackConfig.development);
-const baseProdConfig = mergeWebpack(baseWebpackConfig.common, baseWebpackConfig.production);
-const baseToolsConfig = require('../config/webpack-isomorphic-tools.config.js');
+const WebpackIsomorphicToolsPlugin = require('webpack-isomorphic-tools/plugin');
 const WebpackErrorNotificationPlugin = require('webpack-error-notification');
+
+const mergeBabel = require('./merge-babel-config');
+const baseConfig = require('../config/universal-redux.config.js');
+const webpackConfigs = require('../config/webpack.config.js');
+const baseToolsConfig = require('../config/webpack-isomorphic-tools.config.js');
 
 const isProduction = process.env.NODE_ENV === 'production';
 
@@ -24,18 +24,18 @@ function inspect(obj) {
 }
 
 module.exports = (userConfig) => {
-  // derive root and sourceDir, alowing for absolute, relative, or not provided
-  const root = userConfig.root ? userConfig.root[0] === '/' ? userConfig.root : path.resolve(__dirname, '../..', userConfig.root) : path.resolve(__dirname, '../../..');
-  const sourceDir = userConfig.sourceDir ? userConfig.sourceDir[0] === '/' ? userConfig.sourceDir : path.resolve(root, userConfig.sourceDir) : path.resolve(root, './src');
+  const projectRoot = process.cwd();
+  const sourceRoot = `${projectRoot}/src`;
 
   // merge with base config
-  const universalReduxConfig = lodash.merge(require('../config/universal-redux.config.js')(root, sourceDir), userConfig);
+  const universalReduxConfig = lodash.merge(baseConfig, userConfig);
 
   // merge with base webpack config
-  const baseConfig = isProduction ? baseProdConfig : baseDevConfig;
-  const combinedWebpackConfig = mergeWebpack(baseConfig, universalReduxConfig.webpack.config);
-  combinedWebpackConfig.context = root;
-  combinedWebpackConfig.resolve.root = sourceDir;
+  const webpackSubset = isProduction ? webpackConfigs.production : webpackConfigs.development;
+  const baseWebpackConfig = mergeWebpack(webpackConfigs.common, webpackSubset);
+  const combinedWebpackConfig = mergeWebpack(baseWebpackConfig, universalReduxConfig.webpack.config);
+  combinedWebpackConfig.context = projectRoot;
+  combinedWebpackConfig.resolve.root = sourceRoot;
 
   // derive webpack output destination from staticPath
   combinedWebpackConfig.output.path = universalReduxConfig.server.staticPath + '/dist';
@@ -52,7 +52,6 @@ module.exports = (userConfig) => {
   combinedToolsConfig.webpack_assets_file_path = 'node_modules/universal-redux/webpack-assets.json';
 
   // add tools settings to combined weback config
-  const WebpackIsomorphicToolsPlugin = require('webpack-isomorphic-tools/plugin');
   const toolsPlugin = new WebpackIsomorphicToolsPlugin(combinedToolsConfig);
 
   combinedWebpackConfig.module.loaders.push({ test: toolsPlugin.regular_expression('images'), loader: 'url-loader?limit=10240' });
