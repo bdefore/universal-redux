@@ -34,31 +34,32 @@ export default (projectConfig, projectToolsConfig) => {
 
     if (__DISABLE_SSR__) {
       const content = html(config, tools.assets(), store, headers);
-      return send(200, content, ()=> 0 /*noop*/);
-    } else {
-      return new Promise((resolve) => {
-        match({history, routes: getRoutes(store), location: originalUrl}, (error, redirectLocation, renderProps) => {
-          if (redirectLocation) {
-            redirect(redirectLocation.pathname + redirectLocation.search, resolve);
-          } else if (error) {
-            console.error('ROUTER ERROR:', pretty.render(error));
-            send(500, resolve);
-          } else if (renderProps) {
-            rootComponent.createForServer(store, renderProps)
-              .then(({ root }) => {
-                const content = html(config, tools.assets(), store, headers, root);
-                send(200, content, resolve);
-              })
-              .catch((err) => {
-                console.log('ERROR GENERATING ROOT COMPONENT', err, err.stack);
-                send(500, err, resolve);
-              });
-          } else {
-            send(404, 'Not found', resolve);
-          }
-        });
+      return new Promise(resolve => send(200, content, resolve)).then(() => {
       });
     }
+    return new Promise((resolve) => {
+      match({history, routes: getRoutes(store), location: originalUrl}, (error, redirectLocation, renderProps) => {
+        if (redirectLocation) {
+          redirect(redirectLocation.pathname + redirectLocation.search, resolve);
+        } else if (error) {
+          console.error('ROUTER ERROR:', pretty.render(error));
+          send(500, resolve);
+        } else if (renderProps) {
+          rootComponent.createForServer(store, renderProps)
+            .then(({ root }) => {
+              const content = html(config, tools.assets(), store, headers, root);
+              send(200, content, resolve);
+            })
+            .catch((err) => {
+              console.log('ERROR GENERATING ROOT COMPONENT', err, err.stack);
+              send(500, err, resolve);
+            });
+        } else {
+          send(404, 'Not found', resolve);
+        }
+      });
+    }).then(() => {
+    });
   };
 
   function *koaMiddleware() {
