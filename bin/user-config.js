@@ -5,7 +5,9 @@ const userConfigPath = path.join(process.cwd(), './config/universal-redux.config
 function getConfig() {
   try {
     const config = require(path.resolve(userConfigPath));
-    console.log('Loaded project level config', config);
+    if (config.verbose) {
+      console.log('Loaded project level config', config);
+    }
     return config;
   } catch (err) {
     console.error('No configuration file provided, using defaults.', err);
