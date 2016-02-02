@@ -28,7 +28,7 @@ export default (projectConfig) => {
   const config = mergeConfigs(projectConfig);
 
   // add user defined globals for serverside access
-  each(config.globals, (value, key) => { global[key] = JSON.stringify(value); });
+  each(config.globals, (value, key) => { global[key] = value; });
 
   const errors = validateConfig(config);
 

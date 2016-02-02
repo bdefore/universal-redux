@@ -31,6 +31,10 @@ module.exports = {
       ],
       parser: WebpackIsomorphicToolsPlugin.url_loader_parser
     },
+    videos: {
+      extensions: [ 'webm', 'mp4' ],
+      parser: WebpackIsomorphicToolsPlugin.url_loader_parser
+    },
     svg: {
       extension: 'svg',
       parser: WebpackIsomorphicToolsPlugin.url_loader_parser
