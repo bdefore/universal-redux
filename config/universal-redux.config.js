@@ -154,11 +154,6 @@ module.exports = {
   */
   routes: sourceRoot + '/routes.js',
 
-  /*
-  // The root component factory file. Optional. Will be added to Webpack aliases.
-  */
-  // rootComponent: sourceRoot + '/rootComponent.js',
-
   html: {
     /*
     // A path to a component that provides additional DOM items to be appended
