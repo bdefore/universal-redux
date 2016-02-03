@@ -1,19 +1,20 @@
 import React from 'react';
 import { Provider } from 'react-redux';
 import { Router } from 'react-router';
+import getRoutes from 'routes';
 import AsyncProps from '../../vendor/async-props';
 
-export default function(store, { routes, history, devComponent }) {
+export default function(store, devComponent) {
   const root = (
     <Provider store={store} key="provider">
       <div>
         <Router render={(props) => <AsyncProps {...props} />} history={history}>
-          {routes}
+          {getRoutes(store)}
         </Router>
         {devComponent}
       </div>
     </Provider>
   );
 
-  return Promise.resolve({ root });
+  return Promise.resolve(root);
 }

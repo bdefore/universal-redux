@@ -10,7 +10,9 @@ export default function(store, renderProps) {
       }
       const root = (
         <Provider store={store} key="provider">
-          <AsyncProps {...renderProps} {...asyncProps} />
+          <div>
+            <AsyncProps {...renderProps} {...asyncProps} />
+          </div>
         </Provider>
       );
       resolve(root);
