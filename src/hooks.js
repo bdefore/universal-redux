@@ -53,7 +53,8 @@ export function register(hook, executor, { environments: hookEnvs, position: hoo
     console.warn('The hook executor must be a function');
     return;
   }
-  if (hookPosition && positionValues.hookPosition(hookPos) === -1) {
+
+  if (hookPosition && positionValues.indexOf(hookPos) === -1) {
     console.warn(`Unknown hook position '${hookPosition}'`);
     return;
   } else if (!hookPosition) {

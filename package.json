@@ -3,7 +3,7 @@
   "description": "A universal redux renderer (ES6, Webpack, Express)",
   "author": "Buck DeFore <bdefore@gmail.com> (http://github.com/bdefore)",
   "license": "MIT",
-  "version": "3.0.0-rc20",
+  "version": "4.0.0-alpha1",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/bdefore/universal-redux.git"
@@ -85,6 +85,7 @@
   },
   "devDependencies": {
     "chai": "3.4.1",
+    "express": "4.13.3",
     "karma": "0.13.19",
     "karma-cli": "0.1.2",
     "karma-mocha": "0.2.1",

@@ -26,7 +26,7 @@ function inspect(obj) {
 
 module.exports = (userConfig) => {
   // derive root and sourceDir, alowing for absolute, relative, or not provided
-  const root = userConfig.root ? userConfig.root[0] === '/' ? userConfig.root : path.resolve(__dirname, '../..', userConfig.root) : path.resolve(__dirname, '../../..');
+  const root = userConfig.root ? userConfig.root[0] === '/' ? userConfig.root : path.resolve(process.cwd(), userConfig.root) : path.resolve(process.cwd());
   const sourceDir = userConfig.sourceDir ? userConfig.sourceDir[0] === '/' ? userConfig.sourceDir : path.resolve(root, userConfig.sourceDir) : path.resolve(root, './src');
 
   // merge with base config

@@ -37,30 +37,38 @@ function renderRootComponent({ config, assets, store, headers, root }) {
   };
 }
 
-function renderer({ history, routes, store, assets, location, headers, config }) {
+function matchRoute({ history, routes, location }){
   return new Promise((resolve, reject) => {
     match({ history, routes, location }, (error, redirectLocation, renderProps) => {
-      if (error) {
-        reject(error);
-      } else if (redirectLocation) {
-        resolve({ redirect: redirectLocation.pathname + redirectLocation.search });
-      } else if (!renderProps) {
-        reject({ status: 400 });
+      if(error){
+        reject({ status: 500, error });
+      } else if (!renderProps){
+        reject({ status: 400, error: `Route for '${location}' not found`});
       } else {
-        execute(hooks.CREATE_ROOT_COMPONENT, { store, renderProps }, createRootComponent)
-          .then(({ root }) => execute(hooks.RENDER_ROOT_COMPONENT, { config, assets, store, headers, root }, renderRootComponent))
-          .then(resolve, reject);
+        resolve({ redirectLocation, renderProps });
       }
-    });
-  })
-  .catch((err) => {
-    const error = pretty.render(err);
-    console.error(error);
-    return {
-      error: pretty.render(error),
-      status: 500
-    };
+    })
   });
+}
+
+function renderer({ history, routes, store, assets, location, headers, config }) {
+  return matchRoute({ history, routes, location })
+    .then(({ redirectLocation, renderProps }) => {
+      if (redirectLocation){
+        return ({ redirect: redirectLocation.pathname + redirectLocation.search });
+      }
+      return execute(hooks.CREATE_ROOT_COMPONENT, { store, renderProps }, createRootComponent)
+        .then(({ root }) => execute(hooks.RENDER_ROOT_COMPONENT, { config, assets, store, headers, root }, renderRootComponent))
+    })
+    .catch((err) => {
+      const error = pretty.render(err.error ? err.error : err);
+      const status = err.status ? err.status : 500;
+      console.error(error);
+      return {
+        body: pretty.render(error),
+        status: status
+      };
+    });
 }
 
 export default (config) => {
