@@ -137,7 +137,7 @@ Peer dependencies for each version:
 "react": "^0.14.3",
 "react-dom": "^0.14.3",
 "react-router": "^2.0.0-rc4",
-"react-router-redux": "^2.1.0"
+"react-router-redux": "^3.0.0"
 ```
 
 ### Local development
