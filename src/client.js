@@ -6,8 +6,8 @@ import { render as renderDevtools } from './client/devtools';
 
 // dependencies of external source. these resolve via webpack aliases
 // as assigned in merge-configs.js
-import middleware from 'middleware';
-import createRootClientComponent from 'rootClientComponent';
+import middleware from 'universal-redux/middleware';
+import createRootClientComponent from 'universal-redux/rootClientComponent';
 
 const dest = document.getElementById('content');
 

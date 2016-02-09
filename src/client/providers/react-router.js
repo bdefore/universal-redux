@@ -2,7 +2,7 @@ import React from 'react';
 import { Router } from 'react-router';
 import { browserHistory } from 'react-router';
 import { ReduxAsyncConnect } from 'redux-async-connect';
-import getRoutes from 'routes';
+import getRoutes from 'universal-redux/routes';
 
 export default function(store) {
   const component = (

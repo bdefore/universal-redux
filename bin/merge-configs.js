@@ -73,10 +73,10 @@ module.exports = (userConfig) => {
 
   // add routes, reducer and rootClientComponent aliases so that client has access to them
   combinedWebpackConfig.resolve.alias = combinedWebpackConfig.resolve.alias || {};
-  combinedWebpackConfig.resolve.alias.routes = universalReduxConfig.routes;
-  combinedWebpackConfig.resolve.alias.middleware = universalReduxConfig.redux.middleware || path.resolve(__dirname, '../lib/helpers/empty.js');
+  combinedWebpackConfig.resolve.alias['universal-redux/routes'] = universalReduxConfig.routes;
+  combinedWebpackConfig.resolve.alias['universal-redux/middleware'] = universalReduxConfig.redux.middleware || path.resolve(__dirname, '../lib/helpers/empty.js');
   const rootComponentPath = universalReduxConfig.rootClientComponent || universalReduxConfig.rootComponent || path.resolve(__dirname, '../lib/client/root.js');
-  combinedWebpackConfig.resolve.alias.rootClientComponent = rootComponentPath;
+  combinedWebpackConfig.resolve.alias['universal-redux/rootClientComponent'] = rootComponentPath;
 
   // add project level vendor libs
   if (universalReduxConfig.webpack.vendorLibraries && isProduction) {

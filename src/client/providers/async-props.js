@@ -1,7 +1,7 @@
 import React from 'react';
 import { Provider } from 'react-redux';
 import { Router } from 'react-router';
-import getRoutes from 'routes';
+import getRoutes from 'universal-redux/routes';
 import AsyncProps from '../../vendor/async-props';
 
 export default function(store, devComponent) {
