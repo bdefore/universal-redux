@@ -45,7 +45,7 @@ export default (projectConfig, projectToolsConfig) => {
           console.error('ROUTER ERROR:', pretty.render(error));
           send(500, resolve);
         } else if (renderProps) {
-      rootServerComponent.createForServer(store, renderProps, config.providers)
+          rootServerComponent.createForServer(store, renderProps, config.providers)
             .then(({ root }) => {
               const content = html(config, tools.assets(), store, headers, root);
               send(200, content, resolve);
