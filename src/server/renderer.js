@@ -1,7 +1,6 @@
 import path from 'path';
-import { match } from 'react-router';
+import { match } from './providers/react-router';
 import PrettyError from 'pretty-error';
-import createMemoryHistory from 'react-router/lib/createMemoryHistory';
 
 import createStore from '../shared/create';
 import configure from '../configure';
@@ -16,8 +15,9 @@ global.__DEVELOPMENT__ = process.env.NODE_ENV !== 'production';
 export default (projectConfig, projectToolsConfig) => {
   const tools = getTools(projectConfig, projectToolsConfig);
   const config = configure(projectConfig);
+  const rootComponentPath = config.rootServerComponent || config.rootComponent || __dirname + '/root';
+  const rootServerComponent = require(path.resolve(rootComponentPath)).default;
   const getRoutes = require(path.resolve(config.routes)).default;
-  const rootComponent = require(config.rootComponent ? path.resolve(config.rootComponent) : '../helpers/rootComponent');
   const pretty = new PrettyError();
 
 
@@ -29,8 +29,8 @@ export default (projectConfig, projectToolsConfig) => {
     }
 
     const middleware = config.redux.middleware ? require(path.resolve(config.redux.middleware)).default : [];
-    const history = createMemoryHistory();
-    const store = createStore(middleware, history);
+    const store = createStore(middleware);
+    const routes = getRoutes(store);
 
     if (__DISABLE_SSR__) {
       const content = html(config, tools.assets(), store, headers);
@@ -38,14 +38,14 @@ export default (projectConfig, projectToolsConfig) => {
       });
     }
     return new Promise((resolve) => {
-      match({ history, routes: getRoutes(store), location: originalUrl }, (error, redirectLocation, renderProps) => {
+      match(routes, originalUrl, store, (error, redirectLocation, renderProps) => {
         if (redirectLocation) {
           redirect(redirectLocation.pathname + redirectLocation.search, resolve);
         } else if (error) {
           console.error('ROUTER ERROR:', pretty.render(error));
           send(500, resolve);
         } else if (renderProps) {
-          rootComponent.createForServer(store, renderProps)
+      rootServerComponent.createForServer(store, renderProps, config.providers)
             .then(({ root }) => {
               const content = html(config, tools.assets(), store, headers, root);
               send(200, content, resolve);
