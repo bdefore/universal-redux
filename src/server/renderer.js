@@ -20,7 +20,8 @@ export default (projectConfig, projectToolsConfig) => {
   const getRoutes = require(path.resolve(config.routes)).default;
   const pretty = new PrettyError();
 
-  return (req, res) => {
+
+  const dynamicMiddleware = (originalUrl, headers, send, redirect) => {
     if (__DEVELOPMENT__) {
       // Do not cache webpack stats: the script file would change since
       // hot module replacement is enabled in the development env
@@ -32,29 +33,61 @@ export default (projectConfig, projectToolsConfig) => {
     const routes = getRoutes(store);
 
     if (__DISABLE_SSR__) {
-      const content = html(config, tools.assets(), store, res._headers);
-      res.status(200).send(content);
-    } else {
-      match(routes, req.originalUrl, store, (error, redirectLocation, renderProps) => {
-        if (redirectLocation) {
-          res.redirect(redirectLocation.pathname + redirectLocation.search);
-        } else if (error) {
-          console.error('ROUTER ERROR:', pretty.render(error));
-          res.status(500);
-        } else if (renderProps) {
-          rootServerComponent(store, renderProps, config.providers)
-            .then((root) => {
-              const content = html(config, tools.assets(), store, res._headers, root);
-              res.status(200).send(content);
-            })
-            .catch((err) => {
-              console.error('ERROR GENERATING ROOT COMPONENT:', pretty.render(err));
-              res.status(500).send(err);
-            });
-        } else {
-          res.status(404).send('Not found');
-        }
+      const content = html(config, tools.assets(), store, headers);
+      return new Promise(resolve => send(200, content, resolve)).then(() => {
       });
     }
+    return new Promise((resolve) => {
+      match(routes, originalUrl, store, (error, redirectLocation, renderProps) => {
+        if (redirectLocation) {
+          redirect(redirectLocation.pathname + redirectLocation.search, resolve);
+        } else if (error) {
+          console.error('ROUTER ERROR:', pretty.render(error));
+          send(500, resolve);
+        } else if (renderProps) {
+          rootServerComponent.createForServer(store, renderProps, config.providers)
+            .then(({ root }) => {
+              const content = html(config, tools.assets(), store, headers, root);
+              send(200, content, resolve);
+            })
+            .catch((err) => {
+              console.log('ERROR GENERATING ROOT COMPONENT', err, err.stack);
+              send(500, err, resolve);
+            });
+        } else {
+          send(404, 'Not found', resolve);
+        }
+      });
+    }).then(() => {
+    });
   };
+
+  function *koaMiddleware() {
+    yield dynamicMiddleware(this.request.originalUrl,
+      this.request.headers,
+      (status, body, resolve) => {
+        this.status = status;
+        this.body = body;
+        resolve();
+      },
+      (url, resolve) => {
+        this.response.redirect(url);
+        resolve();
+      });
+  }
+
+  switch (config.server.webFramework) {
+    case 'koa': {
+      return koaMiddleware;
+    }
+    default:
+    case 'express': {
+      return (req, res) => {
+        dynamicMiddleware(req.originalUrl,
+          req._headers,
+          (status, body) => res.status(status).send(body),
+          (url) => res.redirect(url));
+      };
+    }
+  }
 };

@@ -46,6 +46,14 @@ module.exports = {
     // Expects: Number
     */
     // maxAge: 0
+
+    /*
+    // The renderer returns middleware for universal rendering. This config option sets the framework to
+    // which this middleware should be compatible.
+    // Expects: String
+    // options: 'express' || 'koa'
+    */
+    webFramework: 'express'
   },
 
   /*
