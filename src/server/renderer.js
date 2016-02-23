@@ -20,7 +20,6 @@ export default (projectConfig, projectToolsConfig) => {
   const getRoutes = require(path.resolve(config.routes)).default;
   const pretty = new PrettyError();
 
-
   const dynamicMiddleware = (originalUrl, headers, send, redirect) => {
     if (__DEVELOPMENT__) {
       // Do not cache webpack stats: the script file would change since
