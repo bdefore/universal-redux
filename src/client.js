@@ -9,13 +9,15 @@ import { render as renderDevtools } from './client/devtools';
 import middleware from 'universal-redux/middleware';
 import createRootClientComponent from 'universal-redux/rootClientComponent';
 
+import makeHelpers from 'universal-redux/asyncHelpers';
+
 const dest = document.getElementById('content');
 
 const store = createStore(middleware, window.__data);
 const devComponent = renderDevtools();
 
 // There is probably no need to be asynchronous here
-createRootClientComponent(store, __PROVIDERS__, devComponent)
+createRootClientComponent(store,  __PROVIDERS__, makeHelpers(), devComponent)
   .then((root) => {
     ReactDOM.render(root, dest);
 

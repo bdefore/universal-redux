@@ -202,7 +202,18 @@ module.exports = {
     //
     // Expects: String
     */
-    middleware: sourceRoot + '/redux/middleware/index.js',
+    middleware: sourceRoot + '/redux/middleware/index.js'
+  },
+
+  reduxAsyncConnect: {
+
+    /*
+    // Additional helpers available to 'redux-async-connect'
+    // see
+    // https://github.com/Rezonans/redux-async-connect/blob/master/docs/API.MD#helpers
+    // for usage
+    */
+    // helpers: sourceRoot + '/helpers/index.js'
   },
 
   /*
