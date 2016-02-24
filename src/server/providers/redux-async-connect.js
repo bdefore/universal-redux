@@ -12,7 +12,7 @@ import { ReduxAsyncConnect, loadOnServer } from 'redux-async-connect';
  */
 export default function(store, asyncHelpers, renderProps) {
   return new Promise((resolve, reject) => {
-    loadOnServer(renderProps, store)
+    loadOnServer(renderProps, store, asyncHelpers)
       .then(() => {
         const root = (
           <Provider store={store} key="provider">

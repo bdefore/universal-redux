@@ -30,7 +30,8 @@ export default (projectConfig, projectToolsConfig) => {
     const middleware = config.redux.middleware ? require(path.resolve(config.redux.middleware)).default : [];
     const store = createStore(middleware);
     const routes = getRoutes(store);
-    const makeHelpers = config.reduxAsyncConnect.asyncHelpers ? require(path.resolve(config.reduxAsyncConnect.asyncHelpers)) : () => {return {test: 'server'}};
+    const makeHelpers = config.reduxAsyncConnect.helpers ? require(path.resolve(config.reduxAsyncConnect.helpers)).default : () => {return {test: 'server'}};
+
 
     if (__DISABLE_SSR__) {
       const content = html(config, tools.assets(), store, headers);

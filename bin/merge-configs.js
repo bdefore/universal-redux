@@ -77,6 +77,8 @@ module.exports = (userConfig) => {
   combinedWebpackConfig.resolve.alias['universal-redux/middleware'] = universalReduxConfig.redux.middleware || path.resolve(__dirname, '../lib/helpers/empty.js');
   const rootComponentPath = universalReduxConfig.rootClientComponent || universalReduxConfig.rootComponent || path.resolve(__dirname, '../lib/client/root.js');
   combinedWebpackConfig.resolve.alias['universal-redux/rootClientComponent'] = rootComponentPath;
+  console.log('merge configs', universalReduxConfig.reduxAsyncConnect.helpers);
+  console.log('merge configs', universalReduxConfig);
   combinedWebpackConfig.resolve.alias['universal-redux/asyncHelpers'] = universalReduxConfig.reduxAsyncConnect.helpers || path.resolve(__dirname, '../lib/helpers/emptyFunction.js');
 
   // add project level vendor libs
