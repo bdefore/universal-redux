@@ -1,5 +1,5 @@
 import { includes } from 'lodash';
-import reduxAsyncConnectClient from './providers/redux-sync-connect';
+import reduxAsyncConnectClient from './providers/redux-async-connect';
 import asyncPropsClient from './providers/async-props';
 
 /**
