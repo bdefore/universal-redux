@@ -30,6 +30,8 @@ export default (projectConfig, projectToolsConfig) => {
     const middleware = config.redux.middleware ? require(path.resolve(config.redux.middleware)).default : [];
     const store = createStore(middleware);
     const routes = getRoutes(store);
+    const makeHelpers = config.reduxAsyncConnect.helpers ? require(path.resolve(config.reduxAsyncConnect.helpers)).default : () => {return {test: 'server'}};
+
 
     if (__DISABLE_SSR__) {
       const content = html(config, tools.assets(), store, headers);
@@ -44,7 +46,7 @@ export default (projectConfig, projectToolsConfig) => {
           console.error('ROUTER ERROR:', pretty.render(error));
           send(500, resolve);
         } else if (renderProps) {
-          rootServerComponent(store, renderProps, config.providers)
+          rootServerComponent(store, renderProps, makeHelpers(headers), config.providers)
             .then(({ root }) => {
               const content = html(config, tools.assets(), store, headers, root);
               send(200, content, resolve);

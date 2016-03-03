@@ -4,7 +4,13 @@ import { Router } from 'react-router';
 import getRoutes from 'universal-redux/routes';
 import AsyncProps from '../../vendor/async-props';
 
-export default function(store, devComponent) {
+/**
+ * @param store
+ * @param asyncHelpers - Ignored by async-props
+ * @param devComponent
+ * @returns {Promise.<Provider>}
+ */
+export default function(store, asyncHelpers, devComponent) {
   const root = (
     <Provider store={store} key="provider">
       <div>
