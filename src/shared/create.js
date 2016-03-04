@@ -1,11 +1,6 @@
 import { map } from 'lodash';
 import createLogger from 'redux-logger';
 
-// TODO: parameterize react-router
-import { syncHistoryWithStore } from 'react-router-redux';
-import { browserHistory } from 'react-router';
-import createMemoryHistory from 'react-router/lib/createMemoryHistory';
-
 import { compose as composeDevtools } from '../client/devtools';
 import { applyMiddleware, createStore } from 'redux';
 
@@ -37,14 +32,6 @@ export default function create(providedMiddleware, data) {
   const finalCreateStore = useDevtools ? composeDevtools(middleware)(createStore) : applyMiddleware(...middleware)(createStore);
 
   const store = finalCreateStore(reducers, data);
-
-  // TODO: parameterize react-router
-  let router;
-  if (__CLIENT__) {
-    router = syncHistoryWithStore(browserHistory, store);
-  } else {
-    router = syncHistoryWithStore(createMemoryHistory(), store);
-  }
 
   hmr(store);
 
