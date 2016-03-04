@@ -8,9 +8,7 @@ import getRoutes from 'universal-redux/routes';
 export default function(store) {
   const history = syncHistoryWithStore(browserHistory, store);
   const component = (
-    <Router render={(props) => <ReduxAsyncConnect {...props} />} history={history}>
-      {getRoutes(store)}
-    </Router>
+    <Router render={(props) => <ReduxAsyncConnect {...props} />} history={history} routes={getRoutes(store)} />
   );
 
   return component;
