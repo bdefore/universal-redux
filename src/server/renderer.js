@@ -45,7 +45,7 @@ export default (projectConfig, projectToolsConfig) => {
           send(500, resolve);
         } else if (renderProps) {
           rootServerComponent(store, renderProps, config.providers)
-            .then(({ root }) => {
+            .then((root) => {
               const content = html(config, tools.assets(), store, headers, root);
               send(200, content, resolve);
             })
