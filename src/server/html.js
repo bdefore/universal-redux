@@ -16,10 +16,11 @@ export default (config, assets, store, headers, component) => {
     return html;
   }
 
-  return '<!doctype html>\n' + ReactDOM.renderToString(
+  const { html } = StyleSheetServer.renderStatic(() => '<!doctype html>\n' + ReactDOM.renderToString(
     <html lang="en-us">
       <Head additions={config.html.head} assets={assets} store={store} headers={headers} />
       <Body assets={assets} store={store} headers={headers} component={component} />
     </html>
-  );
+  ));
+  return html;
 };
