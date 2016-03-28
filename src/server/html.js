@@ -9,18 +9,16 @@ export default (config, assets, store, headers, component) => {
   const root = config.html.root || config.htmlShell;
   if (root) {
     const Html = require(path.resolve(root)).default;
-    const { html } = StyleSheetServer.renderStatic(() => {
-      return '<!doctype html>\n' + ReactDOM.renderToString(
-          <Html assets={assets} store={store} component={component} headers={headers}/>);
-    });
-    return html;
+    const { html } = StyleSheetServer.renderStatic(() => ReactDOM.renderToString(
+      <Html assets={assets} store={store} component={component} headers={headers}/>));
+    return '<!doctype html>\n' + html;
   }
 
-  const { html } = StyleSheetServer.renderStatic(() => '<!doctype html>\n' + ReactDOM.renderToString(
+  const { html } = StyleSheetServer.renderStatic(() => ReactDOM.renderToString(
     <html lang="en-us">
       <Head additions={config.html.head} assets={assets} store={store} headers={headers} />
       <Body assets={assets} store={store} headers={headers} component={component} />
     </html>
   ));
-  return html;
+  return '<!doctype html>\n'  + html;
 };
