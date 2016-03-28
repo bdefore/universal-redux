@@ -15,8 +15,8 @@ export default class Body extends Component {
   render() {
     const { assets, component, store } = this.props;
     let content = '';
-    if(component) {
-      const {html} = StyleSheetServer.renderStatic(() => ReactDOM.renderToString(component));
+    if (component) {
+      const { html } = StyleSheetServer.renderStatic(() => ReactDOM.renderToString(component));
       content = html;
     }
     return (

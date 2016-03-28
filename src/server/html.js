@@ -20,5 +20,5 @@ export default (config, assets, store, headers, component) => {
       <Body assets={assets} store={store} headers={headers} component={component} />
     </html>
   ));
-  return '<!doctype html>\n'  + html;
+  return '<!doctype html>\n' + html;
 };
