@@ -50,7 +50,7 @@ Any items specified in the `webpack.config` of your configuration will be merged
 
 #### Express middleware
 
-You can add your own Express middleware like so:
+You can add Express middleware by creating your own server.js like so:
 
 ```javascript
 import { express, renderer, start } from 'universal-redux';
@@ -64,6 +64,8 @@ const app = express(config);
 app.use(renderer(config));
 start(app, config);
 ```
+
+You will need to run this server.js instead of calling the default universal-redux-server.
 
 Alternatively, you may create your own Express instance, add middleware beforehand and pass that instance as parameter when calling `universal.app(app)`.
 
