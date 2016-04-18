@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import ReactDOM from 'react-dom/server';
+import { StyleSheetServer } from 'aphrodite';
 import serialize from 'serialize-javascript';
 
 export default class Body extends Component {
@@ -13,8 +14,11 @@ export default class Body extends Component {
 
   render() {
     const { assets, component, store } = this.props;
-    const content = component ? ReactDOM.renderToString(component) : '';
-
+    let content = '';
+    if (component) {
+      const { html } = StyleSheetServer.renderStatic(() => ReactDOM.renderToString(component));
+      content = html;
+    }
     return (
       <body>
         <div id="content" dangerouslySetInnerHTML={{ __html: content }}/>
