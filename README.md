@@ -142,6 +142,16 @@ Peer dependencies for each version:
 "react-router": "^2.0.0-rc4",
 ```
 
+#### 3.x
+
+[Babel](https://github.com/babel/babel) 6, [React Router](https://github.com/rackt/react-router) 2, [React Router Redux](https://github.com/rackt/react-router-redux) 3 (Redux Simple Router renamed) is available but optional.
+
+```
+"react": "^15.0.0",
+"react-dom": "^15.0.0",
+"react-router": "^2.0.0",
+```
+
 ### Local development
 
 If you'd like to develop on Universal Redux, clone the repo and while testing with a project that uses it, you can run `PROJECT_PATH=/path/to/project npm run dev` from the Universal Redux root, which will watch for changes and copy them over to your project's `node_modules/universal-redux/lib` directory. If any of your changes add dependencies, you will need to copy those over manually.
