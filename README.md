@@ -142,7 +142,7 @@ Peer dependencies for each version:
 "react-router": "^2.0.0-rc4",
 ```
 
-#### 3.x
+#### 4.x
 
 [Babel](https://github.com/babel/babel) 6, [React Router](https://github.com/rackt/react-router) 2, [React Router Redux](https://github.com/rackt/react-router-redux) 3 (Redux Simple Router renamed) is available but optional.
 
