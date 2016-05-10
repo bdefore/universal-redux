@@ -12,7 +12,7 @@ global.__SERVER__ = true;
 global.__DISABLE_SSR__ = false;  // <----- DISABLES SERVER SIDE RENDERING FOR ERROR DEBUGGING
 global.__DEVELOPMENT__ = process.env.NODE_ENV !== 'production';
 
-export default (projectConfig, projectToolsConfig) => {
+export default (projectConfig, projectToolsConfig, onRequest) => {
   const tools = getTools(projectConfig, projectToolsConfig);
   const config = configure(projectConfig);
   const rootComponentPath = config.rootServerComponent || config.rootComponent || __dirname + '/root';
@@ -30,6 +30,10 @@ export default (projectConfig, projectToolsConfig) => {
     const middleware = config.redux.middleware ? require(path.resolve(config.redux.middleware)).default : [];
     const store = createStore(middleware);
     const routes = getRoutes(store);
+
+    if (onRequest) {
+      onRequest(originalUrl, store, headers);
+    }
 
     if (__DISABLE_SSR__) {
       const content = html(config, tools.assets(), store, headers);
