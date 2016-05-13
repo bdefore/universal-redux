@@ -12,7 +12,7 @@ global.__SERVER__ = true;
 global.__DISABLE_SSR__ = false;  // <----- DISABLES SERVER SIDE RENDERING FOR ERROR DEBUGGING
 global.__DEVELOPMENT__ = process.env.NODE_ENV !== 'production';
 
-export default (projectConfig, projectToolsConfig, onRequest) => {
+export default (projectConfig, projectToolsConfig, ...requestInterceptors) => {
   const tools = getTools(projectConfig, projectToolsConfig);
   const config = configure(projectConfig);
   const rootComponentPath = config.rootServerComponent || config.rootComponent || __dirname + '/root';
@@ -31,37 +31,39 @@ export default (projectConfig, projectToolsConfig, onRequest) => {
     const store = createStore(middleware);
     const routes = getRoutes(store);
 
-    if (onRequest) {
-      onRequest(originalUrl, store, headers);
-    }
+    const interceptors = requestInterceptors || [() => Promise.resolve()];
 
-    if (__DISABLE_SSR__) {
-      const content = html(config, tools.assets(), store, headers);
-      return new Promise(resolve => send(200, content, resolve)).then(() => {
-      });
-    }
-    return new Promise((resolve) => {
-      match(routes, originalUrl, store, (error, redirectLocation, renderProps) => {
-        if (redirectLocation) {
-          redirect(redirectLocation.pathname + redirectLocation.search, resolve);
-        } else if (error) {
-          console.error('ROUTER ERROR:', pretty.render(error));
-          send(500, resolve);
-        } else if (renderProps) {
-          rootServerComponent(store, renderProps, config.providers)
-            .then((root) => {
-              const content = html(config, tools.assets(), store, headers, root);
-              send(200, content, resolve);
-            })
-            .catch((err) => {
-              console.log('ERROR GENERATING ROOT COMPONENT', err, err.stack);
-              send(500, err, resolve);
-            });
-        } else {
-          send(404, 'Not found', resolve);
-        }
-      });
-    }).then(() => {
+    return Promise.all(interceptors.map((interceptor) => (
+      interceptor(originalUrl, store, headers)
+    ))).then(() => {
+      if (__DISABLE_SSR__) {
+        const content = html(config, tools.assets(), store, headers);
+        return new Promise(resolve => send(200, content, resolve)).then(() => {
+        });
+      }
+      return new Promise((resolve) => {
+        match(routes, originalUrl, store, (error, redirectLocation, renderProps) => {
+          if (redirectLocation) {
+            redirect(redirectLocation.pathname + redirectLocation.search, resolve);
+          } else if (error) {
+            console.error('ROUTER ERROR:', pretty.render(error));
+            send(500, resolve);
+          } else if (renderProps) {
+            rootServerComponent(store, renderProps, config.providers)
+              .then((root) => {
+                const content = html(config, tools.assets(), store, headers, root);
+                send(200, content, resolve);
+              })
+              .catch((err) => {
+                console.log('ERROR GENERATING ROOT COMPONENT', err, err.stack);
+                send(500, err, resolve);
+              });
+          } else {
+            send(404, 'Not found', resolve);
+          }
+        });
+      }).then(() => {
+      })
     });
   };
 
