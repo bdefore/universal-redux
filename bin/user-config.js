@@ -10,7 +10,7 @@ function getConfig() {
     }
     return config;
   } catch (err) {
-    console.error('No configuration file provided, using defaults.', err);
+    console.warn('No configuration file found, using defaults.');
     return {};
   }
 }
