@@ -1,6 +1,6 @@
 import React from 'react';
 import { Provider } from 'react-redux';
-import { ReduxAsyncConnect, loadOnServer } from 'redux-async-connect';
+import { ReduxAsyncConnect, loadOnServer } from 'fmp-redux-async-connect';
 
 export default function(store, renderProps) {
   return new Promise((resolve, reject) => {

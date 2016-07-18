@@ -7,7 +7,7 @@ export default function(store, renderProps, providers) {
   if (includes(providers, 'async-props')) {
     server = asyncPropsServer;
   }
-  if (includes(providers, 'redux-async-connect')) {
+  if (includes(providers, 'fmp-redux-async-connect')) {
     server = reduxAsyncConnectServer;
   }
   return server(store, renderProps);
