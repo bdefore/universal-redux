@@ -74,7 +74,7 @@
     "react-transform-hmr": "1.0.4",
     "redbox-react": "1.2.10",
     "redux": "3.5.2",
-    "fmp-redux-async-connect": "0.1.14",
+    "fmp-redux-async-connect": "0.1.15",
     "redux-devtools": "3.3.1",
     "redux-devtools-dock-monitor": "1.1.1",
     "redux-devtools-log-monitor": "1.0.11",
