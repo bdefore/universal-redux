@@ -1,6 +1,5 @@
 import path from 'path';
 import React, { Component, PropTypes } from 'react';
-import DocumentMeta from 'react-document-meta';
 
 export default class Head extends Component {
   static propTypes = {
@@ -23,7 +22,6 @@ export default class Head extends Component {
 
     return (
       <head>
-        {DocumentMeta.renderAsReact()}
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         {/* styles (will be present only in production with webpack extract text plugin) */}
         {Object.keys(assets.styles).map((style, key) =>
