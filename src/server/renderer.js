@@ -31,6 +31,13 @@ export default (projectConfig, projectToolsConfig) => {
     const store = createStore(middleware);
     const routes = getRoutes(store);
 
+    if (config.redux.middleware) {
+      const callback = require(path.resolve(config.redux.middleware)).middlewareAppliedCallback;
+      if (callback) {
+        callback();
+      }
+    }
+
     if (__DISABLE_SSR__) {
       const content = html(config, tools.assets(), store, headers);
       return new Promise(resolve => send(200, content, resolve)).then(() => {

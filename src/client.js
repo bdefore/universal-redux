@@ -6,13 +6,17 @@ import { render as renderDevtools } from './client/devtools';
 
 // dependencies of external source. these resolve via webpack aliases
 // as assigned in merge-configs.js
-import middleware from 'universal-redux/middleware';
+import middleware, { middlewareAppliedCallback } from 'universal-redux/middleware';
 import createRootClientComponent from 'universal-redux/rootClientComponent';
 
 const dest = document.getElementById('content');
 
 const store = createStore(middleware, window.__data);
 const devComponent = renderDevtools();
+
+if (middlewareAppliedCallback) {
+  middlewareAppliedCallback();
+}
 
 // There is probably no need to be asynchronous here
 createRootClientComponent(store, __PROVIDERS__, devComponent)
