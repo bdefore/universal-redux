@@ -26,6 +26,7 @@ module.exports = {
       extensions: [
         'woff',
         'woff2',
+        'otf',
         'ttf',
         'eot'
       ],
