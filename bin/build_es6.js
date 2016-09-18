@@ -43,7 +43,8 @@ webpack(webpackConfig, (err, stats) => {
   if (buildStats) {
     fs.writeFile(outputStatsPath, JSON.stringify(stats.toJson()), (writeError) => {
       if (writeError) {
-        return console.log(writeError);
+        console.log(writeError);
+        return;
       }
 
       console.log('Webpack output stats were saved to', outputStatsPath);

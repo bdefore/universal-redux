@@ -68,7 +68,7 @@ export default (projectConfig, projectToolsConfig) => {
     });
   };
 
-  function *koaMiddleware() {
+  function* koaMiddleware() {
     yield dynamicMiddleware(this.request.originalUrl,
       this.request.headers,
       (status, body, resolve) => {
@@ -92,7 +92,7 @@ export default (projectConfig, projectToolsConfig) => {
         dynamicMiddleware(req.originalUrl,
           res._headers,
           (status, body) => res.status(status).send(body),
-          (url) => res.redirect(url));
+          url => res.redirect(url));
       };
     }
   }

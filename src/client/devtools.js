@@ -37,4 +37,6 @@ export function render() {
     const Tools = __DEVTOOLS_IS_VISIBLE__ ? DevTools : InvisibleDevTools;
     return <Tools />;
   }
+
+  return null;
 }

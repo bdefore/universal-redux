@@ -2,7 +2,7 @@ import React from 'react';
 import { Provider } from 'react-redux';
 import AsyncProps, { loadPropsOnServer } from '../../vendor/async-props';
 
-export default function(store, renderProps) {
+export default function (store, renderProps) {
   return new Promise((resolve, reject) => {
     loadPropsOnServer(renderProps, (err, asyncProps) => {
       if (err) {

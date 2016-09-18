@@ -3,7 +3,7 @@ import reduxAsyncConnectClient from './providers/redux-async-connect';
 import reactRouterScroll from './providers/react-router-scroll';
 import asyncPropsClient from './providers/async-props';
 
-export default function(store, providers, devComponent) {
+export default function (store, providers, devComponent) {
   let client = reduxAsyncConnectClient;
   if (includes(providers, 'react-router-scroll')) {
     client = reactRouterScroll;

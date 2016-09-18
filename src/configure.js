@@ -23,7 +23,7 @@ function validateConfig(config) {
 
 export default (projectConfig) => {
   // since typically the dev server is logging this out too
-  projectConfig.verbose = false;
+  projectConfig.verbose = false; // eslint-disable-line no-param-reassign
 
   const config = mergeConfigs(projectConfig);
 
