@@ -6,7 +6,6 @@
   ],
   "plugins": [
     [ "transform-runtime" ],
-    [ "typecheck" ],
     [ "transform-decorators-legacy" ]
   ],
   "env": {
