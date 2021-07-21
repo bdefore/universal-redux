@@ -7,6 +7,10 @@
 [![Demo on Heroku](https://img.shields.io/badge/demo-heroku-brightgreen.svg?style=flat-square)](https://universal-redux.herokuapp.com)
 [![Discord](https://img.shields.io/badge/Discord-join%20chat%20%E2%86%92-738bd7.svg?style=flat-square)](https://discord.gg/0ZcbPKXt5bXmzEb4)
 
+### Deprecation Notice
+
+This tool had a nice good run of things, but it's no longer recommended for greenfield projects. Consider [Create React App](https://github.com/facebook/create-react-app) to be a currently maintained spiritual successor.
+
 ### What and Why
 
 Universal Redux is an npm package that when used as a dependency in your project provides a universal (isomorphic) rendering server. You can either use its defaults and begin coding your project, or configure it to your liking with custom Webpack options and Express or Redux middleware. It's intended as both an easy starting point for developers new to React and Redux, as well as an extensible base by which advanced developers can augment with their own middleware and keep up to date with the fast-moving React ecosystem.
